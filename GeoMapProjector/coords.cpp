@@ -7,27 +7,27 @@ class Coords{
 
 class RealCoords : public Coords{
 public:
-    RealCoords(float lat, float lon):latitude{lat},longitude{lon}{}
+    RealCoords(double lat, double lon):latitude{lat},longitude{lon}{}
 
-    float latitude;
-    float longitude;
+    double latitude;
+    double longitude;
 };
 
 class PolarCoords: public Coords{
 public:
-    float epsilon;
-    float rho;
+    double epsilon;
+    double rho;
 
     PolarCoords(){}
-    PolarCoords(float e, float r):epsilon{e},rho{r}{}
+    PolarCoords(double e, double r):epsilon{e},rho{r}{}
 };
 
-class CartesianCoords : Coords{
+class CartesianCoords : public Coords{
 public:
-    float x;
-    float y;
+    double x;
+    double y;
 
     CartesianCoords(){}
-    CartesianCoords(float x, float y):x{x},y{y}{}
+    CartesianCoords(double x, double y):x{x},y{y}{}
 };
 

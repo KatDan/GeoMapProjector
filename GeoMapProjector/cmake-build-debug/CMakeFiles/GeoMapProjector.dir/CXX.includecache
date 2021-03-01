@@ -6,7 +6,41 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/coords.cpp
+
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/database.cpp
+
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp
 iostream
+-
+projections.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/projections.cpp
+
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.cpp
+my_math.hpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.hpp
+
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.hpp
+cmath
+-
+
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/projections.cpp
+coords.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/coords.cpp
+database.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/database.cpp
+my_math.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.cpp
+iostream
+-
+map
+-
+string
+-
+vector
+-
+memory
+-
+cmath
 -
 
