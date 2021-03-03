@@ -3,6 +3,8 @@
 //
 #include "my_math.hpp"
 
+#define EARTH_PERIMETER 6371.11
+
 double deg_to_rad(double number){
     return number * M_PI / 180;
 }
@@ -34,6 +36,11 @@ double deg_cot(double number){
 double deg_arccos(double number){
     double rad_number = deg_to_rad(number);
     return acos(rad_number);
+}
+
+double deg_arcsin(double number){
+    double rad_number = deg_to_rad(number);
+    return asin(rad_number);
 }
 
 double normalize_deg(double degree){

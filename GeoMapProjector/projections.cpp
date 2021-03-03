@@ -9,13 +9,13 @@
 #include<memory>
 #include <cmath>
 
-#define EARTH_PERIMETER 6371.11
-
 using namespace std;
 
 class Projection{
 public:
     shared_ptr<Database> db;
+
+    double scale;
 
     Projection(){}
 

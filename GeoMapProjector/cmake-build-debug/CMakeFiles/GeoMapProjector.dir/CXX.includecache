@@ -17,6 +17,10 @@ memory
 -
 cmath
 -
+vector
+-
+map
+-
 
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp
 iostream
