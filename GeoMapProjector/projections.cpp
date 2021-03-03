@@ -15,21 +15,20 @@ using namespace std;
 
 class Projection{
 public:
-    shared_ptr<database> db;
+    shared_ptr<Database> db;
 
     Projection(){}
 
-    Projection(shared_ptr<database> &db):db{db}{}
+    Projection(shared_ptr<Database> &db):db{db}{}
 
-    static double calculate_distance(const string &p0, const string &points...){
-        //TODO variadic function
-        return 0.0;
-    };
+    virtual double calculate_distance(const string &p0, const string &p1){};
 
     static double calculate_area(const string &p0, const string &p1, const string &points...){
         //TODO variadic function 2
         return 0.0;
     }
+
+    virtual double calculate_rectangular_area(const string &name){}
 
     virtual void add_point(string &name, double c1, double c2){}
 
@@ -37,6 +36,7 @@ public:
 
 };
 
+//main type
 class AzimuthalProjection : public Projection{
 public:
     map<string,shared_ptr<PolarCoords>> points;
@@ -115,9 +115,9 @@ public:
     }
 };
 
-class LambertProjectionAzimuth : public AzimuthalProjection{
+class LambertAzimuthalProjection : public AzimuthalProjection{
 public:
-    LambertProjectionAzimuth() : AzimuthalProjection(){}
+    LambertAzimuthalProjection() : AzimuthalProjection(){}
 
     shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
         double epsilon = coords.longitude;
@@ -128,6 +128,7 @@ public:
 };
 
 
+//main type
 class CylindricalProjection : public Projection{
     map<string,shared_ptr<CartesianCoords>> points;
 
@@ -153,9 +154,9 @@ class EquirectangularProjection : public CylindricalProjection{
     }
 };
 
-class LambertProjectionCylinder : public CylindricalProjection{
+class LambertCylindricalProjection : public CylindricalProjection{
 public:
-    LambertProjectionCylinder():CylindricalProjection(){}
+    LambertCylindricalProjection():CylindricalProjection(){}
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
         double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
@@ -227,7 +228,8 @@ public:
 };
 
 
-
+//TODO doplnit projekcie ked zistim, aku hodnotu ma phi_0
+//main type
 class ConicProjection : public Projection{
     map<string,shared_ptr<PolarCoords>> points;
 

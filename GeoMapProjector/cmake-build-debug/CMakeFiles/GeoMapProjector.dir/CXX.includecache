@@ -7,8 +7,16 @@
 #IncludeRegexTransform: 
 
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/coords.cpp
+utility
+-
 
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/database.cpp
+utility
+-
+memory
+-
+cmath
+-
 
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp
 iostream
