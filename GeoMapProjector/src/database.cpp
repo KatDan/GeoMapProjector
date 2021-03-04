@@ -7,6 +7,7 @@
 #include<cmath>
 #include<vector>
 #include<map>
+#include "../include/coords.hpp"
 
 using namespace std;
 
@@ -95,6 +96,7 @@ enum object_type{
     MOUNTAIN,
     LAKE,
     STATE,
+    CONTINENT
 };
 
 class Database{
@@ -105,6 +107,7 @@ public:
     map<string, shared_ptr<Data>> cities;
     map<string, shared_ptr<Data>> mountains;
     map<string, shared_ptr<Data>> custom;
+    map<string, shared_ptr<Data>> continents;
 
     Database(){}
 
@@ -120,6 +123,7 @@ public:
         auto region_ptr = make_shared<Region>(s,n,e,w);
         data[name] = region_ptr;
         if(obj_type == LAKE) lakes[name] = region_ptr;
+        else if(obj_type == CONTINENT) continents[name] = region_ptr;
         else if (obj_type == CUSTOM) custom[name] = region_ptr;
     }
 
@@ -162,6 +166,13 @@ public:
         cout << lakes.size()<<" lakes saved: "<<endl;
         for(auto &lake : lakes){
             cout << " "<<lake.first<<": "<< lake.second->print_coords()<<endl;
+        }
+    }
+
+    void print_continents() const{
+        cout << continents.size()<<" continents saved: "<<endl;
+        for(auto &cont : continents){
+            cout << " "<<cont.first<<": "<< cont.second->print_coords()<<endl;
         }
     }
 

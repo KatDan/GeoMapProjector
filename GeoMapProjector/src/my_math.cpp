@@ -1,9 +1,9 @@
 //
 // Created by Ja on 01.03.2021.
 //
-#include "my_math.hpp"
+#include "../include/my_math.hpp"
 
-#define EARTH_PERIMETER 6371.11
+//#define EARTH_PERIMETER 6371.11
 
 double deg_to_rad(double number){
     return number * M_PI / 180;

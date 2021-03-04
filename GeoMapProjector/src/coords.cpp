@@ -1,68 +1,48 @@
 //
 // Created by Ja on 28.02.2021.
 //
-#include<iostream>
+/*#include<iostream>
 #include<utility>
 #include<cmath>
-#include "my_math.cpp"
+#include "my_math.hpp"*/
+#include "../include/coords.hpp"
 
 using namespace std;
 
-enum lat_or_long{
+/*enum lat_or_long{
     BOTH,
     LATITUDE,
     LONGITUDE
-};
+};*/
 
-class Coords{
-public:
-    pair<double,double> coords_pair;
-    enum lat_or_long singleton_type = BOTH;
 
-    Coords(){}
-    Coords(enum lat_or_long type):singleton_type{type}{}
-    Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
+Coords::Coords(enum lat_or_long type):singleton_type{type}{}
+Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
-    virtual ~Coords(){}
-};
 
-class RealCoords : public Coords{
-public:
-    double latitude;
-    double longitude;
-    
-    RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
-    RealCoords(double value, enum lat_or_long type):Coords(type){
-        if(type == LATITUDE) latitude = value;
-        else if(type == LONGITUDE) longitude = value;
-    }
-};
 
-class PolarCoords: public Coords{
-public:
-    double epsilon;
-    double rho;
+RealCoords::RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
+RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
+    if (type == LATITUDE) latitude = value;
+    else if (type == LONGITUDE) longitude = value;
+}
 
-    PolarCoords():Coords(){}
-    PolarCoords(double e, double r):Coords(r,e),epsilon{e},rho{r}{}
-    PolarCoords(double value, enum lat_or_long type):Coords(type){
-        if(type == LATITUDE) rho = value;
-        else if(type == LONGITUDE) epsilon = value;
-    }
-};
 
-class CartesianCoords : public Coords{
-public:
-    double x;
-    double y;
 
-    CartesianCoords(){}
-    CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
-    CartesianCoords(double value, enum lat_or_long type):Coords(type){
-        if(type == LATITUDE) y = value;
-        else if(type == LONGITUDE) x = value;
-    }
-};
+PolarCoords::PolarCoords(double e, double r):Coords(r,e),epsilon{e},rho{r}{}
+PolarCoords::PolarCoords(double value, enum lat_or_long type):Coords(type){
+    if(type == LATITUDE) rho = value;
+    else if(type == LONGITUDE) epsilon = value;
+}
+
+
+
+CartesianCoords::CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
+CartesianCoords::CartesianCoords(double value, enum lat_or_long type):Coords(type){
+    if(type == LATITUDE) y = value;
+    else if(type == LONGITUDE) x = value;
+}
+
 
 template<typename T>
 double get_distance(T p0, T p1);

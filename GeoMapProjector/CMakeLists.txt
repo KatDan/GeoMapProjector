@@ -3,4 +3,6 @@ project(GeoMapProjector)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(GeoMapProjector main.cpp)
+file(GLOB_RECURSE sources "src/*.cpp")
+
+add_executable(GeoMapProjector ${sources})

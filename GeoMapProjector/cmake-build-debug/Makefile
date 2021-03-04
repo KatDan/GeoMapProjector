@@ -142,32 +142,194 @@ GeoMapProjector/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/build
 .PHONY : GeoMapProjector/fast
 
-main.obj: main.cpp.obj
+src/controller.obj: src/controller.cpp.obj
 
-.PHONY : main.obj
+.PHONY : src/controller.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+src/controller.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj
+.PHONY : src/controller.cpp.obj
 
-main.i: main.cpp.i
+src/controller.i: src/controller.cpp.i
 
-.PHONY : main.i
+.PHONY : src/controller.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/controller.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/controller.cpp.i
+.PHONY : src/controller.cpp.i
 
-main.s: main.cpp.s
+src/controller.s: src/controller.cpp.s
 
-.PHONY : main.s
+.PHONY : src/controller.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/controller.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/controller.cpp.s
+.PHONY : src/controller.cpp.s
+
+src/coords.obj: src/coords.cpp.obj
+
+.PHONY : src/coords.obj
+
+# target to build an object file
+src/coords.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj
+.PHONY : src/coords.cpp.obj
+
+src/coords.i: src/coords.cpp.i
+
+.PHONY : src/coords.i
+
+# target to preprocess a source file
+src/coords.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/coords.cpp.i
+.PHONY : src/coords.cpp.i
+
+src/coords.s: src/coords.cpp.s
+
+.PHONY : src/coords.s
+
+# target to generate assembly for a file
+src/coords.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/coords.cpp.s
+.PHONY : src/coords.cpp.s
+
+src/database.obj: src/database.cpp.obj
+
+.PHONY : src/database.obj
+
+# target to build an object file
+src/database.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj
+.PHONY : src/database.cpp.obj
+
+src/database.i: src/database.cpp.i
+
+.PHONY : src/database.i
+
+# target to preprocess a source file
+src/database.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/database.cpp.i
+.PHONY : src/database.cpp.i
+
+src/database.s: src/database.cpp.s
+
+.PHONY : src/database.s
+
+# target to generate assembly for a file
+src/database.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/database.cpp.s
+.PHONY : src/database.cpp.s
+
+src/db_loader.obj: src/db_loader.cpp.obj
+
+.PHONY : src/db_loader.obj
+
+# target to build an object file
+src/db_loader.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj
+.PHONY : src/db_loader.cpp.obj
+
+src/db_loader.i: src/db_loader.cpp.i
+
+.PHONY : src/db_loader.i
+
+# target to preprocess a source file
+src/db_loader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.i
+.PHONY : src/db_loader.cpp.i
+
+src/db_loader.s: src/db_loader.cpp.s
+
+.PHONY : src/db_loader.s
+
+# target to generate assembly for a file
+src/db_loader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.s
+.PHONY : src/db_loader.cpp.s
+
+src/main.obj: src/main.cpp.obj
+
+.PHONY : src/main.obj
+
+# target to build an object file
+src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj
+.PHONY : src/main.cpp.obj
+
+src/main.i: src/main.cpp.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/my_math.obj: src/my_math.cpp.obj
+
+.PHONY : src/my_math.obj
+
+# target to build an object file
+src/my_math.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj
+.PHONY : src/my_math.cpp.obj
+
+src/my_math.i: src/my_math.cpp.i
+
+.PHONY : src/my_math.i
+
+# target to preprocess a source file
+src/my_math.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.i
+.PHONY : src/my_math.cpp.i
+
+src/my_math.s: src/my_math.cpp.s
+
+.PHONY : src/my_math.s
+
+# target to generate assembly for a file
+src/my_math.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.s
+.PHONY : src/my_math.cpp.s
+
+src/projections.obj: src/projections.cpp.obj
+
+.PHONY : src/projections.obj
+
+# target to build an object file
+src/projections.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj
+.PHONY : src/projections.cpp.obj
+
+src/projections.i: src/projections.cpp.i
+
+.PHONY : src/projections.i
+
+# target to preprocess a source file
+src/projections.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/projections.cpp.i
+.PHONY : src/projections.cpp.i
+
+src/projections.s: src/projections.cpp.s
+
+.PHONY : src/projections.s
+
+# target to generate assembly for a file
+src/projections.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GeoMapProjector.dir\build.make CMakeFiles/GeoMapProjector.dir/src/projections.cpp.s
+.PHONY : src/projections.cpp.s
 
 # Help Target
 help:
@@ -178,9 +340,27 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... GeoMapProjector
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... src/controller.obj
+	@echo ... src/controller.i
+	@echo ... src/controller.s
+	@echo ... src/coords.obj
+	@echo ... src/coords.i
+	@echo ... src/coords.s
+	@echo ... src/database.obj
+	@echo ... src/database.i
+	@echo ... src/database.s
+	@echo ... src/db_loader.obj
+	@echo ... src/db_loader.i
+	@echo ... src/db_loader.s
+	@echo ... src/main.obj
+	@echo ... src/main.i
+	@echo ... src/main.s
+	@echo ... src/my_math.obj
+	@echo ... src/my_math.i
+	@echo ... src/my_math.s
+	@echo ... src/projections.obj
+	@echo ... src/projections.i
+	@echo ... src/projections.s
 .PHONY : help
 
 

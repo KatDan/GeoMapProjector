@@ -1,6 +1,6 @@
-#include "coords.cpp"
+#include "../include/coords.hpp"
 #include "database.cpp"
-#include "my_math.cpp"
+#include "../include/my_math.hpp"
 
 #include<iostream>
 #include<map>

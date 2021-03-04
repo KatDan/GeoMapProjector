@@ -82,7 +82,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp">
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/controller.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/coords.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/database.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/main.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/my_math.cpp">
+			<Option target="GeoMapProjector"/>
+		</Unit>
+		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp">
 			<Option target="GeoMapProjector"/>
 		</Unit>
 		<Unit filename="C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/CMakeLists.txt">

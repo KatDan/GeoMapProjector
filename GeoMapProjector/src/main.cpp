@@ -12,7 +12,7 @@ int main() {
 
     gproj.print_points();
 
-
+    cout << gproj.calculate_distance("p0","p1");
 
     return 0;
 }

@@ -4,7 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/main.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/controller.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/coords.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/database.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/main.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/my_math.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj"
+  "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp" "C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

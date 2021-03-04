@@ -76,32 +76,122 @@ include CMakeFiles/GeoMapProjector.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/GeoMapProjector.dir/flags.make
 
-CMakeFiles/GeoMapProjector.dir/main.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
-CMakeFiles/GeoMapProjector.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/GeoMapProjector.dir/main.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\main.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\main.cpp
+CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj: ../src/controller.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\controller.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\controller.cpp
 
-CMakeFiles/GeoMapProjector.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/main.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\main.cpp > CMakeFiles\GeoMapProjector.dir\main.cpp.i
+CMakeFiles/GeoMapProjector.dir/src/controller.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/controller.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\controller.cpp > CMakeFiles\GeoMapProjector.dir\src\controller.cpp.i
 
-CMakeFiles/GeoMapProjector.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/main.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\main.cpp -o CMakeFiles\GeoMapProjector.dir\main.cpp.s
+CMakeFiles/GeoMapProjector.dir/src/controller.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/controller.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\controller.cpp -o CMakeFiles\GeoMapProjector.dir\src\controller.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj: ../src/coords.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\coords.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\coords.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/coords.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/coords.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\coords.cpp > CMakeFiles\GeoMapProjector.dir\src\coords.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/coords.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/coords.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\coords.cpp -o CMakeFiles\GeoMapProjector.dir\src\coords.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj: ../src/database.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\database.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\database.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/database.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/database.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\database.cpp > CMakeFiles\GeoMapProjector.dir\src\database.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/database.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/database.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\database.cpp -o CMakeFiles\GeoMapProjector.dir\src\database.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj: ../src/db_loader.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\db_loader.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\db_loader.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\db_loader.cpp > CMakeFiles\GeoMapProjector.dir\src\db_loader.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\db_loader.cpp -o CMakeFiles\GeoMapProjector.dir\src\db_loader.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\main.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\main.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/main.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\main.cpp > CMakeFiles\GeoMapProjector.dir\src\main.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/main.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\main.cpp -o CMakeFiles\GeoMapProjector.dir\src\main.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj: ../src/my_math.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\my_math.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\my_math.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\my_math.cpp > CMakeFiles\GeoMapProjector.dir\src\my_math.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\my_math.cpp -o CMakeFiles\GeoMapProjector.dir\src\my_math.cpp.s
+
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: CMakeFiles/GeoMapProjector.dir/flags.make
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../src/projections.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\GeoMapProjector.dir\src\projections.cpp.obj -c C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\projections.cpp
+
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GeoMapProjector.dir/src/projections.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\projections.cpp > CMakeFiles\GeoMapProjector.dir\src\projections.cpp.i
+
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GeoMapProjector.dir/src/projections.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\src\projections.cpp -o CMakeFiles\GeoMapProjector.dir\src\projections.cpp.s
 
 # Object files for target GeoMapProjector
 GeoMapProjector_OBJECTS = \
-"CMakeFiles/GeoMapProjector.dir/main.cpp.obj"
+"CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj" \
+"CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj"
 
 # External object files for target GeoMapProjector
 GeoMapProjector_EXTERNAL_OBJECTS =
 
-GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/main.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj
+GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj
 GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/build.make
 GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/linklibs.rsp
 GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/objects1.rsp
 GeoMapProjector.exe: CMakeFiles/GeoMapProjector.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable GeoMapProjector.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Ja\Documents\GitHub\GeoMapProjector\GeoMapProjector\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable GeoMapProjector.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\GeoMapProjector.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

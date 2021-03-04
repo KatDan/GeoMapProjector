@@ -6,11 +6,21 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/coords.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
+iostream
+-
 utility
 -
+cmath
+-
+my_math.hpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
 
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/database.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
+cmath
+-
+
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/database.cpp
 utility
 -
 memory
@@ -21,28 +31,22 @@ vector
 -
 map
 -
+../include/coords.hpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
 
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/main.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/main.cpp
 iostream
 -
 projections.cpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/projections.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp
 
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.cpp
-my_math.hpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.hpp
-
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.hpp
-cmath
--
-
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/projections.cpp
-coords.cpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/coords.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp
+../include/coords.hpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
 database.cpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/database.cpp
-my_math.cpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/my_math.cpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/database.cpp
+../include/my_math.hpp
+C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
 iostream
 -
 map
