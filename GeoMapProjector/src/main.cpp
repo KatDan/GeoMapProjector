@@ -19,6 +19,10 @@ int main() {
     db_loader loader;
     loader.add_initial_data(db);
     db.print_cities();
+    db.print_continents();
+    db.print_countries();
+    db.print_lakes();
+    db.print_mountains();
 
     return 0;
 }

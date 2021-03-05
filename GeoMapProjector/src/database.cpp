@@ -60,10 +60,10 @@ Region::Region(double s, double n, double e, double w, string &capital_name, dou
 
 string Region::print_coords() const{
     if(type == data_type::REGION){
-        return "S: "+to_string(south)+"°, N: "+to_string(north)+"°, E: "+to_string(east)+"°, W: "+to_string(west)+"°";
+        return "S: "+to_string(south)+", N: "+to_string(north)+", E: "+to_string(east)+", W: "+to_string(west);
     }
     else{
-        return "S: "+to_string(south)+"°, N: "+to_string(north)+"°, E: "+to_string(east)+"°, W: "+to_string(west)+"°"+
+        return "S: "+to_string(south)+", N: "+to_string(north)+", E: "+to_string(east)+", W: "+to_string(west)+
           "\n    Capital is "+capital_name+": "+capital->print_coords();
     }
 
@@ -110,45 +110,57 @@ shared_ptr<Data> Database::get_data(string &name){
 }
 
 void Database::print_countries() const{
+    cout << "-------------------------------------------"<<endl;
     cout << countries.size() << " countries saved:"<<endl;
     for(auto &country : countries){
         cout << " "<<country.first<<": "<<country.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 void Database::print_cities() const{
+    cout << "-------------------------------------------"<<endl;
     cout << cities.size() << " cities saved: "<<endl;
     for(auto &city : cities){
         cout << " "<<city.first<<": "<< city.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 void Database::print_mountains() const{
+    cout << "-------------------------------------------"<<endl;
     cout << mountains.size()<<" mountains saved:"<<endl;
     for(auto &mountain : mountains){
-        cout << " "<<mountain.first<<": "<< mountain.second->print_coords()<<endl;
+        cout <<" "<<mountain.first<<": "<< mountain.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 void Database::print_lakes() const{
+    cout << "-------------------------------------------"<<endl;
     cout << lakes.size()<<" lakes saved: "<<endl;
     for(auto &lake : lakes){
         cout << " "<<lake.first<<": "<< lake.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 void Database::print_continents() const{
+    cout << "-------------------------------------------"<<endl;
     cout << continents.size()<<" continents saved: "<<endl;
     for(auto &cont : continents){
         cout << " "<<cont.first<<": "<< cont.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 void Database::print_custom() const{
+    cout << "-------------------------------------------"<<endl;
     cout << custom.size()<<" custom data saved:"<<endl;
     for(auto &cust : custom){
         cout << " "<<cust.first<<": "<< cust.second->print_coords()<<endl;
     }
+    cout << "-------------------------------------------"<<endl;
 }
 
 
