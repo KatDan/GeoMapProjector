@@ -5,16 +5,8 @@
 
 Data::Data(enum data_type type):type{type}{}
 
-Point::Point(double c1, double c2, enum coords_type type):Data(data_type::POINT){
-    if(type == coords_type::POLAR){
-        coords = make_shared<PolarCoords>(c1,c2);
-    }
-    else if(type == coords_type::CARTESIAN){
-        coords = make_shared<CartesianCoords>(c1,c2);
-    }
-    else{
-        coords = make_shared<RealCoords>(c1,c2);
-    }
+Point::Point(double c1, double c2, enum coords_type type = REAL):Data(data_type::POINT){
+    coords = make_shared<RealCoords>(c1,c2);
 }
 
 string Point::print_coords() const{
@@ -58,7 +50,8 @@ string Region::print_coords() const{
 
 void Database::add_data(string &name, double c1, double c2, coords_type type, enum object_type obj_type){
     auto p = make_shared<Point>(c1,c2,type);
-    data[name] = p;
+    auto p_dup = p;
+    data[name] = p_dup;
     if(obj_type == CUSTOM) custom[name] = p;
     else if(obj_type == CITY) cities[name] = p;
     else if(obj_type == MOUNTAIN) mountains[name] = p;
@@ -66,7 +59,8 @@ void Database::add_data(string &name, double c1, double c2, coords_type type, en
 
 void Database::add_data(string &name, double s, double n, double e, double w, enum object_type obj_type){
     auto region_ptr = make_shared<Region>(s,n,e,w);
-    data[name] = region_ptr;
+    auto another_ptr = region_ptr;
+    data[name] = another_ptr;
     if(obj_type == LAKE) lakes[name] = region_ptr;
     else if(obj_type == CONTINENT) continents[name] = region_ptr;
     else if (obj_type == CUSTOM) custom[name] = region_ptr;
@@ -74,7 +68,8 @@ void Database::add_data(string &name, double s, double n, double e, double w, en
 
 void Database::add_data(string &name, double s, double n, double e, double w,string &capital_name, double c1, double c2){
     auto country_ptr = make_shared<Region>(s,n,e,w,capital_name,c1,c2);
-    data[name] = country_ptr;
+    auto c_ptr = country_ptr;
+    data[name] = c_ptr;
     countries[name] = country_ptr;
 }
 

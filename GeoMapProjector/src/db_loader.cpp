@@ -109,7 +109,7 @@ public:
         is.close();
     }
 
-    void add_cities(Database &db,int number = 100){
+    void add_cities(Database &db,int number){
         ifstream is("../worldcities_mega_db.csv");
 
         if(is.fail()){
@@ -170,11 +170,11 @@ public:
     }
 
 
-    void add_initial_data(Database &db){
+    void add_initial_data(Database &db, int number = 100){
         add_continents(db);
         add_countries(db);
         add_lakes(db);
         add_mountains(db);
-        add_cities(db);
+        add_cities(db, number);
     }
 };

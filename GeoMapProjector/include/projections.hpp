@@ -1,7 +1,14 @@
+//
+// Created by Ja on 05.03.2021.
+//
+
+#ifndef GEOMAPPROJECTOR_PROJECTIONS_HPP
+#define GEOMAPPROJECTOR_PROJECTIONS_HPP
+
 #include "../include/coords.hpp"
 #include "../include/database.hpp"
 #include "../include/my_math.hpp"
-#include "db_loader.cpp"
+#include "../src/db_loader.cpp"
 
 #include<iostream>
 #include<map>
@@ -18,11 +25,7 @@ public:
 
     double scale;
 
-    Projection(){
-        /*if(!db){
-            db = fill_initial_db();
-        }*/
-    }
+    Projection(){};
 
     //Projection(shared_ptr<Database> &db):db{db}{}
 
@@ -42,7 +45,7 @@ class AzimuthalProjection : public Projection{
 public:
     map<string,shared_ptr<PolarCoords>> points;
 
-    AzimuthalProjection() : Projection() {}
+    AzimuthalProjection();
 
     virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){
     }
@@ -346,3 +349,4 @@ class ConicProjection : public Projection{
 
 
 
+#endif //GEOMAPPROJECTOR_PROJECTIONS_HPP

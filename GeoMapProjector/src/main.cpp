@@ -1,11 +1,13 @@
 #include <iostream>
 #include "projections.cpp"
-#include "db_loader.cpp"
+//#include "db_loader.cpp"
 
 using namespace std;
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    /*Database db;
+    db_loader loader;
+    loader.add_initial_data(db);*/
 
     GnomonicProjection gproj;
     gproj.add_point("p0",5,10.12);
@@ -15,14 +17,13 @@ int main() {
 
     cout << gproj.calculate_distance("p0","p1")<<endl;
 
-    Database db;
-    db_loader loader;
-    loader.add_initial_data(db);
-    db.print_cities();
+
+    /*db.print_cities();
     db.print_continents();
     db.print_countries();
     db.print_lakes();
-    db.print_mountains();
+    db.print_mountains();*/
+    cout << gproj.calculate_distance("Slovakia", "Spain");
 
     return 0;
 }
