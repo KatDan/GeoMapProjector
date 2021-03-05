@@ -1,71 +1,71 @@
-﻿"Name;Latitude;hemisphere;Longitude;Hemisphere"
-"Mount Everest;27.983;N;86.917;E"
-"K2;35.867;N;76.500;E"
-"Kangchenjunga;27.700;N;88.133;E"
-"Lhotse;27.950;N;86.917;E"
-"Makalu;27.883;N;87.083;E"
-"Cho Oyu;28.083;N;86.650;E"
-"Dhaulagiri I;28.683;N;83.483;E"
-"Manaslu;28.550;N;84.550;E"
-"Nanga Parbat;35.233;N;74.583;E"
-"Annapurna I;28.583;N;83.817;E"
-"Gasherbrum I;35.717;N;76.683;E"
-"Broad Peak;35.800;N;76.567;E"
-"Gasherbrum II;35.750;N;76.650;E"
-"Shishapangma;28.350;N;85.767;E"
-"Gyachung Kang;28.083;N;86.733;E"
-"Gasherbrum III;35.750;N;76.633;E"
-"Annapurna II;28.533;N;84.117;E"
-"Gasherbrum IV;35.750;N;76.600;E"
-"Himalchuli;28.433;N;84.633;E"
-"Distaghil Sar;36.317;N;75.183;E"
-"Ngadi Chuli;28.500;N;84.567;E"
-"Khunyang Chhish;36.200;N;75.200;E"
-"Masherbrum;35.633;N;76.300;E"
-"Nanda Devi;30.367;N;79.967;E"
-"Chomo Lonzo;27.917;N;87.100;E"
-"Batura Sar;36.500;N;74.517;E"
-"Rakaposhi;36.133;N;74.483;E"
-"Namcha Barwa;29.617;N;95.050;E"
-"Kanjut Sar;36.200;N;75.417;E"
-"Kamet;30.917;N;79.583;E"
-"Dhaulagiri II;28.750;N;83.383;E"
-"Saltoro Kangri;35.383;N;76.833;E"
-"Kumbhakarna;27.667;N;88.033;E"
-"Tirich Mir;36.250;N;71.833;E"
-"Molamenqing;28.350;N;85.800;E"
-"Gurla Mandhata;30.433;N;81.283;E"
-"Saser Kangri I;34.867;N;77.750;E"
-"Chogolisa;35.600;N;76.567;E"
-"Dhaulagiri IV;28.733;N;83.300;E"
-"Kongur Tagh;38.583;N;75.300;E"
-"Dhaulagiri V;28.733;N;83.350;E"
-"Shispare;36.433;N;74.667;E"
-"Trivor;36.283;N;75.083;E"
-"Gangkhar Puensum;28.033;N;90.450;E"
-"Gongga Shan;29.583;N;101.867;E"
-"Annapurna III;28.583;N;83.983;E"
-"Skyang Kangri;35.917;N;76.567;E"
-"Changtse;28.017;N;86.900;E"
-"Kula Kangri;28.217;N;90.600;E"
-"Kongur Tiube;38.600;N;75.183;E"
-"Annapurna IV;28.533;N;84.067;E"
-"Mamostong Kangri;35.133;N;77.567;E"
-"Saser Kangri II E;34.800;N;77.800;E"
-"Muztagh Ata;38.267;N;75.100;E"
-"Ismoil Somoni Peak;38.933;N;72.000;E"
-"Skyang Kangri;35.917;N;76.567;E"
-"Changtse;28.017;N;86.900;E"
-"Kula Kangri;28.217;N;90.600;E"
-"Kongur Tiube;38.600;N;75.183;E"
-"Annapurna IV;28.533;N;84.067;E"
-"Mamostong Kangri;35.133;N;77.567;E"
-"Saser Kangri II E;34.800;N;77.800;E"
-"Muztagh Ata;38.267;N;75.100;E"
-"Ismoil Somoni Peak;38.933;N;72.000;E"
-"Saser Kangri III;34.833;N;77.783;E"
-"Noshaq;36.417;N;71.817;E"
-"Pumari Chhish;36.200;N;75.250;E"
-"Passu Sar;36.483;N;74.583;E"
-"Yukshin Gardan Sar;36.250;N;75.367;E"
-"Teram Kangri I;35.567;N;77.067;E"
+﻿Name;Latitude;hemisphere;Longitude;Hemisphere
+Mount Everest;27.983;N;86.917;E
+K2;35.867;N;76.500;E
+Kangchenjunga;27.700;N;88.133;E
+Lhotse;27.950;N;86.917;E
+Makalu;27.883;N;87.083;E
+Cho Oyu;28.083;N;86.650;E
+Dhaulagiri I;28.683;N;83.483;E
+Manaslu;28.550;N;84.550;E
+Nanga Parbat;35.233;N;74.583;E
+Annapurna I;28.583;N;83.817;E
+Gasherbrum I;35.717;N;76.683;E
+Broad Peak;35.800;N;76.567;E
+Gasherbrum II;35.750;N;76.650;E
+Shishapangma;28.350;N;85.767;E
+Gyachung Kang;28.083;N;86.733;E
+Gasherbrum III;35.750;N;76.633;E
+Annapurna II;28.533;N;84.117;E
+Gasherbrum IV;35.750;N;76.600;E
+Himalchuli;28.433;N;84.633;E
+Distaghil Sar;36.317;N;75.183;E
+Ngadi Chuli;28.500;N;84.567;E
+Khunyang Chhish;36.200;N;75.200;E
+Masherbrum;35.633;N;76.300;E
+Nanda Devi;30.367;N;79.967;E
+Chomo Lonzo;27.917;N;87.100;E
+Batura Sar;36.500;N;74.517;E
+Rakaposhi;36.133;N;74.483;E
+Namcha Barwa;29.617;N;95.050;E
+Kanjut Sar;36.200;N;75.417;E
+Kamet;30.917;N;79.583;E
+Dhaulagiri II;28.750;N;83.383;E
+Saltoro Kangri;35.383;N;76.833;E
+Kumbhakarna;27.667;N;88.033;E
+Tirich Mir;36.250;N;71.833;E
+Molamenqing;28.350;N;85.800;E
+Gurla Mandhata;30.433;N;81.283;E
+Saser Kangri I;34.867;N;77.750;E
+Chogolisa;35.600;N;76.567;E
+Dhaulagiri IV;28.733;N;83.300;E
+Kongur Tagh;38.583;N;75.300;E
+Dhaulagiri V;28.733;N;83.350;E
+Shispare;36.433;N;74.667;E
+Trivor;36.283;N;75.083;E
+Gangkhar Puensum;28.033;N;90.450;E
+Gongga Shan;29.583;N;101.867;E
+Annapurna III;28.583;N;83.983;E
+Skyang Kangri;35.917;N;76.567;E
+Changtse;28.017;N;86.900;E
+Kula Kangri;28.217;N;90.600;E
+Kongur Tiube;38.600;N;75.183;E
+Annapurna IV;28.533;N;84.067;E
+Mamostong Kangri;35.133;N;77.567;E
+Saser Kangri II E;34.800;N;77.800;E
+Muztagh Ata;38.267;N;75.100;E
+Ismoil Somoni Peak;38.933;N;72.000;E
+Skyang Kangri;35.917;N;76.567;E
+Changtse;28.017;N;86.900;E
+Kula Kangri;28.217;N;90.600;E
+Kongur Tiube;38.600;N;75.183;E
+Annapurna IV;28.533;N;84.067;E
+Mamostong Kangri;35.133;N;77.567;E
+Saser Kangri II E;34.800;N;77.800;E
+Muztagh Ata;38.267;N;75.100;E
+Ismoil Somoni Peak;38.933;N;72.000;E
+Saser Kangri III;34.833;N;77.783;E
+Noshaq;36.417;N;71.817;E
+Pumari Chhish;36.200;N;75.250;E
+Passu Sar;36.483;N;74.583;E
+Yukshin Gardan Sar;36.250;N;75.367;E
+Teram Kangri I;35.567;N;77.067;E
