@@ -1,5 +1,6 @@
 #include <iostream>
 #include "projections.cpp"
+#include "db_loader.cpp"
 
 using namespace std;
 
@@ -12,7 +13,12 @@ int main() {
 
     gproj.print_points();
 
-    cout << gproj.calculate_distance("p0","p1");
+    cout << gproj.calculate_distance("p0","p1")<<endl;
+
+    Database db;
+    db_loader loader;
+    loader.add_initial_data(db);
+    db.print_cities();
 
     return 0;
 }

@@ -1,5 +1,5 @@
 #include "../include/coords.hpp"
-#include "database.cpp"
+#include "../include/database.hpp"
 #include "../include/my_math.hpp"
 
 #include<iostream>

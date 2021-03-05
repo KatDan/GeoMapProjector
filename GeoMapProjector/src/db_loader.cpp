@@ -2,16 +2,18 @@
 // Created by Ja on 04.03.2021.
 //
 
-#include "database.cpp"
+#include "../include/database.hpp"
 #include<string>
 #include<fstream>
 #include<iostream>
+#include<sstream>
 
 class db_loader{
 public:
-    Database db;
 
-    db_loader();
+    db_loader(){};
+
+    ~db_loader(){}
 
     double get_coordinate(istream &is){
         string num_string;
@@ -25,8 +27,8 @@ public:
         return coord;
     }
 
-    void add_countries(){
-        ifstream is("extreme_points_on_earth_countries.csv");
+    void add_countries(Database &db){
+        ifstream is("../extreme_points_on_earth_countries.csv");
 
         if(is.fail()){
             cout<<"error: unable to add countries to database"<<endl;
@@ -36,26 +38,28 @@ public:
         string line;
         getline(is,line,'\n');
         while(getline(is,line,'\n')){
+            stringstream ss(line);
+
             string state, capital;
 
-            getline(is,state,';');
-            double s = get_coordinate(is);
-            double n = get_coordinate(is);
-            double e = get_coordinate(is);
-            double w = get_coordinate(is);
+            getline(ss,state,';');
+            double s = get_coordinate(ss);
+            double n = get_coordinate(ss);
+            double e = get_coordinate(ss);
+            double w = get_coordinate(ss);
 
-            getline(is,capital,';');
+            getline(ss,capital,';');
 
-            double c_lat = get_coordinate(is);
-            double c_lon = get_coordinate(is);
+            double c_lat = get_coordinate(ss);
+            double c_lon = get_coordinate(ss);
 
             db.add_data(state, s, n, e, w, capital, c_lat, c_lon);
         }
         is.close();
     }
 
-    void add_lakes(){
-        ifstream is("extreme_points_on_earth_lakes.csv");
+    void add_lakes(Database &db){
+        ifstream is("../extreme_points_on_earth_lakes.csv");
 
         if(is.fail()){
             cout<<"error: unable to add lakes to database"<<endl;
@@ -65,21 +69,23 @@ public:
         string line;
         getline(is,line,'\n');
         while(getline(is,line,'\n')){
+            stringstream ss(line);
+
             string lake;
 
-            getline(is,lake,';');
-            double s = get_coordinate(is);
-            double n = get_coordinate(is);
-            double e = get_coordinate(is);
-            double w = get_coordinate(is);
+            getline(ss,lake,';');
+            double s = get_coordinate(ss);
+            double n = get_coordinate(ss);
+            double e = get_coordinate(ss);
+            double w = get_coordinate(ss);
 
             db.add_data(lake, s, n, e, w,object_type::LAKE);
         }
         is.close();
     }
 
-    void add_mountains(){
-        ifstream is("extreme_points_on_earth_mountains.csv");
+    void add_mountains(Database &db){
+        ifstream is("../extreme_points_on_earth_mountains.csv");
 
         if(is.fail()){
             cout<<"error: unable to add  mountains to database"<<endl;
@@ -89,19 +95,22 @@ public:
         string line;
         getline(is,line,'\n');
         while(getline(is,line,'\n')){
+            stringstream ss(line);
+
             string mount;
 
-            getline(is,mount,';');
-            double lat = get_coordinate(is);
-            double lon = get_coordinate(is);
+            getline(ss,mount,';');
+            double lat = get_coordinate(ss);
+            double lon = get_coordinate(ss);
 
             db.add_data(mount,lat,lon,coords_type::REAL,object_type::MOUNTAIN);
+
         }
         is.close();
     }
 
-    void add_cities(int number = 100){
-        ifstream is("worldcities_mega_db.csv");
+    void add_cities(Database &db,int number = 100){
+        ifstream is("../worldcities_mega_db.csv");
 
         if(is.fail()){
             cout<<"error: unable to add cities to database"<<endl;
@@ -110,26 +119,32 @@ public:
 
         string line;
         getline(is,line,'\n');
-        while(getline(is,line,'\n')){
-            string city, nothing;
-            getline(is,city,';');
+        int iteration = 0;
+        while(iteration < number){
+            getline(is,line,'\n');
+            stringstream ss(line);
 
-            getline(is,nothing,';');
+            string city, nothing;
+
+            getline(ss,nothing,';');
+
+            getline(ss,city,';');
 
             string lat_string, lon_string;
-            getline(is,lat_string,';');
-            getline(is,lon_string,';');
+            getline(ss,lat_string,';');
+            getline(ss,lon_string,';');
 
             double lat = stod(lat_string);
             double lon = stod(lon_string);
 
             db.add_data(city,lat,lon,coords_type::REAL,object_type::CITY);
+            iteration++;
         }
         is.close();
     }
 
-    void add_continents(){
-        ifstream is("extreme_points_on_earth_continents.csv");
+    void add_continents(Database &db){
+        ifstream is("../extreme_points_on_earth_continents.csv");
 
         if(is.fail()){
             cout<<"error: unable to add continents to database"<<endl;
@@ -139,13 +154,15 @@ public:
         string line;
         getline(is,line,'\n');
         while(getline(is,line,'\n')){
+            stringstream  ss(line);
+
             string cont;
 
-            getline(is,cont,';');
-            double s = get_coordinate(is);
-            double n = get_coordinate(is);
-            double e = get_coordinate(is);
-            double w = get_coordinate(is);
+            getline(ss,cont,';');
+            double s = get_coordinate(ss);
+            double n = get_coordinate(ss);
+            double e = get_coordinate(ss);
+            double w = get_coordinate(ss);
 
             db.add_data(cont, s, n, e, w,object_type::CONTINENT);
         }
@@ -153,11 +170,11 @@ public:
     }
 
 
-    void add_initial_data(){
-        add_continents();
-        add_countries();
-        add_lakes();
-        add_mountains();
-        add_cities();
+    void add_initial_data(Database &db){
+        add_continents(db);
+        add_countries(db);
+        add_lakes(db);
+        add_mountains(db);
+        add_cities(db);
     }
 };
