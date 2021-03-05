@@ -5,7 +5,6 @@
 #include<iostream>
 #include<map>
 #include<string>
-#include<vector>
 #include<memory>
 #include <cmath>
 
@@ -23,16 +22,11 @@ public:
 
     virtual double calculate_distance(const string &p0, const string &p1){};
 
-    static double calculate_area(const string &p0, const string &p1, const string &points...){
-        //TODO variadic function 2
-        return 0.0;
-    }
-
     virtual double calculate_rectangular_area(const string &name){}
 
     virtual void add_point(string &name, double c1, double c2){}
 
-    //TODO pridat add_point(const string &name) pomocou db
+    //TODO pridat pocitanie dat z db
 
 };
 
@@ -58,6 +52,14 @@ public:
         for(auto &point : points){
             cout << point.first<<": e="<<point.second->epsilon<<", r="<<point.second->rho<<endl;
         }
+    }
+
+    double calculate_distance(const string &p0, const string &p1){
+        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
+            cout << "one of the points does not exist."<<endl;
+            return 0;
+        }
+        return get_distance<PolarCoords>(*points[p0],*points[p1]);
     }
 };
 
@@ -141,6 +143,14 @@ class CylindricalProjection : public Projection{
             shared_ptr<CartesianCoords> coords = compute_coords(real_coords);
             points[name] = coords;
         }
+    }
+
+    double calculate_distance(const string &p0, const string &p1){
+        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
+            cout << "one of the points does not exist."<<endl;
+            return 0;
+        }
+        return get_distance<CartesianCoords>(*points[p0],*points[p1]);
     }
 };
 
@@ -242,6 +252,14 @@ class ConicProjection : public Projection{
             shared_ptr<PolarCoords> coords = compute_coords(name,real_coords);
             points[name] = coords;
         }
+    }
+
+    double calculate_distance(const string &p0, const string &p1){
+        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
+            cout << "one of the points does not exist."<<endl;
+            return 0;
+        }
+        return get_distance<PolarCoords>(*points[p0],*points[p1]);
     }
 
 };

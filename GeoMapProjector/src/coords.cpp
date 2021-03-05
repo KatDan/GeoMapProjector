@@ -9,13 +9,6 @@
 
 using namespace std;
 
-/*enum lat_or_long{
-    BOTH,
-    LATITUDE,
-    LONGITUDE
-};*/
-
-
 Coords::Coords(enum lat_or_long type):singleton_type{type}{}
 Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
