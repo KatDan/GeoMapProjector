@@ -19,9 +19,9 @@ CMakeFiles/GeoMapProjector.dir/src/db_loader.cpp.obj: ../src/db_loader.cpp
 CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../include/coords.hpp
 CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../include/database.hpp
 CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../include/my_math.hpp
+CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../include/projections.hpp
 CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../src/db_loader.cpp
 CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../src/main.cpp
-CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj: ../src/projections.cpp
 
 CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj: ../include/my_math.hpp
 CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj: ../src/my_math.cpp
@@ -29,5 +29,7 @@ CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj: ../src/my_math.cpp
 CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../include/coords.hpp
 CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../include/database.hpp
 CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../include/my_math.hpp
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../include/projections.hpp
+CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../src/db_loader.cpp
 CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj: ../src/projections.cpp
 

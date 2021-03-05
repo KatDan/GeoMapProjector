@@ -20,9 +20,9 @@ CMakeFiles/GeoMapProjector.dir/src/main.cpp.obj
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/database.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
+ C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/projections.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/main.cpp
- C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp
 CMakeFiles/GeoMapProjector.dir/src/my_math.cpp.obj
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/my_math.cpp
@@ -30,4 +30,6 @@ CMakeFiles/GeoMapProjector.dir/src/projections.cpp.obj
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/database.hpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/my_math.hpp
+ C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/projections.hpp
+ C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp
  C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp

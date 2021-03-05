@@ -14,7 +14,7 @@
 #include<map>
 #include<string>
 #include<memory>
-#include <cmath>
+#include<cmath>
 
 using namespace std;
 
@@ -25,7 +25,7 @@ public:
 
     double scale;
 
-    Projection(){};
+    Projection();
 
     //Projection(shared_ptr<Database> &db):db{db}{}
 
@@ -38,7 +38,7 @@ public:
     virtual shared_ptr<Coords> find_point(const string &name){};
 };
 
-shared_ptr<Database> Projection::db;
+//shared_ptr<Database> Projection::db = nullptr;
 
 //main type
 class AzimuthalProjection : public Projection{
@@ -47,253 +47,115 @@ public:
 
     AzimuthalProjection();
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){
-    }
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2){
-        if(points.find(name) == points.end()){
-            RealCoords real_coords(c1,c2);
-            shared_ptr<PolarCoords> coords = compute_coords(real_coords);
-            points[name] = coords;
-        }
-    }
+    void add_point(const string &name, double c1, double c2);
 
-    void print_points() const{
-        for(auto &point : points){
-            cout << point.first<<": e="<<point.second->epsilon<<", r="<<point.second->rho<<endl;
-        }
-    }
+    void print_points() const;
 
-    shared_ptr<Coords> find_point(const string &p0){
-        shared_ptr<PolarCoords> p0_ptr;
-        //auto stuff = points.find(p0);
-        if(points.find(p0) == points.end()){
-            if(db->data.find(p0) == Projection::db->data.end()){
-                return nullptr;
-            }
-            else if(db->data[p0]->type == POINT) {
-                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->coords);
-            }
-            else{
-                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->centroid);
-            }
-        }
-        else{
-            p0_ptr = points[p0];
-        }
-        return p0_ptr;
-    }
+    shared_ptr<Coords> find_point(const string &p0);
 
-    double calculate_distance(const string &p0, const string &p1){
-        shared_ptr<PolarCoords> p0_ptr = static_pointer_cast<PolarCoords>(find_point(p0));
-        shared_ptr<PolarCoords> p1_ptr = static_pointer_cast<PolarCoords>(find_point(p1));
-        if(p0_ptr == nullptr || p1_ptr == nullptr){
-            cout <<"at least one of the points does not exist."<<endl;
-            return 0;
-        }
-
-        return get_distance<PolarCoords>(*p0_ptr,*p1_ptr);
-    }
+    double calculate_distance(const string &p0, const string &p1);
 };
 
 class GnomonicProjection : public AzimuthalProjection{
 public:
-    GnomonicProjection() : AzimuthalProjection(){}
+    GnomonicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
-        if(coords.latitude == 0) {
-            return nullptr;
-        }
-        double epsilon = coords.longitude;
-        double delta = 90 - coords.latitude;
-        double rho = EARTH_PERIMETER * deg_tan(delta);
-        return make_shared<PolarCoords>(epsilon,rho);
-    }
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
 class StereoGraphicProjection : public AzimuthalProjection{
 public:
-    StereoGraphicProjection() : AzimuthalProjection(){}
+    StereoGraphicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
-        if(coords.latitude == -90) {
-            return nullptr;
-        }
-        double epsilon = coords.longitude;
-        double delta = 90 - coords.latitude;
-        double rho = 2 * EARTH_PERIMETER * deg_tan(delta/2);
-        return make_shared<PolarCoords>(epsilon,rho);
-    }
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
 class OrthographicProjection : public AzimuthalProjection{
 public:
-    OrthographicProjection():AzimuthalProjection() {}
+    OrthographicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
-        double epsilon = coords.longitude;
-        double delta = 90 - coords.latitude;
-        double rho = EARTH_PERIMETER * deg_sin(delta);
-        return make_shared<PolarCoords>(epsilon,rho);
-    }
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
 class PostelProjection : public AzimuthalProjection{
 public:
-    PostelProjection() : AzimuthalProjection(){}
+    PostelProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
-        double epsilon = coords.longitude;
-        double delta = 90 - coords.latitude;
-        double rho = EARTH_PERIMETER * deg_to_rad(delta);
-        return make_shared<PolarCoords>(epsilon,rho);
-    }
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
 class LambertAzimuthalProjection : public AzimuthalProjection{
 public:
-    LambertAzimuthalProjection() : AzimuthalProjection(){}
+    LambertAzimuthalProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override{
-        double epsilon = coords.longitude;
-        double delta = 90 - coords.latitude;
-        double rho = 2*EARTH_PERIMETER * deg_sin(delta/2);
-        return make_shared<PolarCoords>(epsilon,rho);
-    }
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
 
 //main type
 class CylindricalProjection : public Projection{
+public:
+    CylindricalProjection();
+
     map<string,shared_ptr<CartesianCoords>> points;
 
-    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &coords){
-    }
+    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2){
-        if(points.find(name) == points.end()){
-            RealCoords real_coords(c1,c2);
-            shared_ptr<CartesianCoords> coords = compute_coords(real_coords);
-            points[name] = coords;
-        }
-    }
+    void add_point(const string &name, double c1, double c2);
 
-    shared_ptr<Coords> find_point(const string &p0){
-        shared_ptr<CartesianCoords> p0_ptr;
-        if(points.find(p0) == points.end()){
-            if(db->data.find(p0) == db->data.end()){
-                return nullptr;
-            }
-            else if(db->data[p0]->type == POINT) {
-                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->coords);
-            }
-            else{
-                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->centroid);
-            }
-        }
-        else{
-            p0_ptr = points[p0];
-        }
-        return p0_ptr;
-    }
+    shared_ptr<Coords> find_point(const string &p0);
 
-    double calculate_distance(const string &p0, const string &p1){
-        shared_ptr<CartesianCoords> p0_ptr = static_pointer_cast<CartesianCoords>(find_point(p0));
-        shared_ptr<CartesianCoords> p1_ptr = static_pointer_cast<CartesianCoords>(find_point(p1));
-        if(p0_ptr == nullptr || p1_ptr == nullptr){
-            cout <<"at least one of the points does not exist."<<endl;
-            return 0;
-        }
-
-        return get_distance<CartesianCoords>(*p0_ptr,*p1_ptr);
-    }
+    double calculate_distance(const string &p0, const string &p1);
 };
 
 class EquirectangularProjection : public CylindricalProjection{
-    EquirectangularProjection() : CylindricalProjection(){}
+    EquirectangularProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
-        double y = EARTH_PERIMETER * deg_to_rad(coords.latitude);
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class LambertCylindricalProjection : public CylindricalProjection{
 public:
-    LambertCylindricalProjection():CylindricalProjection(){}
+    LambertCylindricalProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
-        double y = EARTH_PERIMETER * deg_sin(coords.latitude);
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class MercatorProjection : public CylindricalProjection{
 public:
-    MercatorProjection() : CylindricalProjection(){}
+    MercatorProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        if(coords.latitude == 0 || coords.latitude == 180){
-            return nullptr;
-        }
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
-        double delta = 90 - coords.latitude;
-        double y = EARTH_PERIMETER * log(deg_cot(delta/2));
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class PerspectiveProjection : public CylindricalProjection{
 public:
-    PerspectiveProjection():CylindricalProjection(){}
+    PerspectiveProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
-        double y = 2 * EARTH_PERIMETER * deg_tan(coords.latitude/2);
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class BehrmannProjection : public CylindricalProjection{
 public:
-    BehrmannProjection():CylindricalProjection(){}
+    BehrmannProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double phi_0 = 30;
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
-        double y = EARTH_PERIMETER * (deg_sin(coords.latitude)/deg_cos(phi_0));
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class TrystanEdwardsProjection : public CylindricalProjection{
 public:
-    TrystanEdwardsProjection():CylindricalProjection(){}
+    TrystanEdwardsProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double phi_0 = deg_arccos(sqrt(2/M_PI));
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
-        double y = EARTH_PERIMETER * (deg_sin(coords.latitude)/deg_cos(phi_0));
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 class GallProjection : public CylindricalProjection{
 public:
-    GallProjection(): CylindricalProjection(){}
+    GallProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override{
-        double phi_0 = 45;
-        double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
-        double y = EARTH_PERIMETER * (1+deg_cos(phi_0))*deg_tan(coords.latitude/2);
-        return make_shared<CartesianCoords>(x,y);
-    }
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
 
 
@@ -302,49 +164,13 @@ public:
 class ConicProjection : public Projection{
     map<string,shared_ptr<PolarCoords>> points;
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){
-    }
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2){
-        if(points.find(name) == points.end()){
-            RealCoords real_coords(c1,c2);
-            shared_ptr<PolarCoords> coords = compute_coords(real_coords);
-            points[name] = coords;
-        }
-    }
+    void add_point(const string &name, double c1, double c2);
 
-    shared_ptr<Coords> find_point(const string &p0){
-        shared_ptr<PolarCoords> p0_ptr;
-        if(points.find(p0) == points.end()){
-            if(db->data.find(p0) == db->data.end()){
-                return nullptr;
-            }
-            else if(db->data[p0]->type == POINT) {
-                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->coords);
-            }
-            else{
-                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-                p0_ptr = compute_coords(*point_p0->centroid);
-            }
-        }
-        else{
-            p0_ptr = points[p0];
-        }
-        return p0_ptr;
-    }
+    shared_ptr<Coords> find_point(const string &p0);
 
-    double calculate_distance(const string &p0, const string &p1){
-        shared_ptr<PolarCoords> p0_ptr = static_pointer_cast<PolarCoords>(find_point(p0));
-        shared_ptr<PolarCoords> p1_ptr = static_pointer_cast<PolarCoords>(find_point(p1));
-        if(p0_ptr == nullptr || p1_ptr == nullptr){
-            cout <<"at least one of the points does not exist."<<endl;
-            return 0;
-        }
-
-        return get_distance<PolarCoords>(*p0_ptr,*p1_ptr);
-    }
-
+    double calculate_distance(const string &p0, const string &p1);
 };
 
 
