@@ -12,14 +12,17 @@ using namespace std;
 Coords::Coords(enum lat_or_long type):singleton_type{type}{}
 Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
-
-
 RealCoords::RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
 RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
     if (type == LATITUDE) latitude = value;
     else if (type == LONGITUDE) longitude = value;
 }
 
+double RealCoords::get_singleton_value() {
+    if(singleton_type == LATITUDE) return latitude;
+    else if(singleton_type == LONGITUDE) return longitude;
+    else return 0;
+}
 
 
 PolarCoords::PolarCoords(double e, double r):Coords(r,e),epsilon{e},rho{r}{}
@@ -28,12 +31,23 @@ PolarCoords::PolarCoords(double value, enum lat_or_long type):Coords(type){
     else if(type == LONGITUDE) epsilon = value;
 }
 
+double PolarCoords::get_singleton_value() {
+    if(singleton_type == LATITUDE) return rho;
+    else if(singleton_type == LONGITUDE) return epsilon;
+    else return 0;
+}
 
 
 CartesianCoords::CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
 CartesianCoords::CartesianCoords(double value, enum lat_or_long type):Coords(type){
     if(type == LATITUDE) y = value;
     else if(type == LONGITUDE) x = value;
+}
+
+double CartesianCoords::get_singleton_value() {
+    if(singleton_type == LATITUDE) return y;
+    else if(singleton_type == LONGITUDE) return x;
+    else return 0;
 }
 
 

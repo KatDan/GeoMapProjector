@@ -27,6 +27,8 @@ public:
     Coords(enum lat_or_long type);
     Coords(double c1, double c2);
 
+    virtual double get_singleton_value(){}
+
     virtual ~Coords(){}
 };
 
@@ -37,6 +39,8 @@ public:
 
     RealCoords(double lat, double lon);
     RealCoords(double value, enum lat_or_long type);
+
+    double get_singleton_value();
 };
 
 class PolarCoords: public Coords{
@@ -47,6 +51,8 @@ public:
     PolarCoords():Coords(){}
     PolarCoords(double e, double r);
     PolarCoords(double value, enum lat_or_long type);
+
+    double get_singleton_value();
 };
 
 class CartesianCoords : public Coords{
@@ -57,6 +63,8 @@ public:
     CartesianCoords(){}
     CartesianCoords(double x, double y);
     CartesianCoords(double value, enum lat_or_long type);
+
+    double get_singleton_value();
 };
 
 

@@ -26,6 +26,8 @@ public:
 
     virtual void add_point(string &name, double c1, double c2){}
 
+    virtual shared_ptr<Coords> find_point(const string &name);
+
     //TODO pridat pocitanie dat z db
 
 };
@@ -54,12 +56,36 @@ public:
         }
     }
 
+    shared_ptr<Coords> find_point(const string &p0){
+        shared_ptr<PolarCoords> p0_ptr;
+        if(points.find(p0) == points.end()){
+            if(db->data.find(p0) == db->data.end()){
+                return nullptr;
+            }
+            else if(db->data[p0]->type == POINT) {
+                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->coords);
+            }
+            else{
+                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->centroid);
+            }
+        }
+        else{
+            p0_ptr = points[p0];
+        }
+        return p0_ptr;
+    }
+
     double calculate_distance(const string &p0, const string &p1){
-        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
-            cout << "one of the points does not exist."<<endl;
+        shared_ptr<PolarCoords> p0_ptr = static_pointer_cast<PolarCoords>(find_point(p0));
+        shared_ptr<PolarCoords> p1_ptr = static_pointer_cast<PolarCoords>(find_point(p1));
+        if(p0_ptr == nullptr || p1_ptr == nullptr){
+            cout <<"at least one of the points does not exist."<<endl;
             return 0;
         }
-        return get_distance<PolarCoords>(*points[p0],*points[p1]);
+
+        return get_distance<PolarCoords>(*p0_ptr,*p1_ptr);
     }
 };
 
@@ -145,12 +171,36 @@ class CylindricalProjection : public Projection{
         }
     }
 
+    shared_ptr<Coords> find_point(const string &p0){
+        shared_ptr<CartesianCoords> p0_ptr;
+        if(points.find(p0) == points.end()){
+            if(db->data.find(p0) == db->data.end()){
+                return nullptr;
+            }
+            else if(db->data[p0]->type == POINT) {
+                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->coords);
+            }
+            else{
+                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->centroid);
+            }
+        }
+        else{
+            p0_ptr = points[p0];
+        }
+        return p0_ptr;
+    }
+
     double calculate_distance(const string &p0, const string &p1){
-        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
-            cout << "one of the points does not exist."<<endl;
+        shared_ptr<CartesianCoords> p0_ptr = static_pointer_cast<CartesianCoords>(find_point(p0));
+        shared_ptr<CartesianCoords> p1_ptr = static_pointer_cast<CartesianCoords>(find_point(p1));
+        if(p0_ptr == nullptr || p1_ptr == nullptr){
+            cout <<"at least one of the points does not exist."<<endl;
             return 0;
         }
-        return get_distance<CartesianCoords>(*points[p0],*points[p1]);
+
+        return get_distance<CartesianCoords>(*p0_ptr,*p1_ptr);
     }
 };
 
@@ -243,23 +293,47 @@ public:
 class ConicProjection : public Projection{
     map<string,shared_ptr<PolarCoords>> points;
 
-    virtual shared_ptr<PolarCoords> compute_coords(const string &name, RealCoords &coords){
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){
     }
 
     void add_point(const string &name, double c1, double c2){
         if(points.find(name) == points.end()){
             RealCoords real_coords(c1,c2);
-            shared_ptr<PolarCoords> coords = compute_coords(name,real_coords);
+            shared_ptr<PolarCoords> coords = compute_coords(real_coords);
             points[name] = coords;
         }
     }
 
+    shared_ptr<Coords> find_point(const string &p0){
+        shared_ptr<PolarCoords> p0_ptr;
+        if(points.find(p0) == points.end()){
+            if(db->data.find(p0) == db->data.end()){
+                return nullptr;
+            }
+            else if(db->data[p0]->type == POINT) {
+                shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->coords);
+            }
+            else{
+                shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
+                p0_ptr = compute_coords(*point_p0->centroid);
+            }
+        }
+        else{
+            p0_ptr = points[p0];
+        }
+        return p0_ptr;
+    }
+
     double calculate_distance(const string &p0, const string &p1){
-        if(points.find(p0) == points.end() || points.find(p1) == points.end()){
-            cout << "one of the points does not exist."<<endl;
+        shared_ptr<PolarCoords> p0_ptr = static_pointer_cast<PolarCoords>(find_point(p0));
+        shared_ptr<PolarCoords> p1_ptr = static_pointer_cast<PolarCoords>(find_point(p1));
+        if(p0_ptr == nullptr || p1_ptr == nullptr){
+            cout <<"at least one of the points does not exist."<<endl;
             return 0;
         }
-        return get_distance<PolarCoords>(*points[p0],*points[p1]);
+
+        return get_distance<PolarCoords>(*p0_ptr,*p1_ptr);
     }
 
 };

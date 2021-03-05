@@ -44,7 +44,7 @@ public:
 
 class Point : public Data{
 public:
-    shared_ptr<Coords> coords;
+    shared_ptr<RealCoords> coords;
 
     Point(double c1, double c2, enum coords_type type);
     string print_coords() const;
@@ -54,12 +54,12 @@ public:
 
 class Region : public Data{
 public:
-    double south;
-    double north;
-    double east;
-    double west;
+    shared_ptr<RealCoords> south;
+    shared_ptr<RealCoords> north;
+    shared_ptr<RealCoords> east;
+    shared_ptr<RealCoords> west;
 
-    shared_ptr<Coords> centroid;
+    shared_ptr<RealCoords> centroid;
 
     string capital_name;
     shared_ptr<Point> capital;
@@ -68,7 +68,11 @@ public:
 
     Region(double s, double n, double e, double w, string &capital_name, double c1, double c2);
 
+    double get_singleton_val(shared_ptr<Coords> coord);
+
     string print_coords() const;
+
+
 };
 
 enum object_type{
