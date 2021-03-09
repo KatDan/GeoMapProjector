@@ -337,6 +337,10 @@ void ConicProjection::add_point(const string &name, double c1, double c2){
     if(points.find(name) == points.end()){
         RealCoords real_coords(c1,c2);
         shared_ptr<PolarCoords> coords = compute_coords(real_coords);
+        if(coords == nullptr){
+            cout << "unable to project this point at the current projections."<<endl;
+            return;
+        }
         points[name] = coords;
     }
 }

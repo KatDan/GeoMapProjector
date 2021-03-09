@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../include/projections.hpp"
-//#include "db_loader.cpp"
+#include "controller.cpp"
 
 using namespace std;
 
@@ -9,7 +9,7 @@ int main() {
     db_loader loader;
     loader.add_initial_data(db);*/
 
-    GnomonicProjection gproj;
+    /*GnomonicProjection gproj;
     gproj.add_point("p0",5,10.12);
     gproj.add_point("p1",-20,62);
 
@@ -22,10 +22,17 @@ int main() {
     db.print_continents();
     db.print_countries();
     db.print_lakes();
-    db.print_mountains();*/
+    db.print_mountains();
     cout << gproj.calculate_distance("Slovakia", "Spain")<<endl;
     auto result = gproj.calculate_rectangular_area("Slovakia");
     cout.precision(15);
-    cout << "result: "<<result;
+    cout << "result: "<<result;*/
+
+    Controller c;
+    c.process_input(cin);
+
+
+
+
     return 0;
 }
