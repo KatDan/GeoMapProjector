@@ -256,9 +256,6 @@ double CylindricalProjection::calculate_rectangular_area(const string &name) {
     return result;
 }
 
-
-
-
 EquirectangularProjection::EquirectangularProjection() : CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> EquirectangularProjection::compute_coords(RealCoords &coords){
@@ -267,8 +264,6 @@ shared_ptr<CartesianCoords> EquirectangularProjection::compute_coords(RealCoords
     return make_shared<CartesianCoords>(x,y);
 }
 
-
-
 LambertCylindricalProjection::LambertCylindricalProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> LambertCylindricalProjection::compute_coords(RealCoords &coords){
@@ -276,8 +271,6 @@ shared_ptr<CartesianCoords> LambertCylindricalProjection::compute_coords(RealCoo
     double y = EARTH_PERIMETER * deg_sin(coords.latitude);
     return make_shared<CartesianCoords>(x,y);
 }
-
-
 
 MercatorProjection::MercatorProjection() : CylindricalProjection(){}
 
@@ -291,7 +284,6 @@ shared_ptr<CartesianCoords> MercatorProjection::compute_coords(RealCoords &coord
     return make_shared<CartesianCoords>(x,y);
 }
 
-
 PerspectiveProjection::PerspectiveProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> PerspectiveProjection::compute_coords(RealCoords &coords){
@@ -299,8 +291,6 @@ shared_ptr<CartesianCoords> PerspectiveProjection::compute_coords(RealCoords &co
     double y = 2 * EARTH_PERIMETER * deg_tan(coords.latitude/2);
     return make_shared<CartesianCoords>(x,y);
 }
-
-
 
 BehrmannProjection::BehrmannProjection():CylindricalProjection(){}
 
@@ -311,7 +301,6 @@ shared_ptr<CartesianCoords> BehrmannProjection::compute_coords(RealCoords &coord
     return make_shared<CartesianCoords>(x,y);
 }
 
-
 TrystanEdwardsProjection::TrystanEdwardsProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> TrystanEdwardsProjection::compute_coords(RealCoords &coords){
@@ -321,8 +310,6 @@ shared_ptr<CartesianCoords> TrystanEdwardsProjection::compute_coords(RealCoords 
     return make_shared<CartesianCoords>(x,y);
 }
 
-
-
 GallProjection::GallProjection(): CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> GallProjection::compute_coords(RealCoords &coords){
@@ -330,6 +317,23 @@ shared_ptr<CartesianCoords> GallProjection::compute_coords(RealCoords &coords){
     double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
     double y = EARTH_PERIMETER * (1+deg_cos(phi_0))*deg_tan(coords.latitude/2);
     return make_shared<CartesianCoords>(x,y);
+}
+
+
+shared_ptr<PolarCoords> PtolemyProjection::compute_coords(RealCoords &coords) {
+    double phi_0 = 30;
+    double delta_0 = 90 - phi_0;
+    double epsilon = coords.longitude * deg_cos(delta_0);
+    double rho = EARTH_PERIMETER * (deg_tan(delta_0)+deg_to_rad((90-coords.latitude)-delta_0));
+    return make_shared<PolarCoords>(epsilon, rho);
+}
+
+shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coords) {
+    double phi_0 = 30;
+    double delta_0 = 90 - phi_0;
+    double epsilon = coords.longitude * pow(deg_cos(delta_0/2),2);
+    double rho = 2 * EARTH_PERIMETER * (deg_sin((90-coords.latitude)/2)/(deg_cos(delta_0/2)));
+    return make_shared<PolarCoords>(epsilon, rho);
 }
 
 
@@ -426,3 +430,4 @@ Projection::Projection() {
         db = make_shared<Database>(database);
     }
 }
+

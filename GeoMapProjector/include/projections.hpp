@@ -189,6 +189,20 @@ public:
 
 };
 
+class PtolemyProjection : public ConicProjection{
+public:
+    PtolemyProjection(){}
+
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+};
+
+class LambertConicProjection : public ConicProjection{
+public:
+    LambertConicProjection(){};
+
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+};
+
 
 
 #endif //GEOMAPPROJECTOR_PROJECTIONS_HPP

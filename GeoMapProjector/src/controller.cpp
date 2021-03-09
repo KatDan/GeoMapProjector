@@ -16,11 +16,9 @@ using namespace std;
 
 class Controller{
 public:
-    Projection projections[3];
+    map<string, Projection> projections;
 
     shared_ptr<Projection> current_projection;
-
-
 
 
     Controller(){}
@@ -73,10 +71,6 @@ public:
                               " -> Lambert";
 
 
-
-
-
-
     void print_help() const{
         cout << general_help <<endl;
     }
@@ -108,7 +102,7 @@ public:
             if(word == "help"){
                 getline(ss,word,' ');
 
-                if(word == "help") print_help();
+                if(word == "projections") print_help();
                 else if(word.compare("azimuthal") == 0) print_help_azimuth();
                 else if(word == "cylindrical") print_help_cylindrical();
                 else if(word == "conic") print_help_conic();
