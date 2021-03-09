@@ -172,6 +172,7 @@ public:
 //TODO doplnit projekcie ked zistim, aku hodnotu ma phi_0
 //main type
 class ConicProjection : public Projection{
+public:
     map<string,shared_ptr<PolarCoords>> points;
 
     virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
