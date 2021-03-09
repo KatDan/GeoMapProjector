@@ -23,7 +23,9 @@ int main() {
     db.print_countries();
     db.print_lakes();
     db.print_mountains();*/
-    cout << gproj.calculate_distance("Slovakia", "Spain");
-
+    cout << gproj.calculate_distance("Slovakia", "Spain")<<endl;
+    auto result = gproj.calculate_rectangular_area("Slovakia");
+    cout.precision(15);
+    cout << "result: "<<result;
     return 0;
 }

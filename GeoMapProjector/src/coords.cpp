@@ -14,8 +14,14 @@ Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
 RealCoords::RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
 RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
-    if (type == LATITUDE) latitude = value;
-    else if (type == LONGITUDE) longitude = value;
+    if (type == LATITUDE) {
+        latitude = value;
+        longitude = -1;
+    }
+    else if (type == LONGITUDE){
+        longitude = value;
+        latitude = -1;
+    }
 }
 
 double RealCoords::get_singleton_value() {

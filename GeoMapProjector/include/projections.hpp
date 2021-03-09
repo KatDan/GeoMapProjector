@@ -27,8 +27,6 @@ public:
 
     Projection();
 
-    //Projection(shared_ptr<Database> &db):db{db}{}
-
     virtual double calculate_distance(const string &p0, const string &p1){};
 
     virtual double calculate_rectangular_area(const string &name){}
@@ -36,9 +34,11 @@ public:
     virtual void add_point(string &name, double c1, double c2){}
 
     virtual shared_ptr<Coords> find_point(const string &name){};
-};
 
-//shared_ptr<Database> Projection::db = nullptr;
+    static shared_ptr<Region> find_region(const string &name);
+
+    virtual ~Projection(){};
+};
 
 //main type
 class AzimuthalProjection : public Projection{
@@ -56,6 +56,11 @@ public:
     shared_ptr<Coords> find_point(const string &p0);
 
     double calculate_distance(const string &p0, const string &p1);
+
+    double calculate_rectangular_area(const string &name);
+
+    virtual ~AzimuthalProjection(){};
+
 };
 
 class GnomonicProjection : public AzimuthalProjection{
@@ -108,6 +113,11 @@ public:
     shared_ptr<Coords> find_point(const string &p0);
 
     double calculate_distance(const string &p0, const string &p1);
+
+    double calculate_rectangular_area(const string &name);
+
+    virtual ~CylindricalProjection(){};
+
 };
 
 class EquirectangularProjection : public CylindricalProjection{
@@ -171,6 +181,11 @@ class ConicProjection : public Projection{
     shared_ptr<Coords> find_point(const string &p0);
 
     double calculate_distance(const string &p0, const string &p1);
+
+    double calculate_rectangular_area(const string &name);
+
+    virtual ~ConicProjection(){};
+
 };
 
 
