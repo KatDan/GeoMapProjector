@@ -431,3 +431,15 @@ Projection::Projection() {
     }
 }
 
+shared_ptr<CartesianCoords> SansonProjectionSpecial::compute_coords(RealCoords &coords) {
+    double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(coords.latitude);
+    double y = EARTH_PERIMETER * deg_to_rad(coords.latitude);
+    return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &coords) {
+    double delta = 90 - coords.latitude;
+    double epsilon = 360 * deg_sin(delta) / deg_to_rad(delta);
+    double rho = EARTH_PERIMETER * deg_to_rad(delta);
+    return make_shared<PolarCoords>(epsilon,rho);
+}

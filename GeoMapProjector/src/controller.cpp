@@ -23,7 +23,7 @@ public:
 
     Controller(){}
 
-    const string general_help = "There are 3 possible projections to choose from:\n"
+    const string general_help = "There are 3 basic projections to choose from:\n"
                                 " -> Azimuthal projection - The mapping of radial lines can be visualized by imagining\n"
                                 "                           a plane tangent to the Earth, with the central point as \n"
                                 "                           tangent point. This projection uses polar coordinates starting \n"
@@ -43,6 +43,9 @@ public:
                                 "                       or, as the tangent line where the cone is tangent to the globe. The \n"
                                 "                       resulting conic map has low distortion in scale, shape, and area near those \n"
                                 "                       standard parallels. For more info type \"help conic\".\n"
+                                " + Hybrid projections - projection plane is an affine transformation of some of the\n"
+                                "                         projections mentioned above. They may have both polar and\n"
+                                "                         cartesian coordinate system. For more info type \"help hybrid\"\n"
                                 " + basic latitude and longitude coordinates of a globe.";
 
 
@@ -71,7 +74,12 @@ public:
                               " -> Lambert";
 
 
-    void print_help() const{
+    const string hybrid_help = "Hybrid projections:\n"
+                               " -> Sanson - the projection looks like an onion\n"
+                               " -> Werner-Stab - the projection look like a heart";
+
+
+    void print_projections_help() const{
         cout << general_help <<endl;
     }
 
@@ -85,6 +93,10 @@ public:
 
     void print_help_conic() const{
         cout << conic_help <<endl;
+    }
+
+    void print_help_hybrid() const{
+        cout << hybrid_help <<endl;
     }
 
     void process_input(istream &is){
@@ -102,10 +114,11 @@ public:
             if(word == "help"){
                 getline(ss,word,' ');
 
-                if(word == "projections") print_help();
+                if(word == "projections") print_projections_help();
                 else if(word.compare("azimuthal") == 0) print_help_azimuth();
                 else if(word == "cylindrical") print_help_cylindrical();
                 else if(word == "conic") print_help_conic();
+                else if(word == "hybrid") print_help_hybrid();
             }
             if(word == "add"){
 

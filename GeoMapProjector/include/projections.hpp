@@ -98,6 +98,13 @@ public:
     shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 };
 
+class WernerStabProjectionSpecial : public AzimuthalProjection{
+public:
+    WernerStabProjectionSpecial(){}
+
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+};
+
 
 //main type
 class CylindricalProjection : public Projection{
@@ -164,6 +171,13 @@ public:
 class GallProjection : public CylindricalProjection{
 public:
     GallProjection();
+
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+};
+
+class SansonProjectionSpecial : public CylindricalProjection{
+public:
+    SansonProjectionSpecial(){}
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 };
