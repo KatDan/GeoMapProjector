@@ -17,9 +17,9 @@ using namespace std;
 
 class Controller{
 public:
-    map<string, Projection> existing_projections;
+    map<string, shared_ptr<Projection>> existing_projections;
 
-    shared_ptr<Projection> current_projection;
+    pair<string,shared_ptr<Projection>> current_projection;
 
     map<string, map<string, Projection>> projections;
 
@@ -163,19 +163,101 @@ public:
         }
 
         ss >> alias;
-        existing_projections[alias] = (*subtype_it).second;
+        if(alias == ""){
+            cout << "invalid name."<<endl;
+            return;
+        }
+        existing_projections[alias] = make_shared<Projection>((*subtype_it).second);
         cout <<proj_type<<" "<<proj_subtype <<" projection called \""<<alias<<"\" was added to your list of projections."<<endl;
     }
 
+    void enter_cmd(stringstream &ss){
+        string alias;
+        ss >> alias;
+        auto alias_it = existing_projections.find(alias);
+        if(alias_it == existing_projections.end()){
+            cout << "There is none projection saved under this name."<<endl;
+            return;
+        }
+        current_projection.first = alias;
+        current_projection.second = existing_projections[alias];
+    }
+
+    void add_cmd(stringstream &ss){
+        string type;
+        ss >>type;
+        if(type == "point"){
+            string coord_type;
+            ss >> coord_type;
+            if(coord_type == "real"){
+                string name;
+                double lat, lon;
+                ss >> name;
+                ss >> lat;
+                ss >> lon;
+                if(ss.fail()){
+                    cout <<"invalid number."<<endl;
+                    return;
+                }
+                Projection::db->add_data(name,lat,lon,coords_type::REAL,object_type::CUSTOM);
+                cout <<"point \""<<name<<"\" was successfully added to the main database."<<endl;
+                return;
+            }
+            else if(coord_type == "relative"){
+                if(current_projection.second == nullptr){
+                    cout << "error: you currently are not in any projection."<<endl;
+                    return;
+                }
+                string name;
+                ss >>name;
+                double relative_x, relative_y;
+                ss >> relative_x;
+                ss >> relative_y;
+                if(ss.fail()){
+                    cout <<"invalid number."<<endl;
+                    return;
+                }
+                current_projection.second->add_point(name,relative_x,relative_y);
+                cout <<"point \""<<name<<"\" was successfully added to the local database."<<endl;
+                return;
+            }
+            else{
+                cout <<"invalid command."<<endl;
+                return;
+            }
+        }
+        else if(type == "region"){
+            string name;
+            double s,n,e,w;
+            ss >> name;
+            ss >>s;
+            ss >> n;
+            ss >> e;
+            ss >> w;
+            if(ss.fail()){
+                cout << "invalid number."<<endl;
+                return;
+            }
+            Projection::db->add_data(name,s,n,e,w,object_type::CUSTOM);
+            cout <<"region \""<<name<<"\" was successfully added to the main database."<<endl;
+            return;
+        }
+        else{
+            cout << "invalid command."<<endl;
+        }
+    }
 
 
     void process_input(istream &is){
         string line;
+        cout <<">main-menu: ";
         while(getline(is,line)){
+
             if(line == "exit") {
                 exit_cmd();
                 return;
             }
+            transform(line.begin(),line.end(),line.begin(),::tolower);
 
             stringstream ss(line);
             string word;
@@ -183,9 +265,9 @@ public:
 
             if(word == "help") help_cmd(ss);
             if(word == "make") make_cmd(ss);
-            if(word == "add"){
-
-            }
+            if(word == "enter") enter_cmd(ss);
+            if(word == "add") add_cmd(ss);
+            if(word == "menu") current_projection.second = nullptr;
             if(word == "print"){
 
             }
@@ -201,6 +283,8 @@ public:
 
 
 
+            if(current_projection.second == nullptr) cout <<"\n>main-menu: ";
+            else cout << "\n>" << current_projection.first<<": ";
         }
     }
 
