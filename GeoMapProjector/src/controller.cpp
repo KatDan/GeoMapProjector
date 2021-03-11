@@ -265,12 +265,19 @@ public:
             }
             current_projection.second->print_local();
         }
-        if(what == "projections"){
+        else if(what == "projections"){
             print_saved_projections();
         }
-
+        else if(what == "countries") Projection::db->print_countries();
+        else if(what == "cities") Projection::db->print_cities();
+        else if(what == "mountains") Projection::db->print_mountains();
+        else if(what == "lakes") Projection::db->print_lakes();
+        else if(what == "continents") Projection::db->print_continents();
+        else if(what == "custom") Projection::db->print_custom();
+        else{
+            cout << "invalid command."<<endl;
+        }
     }
-
 
     void process_input(istream &is){
         string line;
