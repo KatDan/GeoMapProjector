@@ -25,8 +25,7 @@ AzimuthalProjection::AzimuthalProjection() : Projection() {}
 
 void AzimuthalProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
-        RealCoords real_coords(c1,c2);
-        shared_ptr<PolarCoords> coords = compute_coords(real_coords);
+        shared_ptr<PolarCoords> coords = make_shared<PolarCoords>(c1,c2);
         if(coords == nullptr){
             cout <<"unable to project this point at the current projection."<<endl;
             return;
@@ -178,8 +177,7 @@ CylindricalProjection::CylindricalProjection() : Projection(){}
 
 void CylindricalProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
-        RealCoords real_coords(c1,c2);
-        shared_ptr<CartesianCoords> coords = compute_coords(real_coords);
+        shared_ptr<CartesianCoords> coords = make_shared<CartesianCoords>(c1,c2);
         if(coords == nullptr){
             cout << "unable to project this point in the current projection."<<endl;
             return;
@@ -368,8 +366,7 @@ shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &
 
 void ConicProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
-        RealCoords real_coords(c1,c2);
-        shared_ptr<PolarCoords> coords = compute_coords(real_coords);
+        shared_ptr<PolarCoords> coords = make_shared<PolarCoords>(c1,c2);
         if(coords == nullptr){
             cout << "unable to project this point at the current projections."<<endl;
             return;
