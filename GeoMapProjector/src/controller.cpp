@@ -23,8 +23,11 @@ public:
 
     map<string, map<string, Projection>> projections;
 
-    //const string projection_types[5]={"azimuthal","cylindrical","conic","hybrid","real"};
-
+    string general_help;
+    string azimuthal_help;
+    string cylindrical_help;
+    string conic_help;
+    string hybrid_help;
 
     Controller(){
         projections["azimuthal"]["gnomonic"] = GnomonicProjection();
@@ -47,14 +50,7 @@ public:
         projections["hybrid"]["sanson"] = SansonProjectionSpecial();
         projections["hybrid"]["werner-stab"] = WernerStabProjectionSpecial();
 
-
-    }
-
-
-
-
-
-        const string general_help = "There are 3 basic projections to choose from:\n"
+        general_help = "There are 3 basic projections to choose from:\n"
                                     " -> Azimuthal projection - The mapping of radial lines can be visualized by imagining\n"
                                     "                           a plane tangent to the Earth, with the central point as \n"
                                     "                           tangent point. This projection uses polar coordinates starting \n"
@@ -80,7 +76,7 @@ public:
                                     " + basic latitude and longitude coordinates of a globe.";
 
 
-        const string azimuthal_help = "Azimuthal projections:"
+        azimuthal_help = "Azimuthal projections:"
                                       " -> Gnomonic - cannot project the equator\n"
                                       " -> Stereographic - cannot project the south pole\n"
                                       " -> Ortographic - can show only one hemisphere\n"
@@ -88,7 +84,7 @@ public:
                                       " -> Lambert - usually used only for one hemisphere";
 
 
-        const string cylindrical_help = "Cylindrical projections (cannot project poles):\n"
+        cylindrical_help = "Cylindrical projections (cannot project poles):\n"
                                         "  1) one standard parallel:\n"
                                         "     -> Equirectangular\n"
                                         "     -> Lambert\n"
@@ -100,16 +96,15 @@ public:
                                         "     -> Gall";
 
 
-        const string conic_help = "Conic projections:\n"
+        conic_help = "Conic projections:\n"
                                   " -> Ptolemy\n"
                                   " -> Lambert";
 
 
-        const string hybrid_help = "Hybrid projections:\n"
+        hybrid_help = "Hybrid projections:\n"
                                    " -> Sanson - the projection looks like an onion\n"
                                    " -> Werner-Stab - the projection look like a heart";
-
-
+    }
 
     void print_projections_help() const{
         cout << general_help <<endl;
@@ -152,26 +147,24 @@ public:
         string alias;
 
         ss >> proj_type;
-        auto type_it = find(begin(projection_types),end(projection_types),proj_type);
-        if(type_it == end(projection_types)){
-            cout << "\""<<proj_type<<"\" is not a valid basic projection type."<<endl;
+
+        auto main_proj_it = projections.find(proj_type);
+        if(main_proj_it == projections.end()){
+            cout << "this type of projection does not exist"<<endl;
             return;
         }
-        cout << *type_it<<endl;
-        /*if(*type_it == "real"){
-            //TODO vytvor real neprojekciu
+
+        ss >> proj_subtype;
+        auto subtype_it = (*main_proj_it).second.find(proj_subtype);
+
+        if(subtype_it == (*main_proj_it).second.end()){
+            cout << "this type of projection does not exist"<<endl;
             return;
-        }*/
+        }
 
-        /*ss >> proj_subtype;
-        auto subtypes = projection_subtypes[distance(begin(projection_types),type_it)];
-
-        auto subtype_it = find(subtypes->begin(),subtypes->end(),proj_subtype);
-        cout <<*subtype_it<<endl;*/
-
-
-
-
+        ss >> alias;
+        existing_projections[alias] = (*subtype_it).second;
+        cout <<proj_type<<" "<<proj_subtype <<" projection called \""<<alias<<"\" was added to your list of projections."<<endl;
     }
 
 
