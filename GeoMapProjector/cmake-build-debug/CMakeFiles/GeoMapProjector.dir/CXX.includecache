@@ -63,6 +63,8 @@ fstream
 -
 sstream
 -
+algorithm
+-
 
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp
 ../include/database.hpp

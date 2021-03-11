@@ -337,6 +337,23 @@ shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coord
 }
 
 
+shared_ptr<CartesianCoords> SansonProjectionSpecial::compute_coords(RealCoords &coords) {
+    double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(coords.latitude);
+    double y = EARTH_PERIMETER * deg_to_rad(coords.latitude);
+    return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &coords) {
+    if(coords.latitude == 90) return nullptr;
+
+    double delta = 90 - coords.latitude;
+    double epsilon = 360 * deg_sin(delta) / deg_to_rad(delta);
+    double rho = EARTH_PERIMETER * deg_to_rad(delta);
+    return make_shared<PolarCoords>(epsilon,rho);
+}
+
+
+
 void ConicProjection::add_point(const string &name, double c1, double c2){
     if(points.find(name) == points.end()){
         RealCoords real_coords(c1,c2);
@@ -431,15 +448,48 @@ Projection::Projection() {
     }
 }
 
-shared_ptr<CartesianCoords> SansonProjectionSpecial::compute_coords(RealCoords &coords) {
-    double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(coords.latitude);
-    double y = EARTH_PERIMETER * deg_to_rad(coords.latitude);
-    return make_shared<CartesianCoords>(x,y);
+RealProjection::RealProjection() : Projection(){
+
 }
 
-shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &coords) {
-    double delta = 90 - coords.latitude;
-    double epsilon = 360 * deg_sin(delta) / deg_to_rad(delta);
-    double rho = EARTH_PERIMETER * deg_to_rad(delta);
-    return make_shared<PolarCoords>(epsilon,rho);
+shared_ptr<RealCoords> RealProjection::compute_coords(RealCoords &coords) {
+    return make_shared<RealCoords>(coords);
+}
+
+shared_ptr<Coords> RealProjection::find_point(const string &p0) {
+    shared_ptr<RealCoords> p0_ptr;
+
+    if(db->data.find(p0) == db->data.end()){
+        return nullptr;
+    }
+    else if(db->data[p0]->type == POINT) {
+        shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
+        p0_ptr = compute_coords(*point_p0->coords);
+    }
+    else{
+        shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
+        p0_ptr = compute_coords(*point_p0->centroid);
+    }
+
+    return p0_ptr;
+}
+
+double RealProjection::calculate_distance(const string &p0, const string &p1) {
+    shared_ptr<RealCoords> p0_ptr = static_pointer_cast<RealCoords>(find_point(p0));
+    shared_ptr<RealCoords> p1_ptr = static_pointer_cast<RealCoords>(find_point(p1));
+    if(p0_ptr == nullptr || p1_ptr == nullptr){
+        cout <<"at least one of the points does not exist."<<endl;
+        return 0;
+    }
+
+    return get_distance<RealCoords>(*p0_ptr,*p1_ptr);
+}
+
+double RealProjection::calculate_rectangular_area(const string &name) {
+    shared_ptr<Region> region = find_region(name);
+    if(region == nullptr) return 0;
+
+    double result = get_rectangular_area<RealCoords>(*region->south,*region->north,*region->east,*region->west);
+
+    return result;
 }

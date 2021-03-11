@@ -40,6 +40,19 @@ public:
     virtual ~Projection(){};
 };
 
+class RealProjection : public Projection{
+public:
+    RealProjection();
+
+    shared_ptr<RealCoords> compute_coords(RealCoords &coords);
+
+    shared_ptr<Coords> find_point(const string &p0);
+
+    double calculate_distance(const string &p0, const string &p1);
+
+    double calculate_rectangular_area(const string &name);
+};
+
 //main type
 class AzimuthalProjection : public Projection{
 public:
@@ -128,9 +141,11 @@ public:
 };
 
 class EquirectangularProjection : public CylindricalProjection{
-    EquirectangularProjection();
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+
+public:
+    EquirectangularProjection();
 };
 
 class LambertCylindricalProjection : public CylindricalProjection{
