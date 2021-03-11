@@ -31,13 +31,15 @@ public:
 
     virtual double calculate_rectangular_area(const string &name){}
 
-    virtual void add_point(string &name, double c1, double c2){}
+    virtual void add_point(string &name, double c1, double c2){};
 
     virtual shared_ptr<Coords> find_point(const string &name){};
 
     static shared_ptr<Region> find_region(const string &name);
 
     virtual ~Projection(){};
+
+    virtual void print_local(){};
 };
 
 class RealProjection : public Projection{
@@ -51,6 +53,8 @@ public:
     double calculate_distance(const string &p0, const string &p1);
 
     double calculate_rectangular_area(const string &name);
+
+    void print_local() override;
 };
 
 //main type
@@ -62,9 +66,7 @@ public:
 
     virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2);
-
-    void print_points() const;
+    void add_point(string &name, double c1, double c2) override;
 
     shared_ptr<Coords> find_point(const string &p0);
 
@@ -73,6 +75,8 @@ public:
     double calculate_rectangular_area(const string &name);
 
     virtual ~AzimuthalProjection(){};
+
+    void print_local() override;
 
 };
 
@@ -128,7 +132,7 @@ public:
 
     virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2);
+    void add_point(string &name, double c1, double c2) override;
 
     shared_ptr<Coords> find_point(const string &p0);
 
@@ -137,6 +141,8 @@ public:
     double calculate_rectangular_area(const string &name);
 
     virtual ~CylindricalProjection(){};
+
+    void print_local() override;
 
 };
 
@@ -198,7 +204,6 @@ public:
 };
 
 
-//TODO doplnit projekcie ked zistim, aku hodnotu ma phi_0
 //main type
 class ConicProjection : public Projection{
 public:
@@ -206,7 +211,7 @@ public:
 
     virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
 
-    void add_point(const string &name, double c1, double c2);
+    void add_point(string &name, double c1, double c2) override;
 
     shared_ptr<Coords> find_point(const string &p0);
 
@@ -216,6 +221,7 @@ public:
 
     virtual ~ConicProjection(){};
 
+    void print_local() override;
 };
 
 class PtolemyProjection : public ConicProjection{

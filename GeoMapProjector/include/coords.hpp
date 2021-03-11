@@ -29,6 +29,8 @@ public:
 
     virtual double get_singleton_value(){}
 
+    string get_coords() const;
+
     virtual ~Coords(){}
 };
 

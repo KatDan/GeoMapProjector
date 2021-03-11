@@ -17,11 +17,11 @@ using namespace std;
 
 class Controller{
 public:
-    map<string, shared_ptr<Projection>> existing_projections;
+    map<string, pair<string,shared_ptr<Projection>>> existing_projections;
 
     pair<string,shared_ptr<Projection>> current_projection;
 
-    map<string, map<string, Projection>> projections;
+    map<string, map<string, shared_ptr<Projection>>> projections;
 
     string general_help;
     string azimuthal_help;
@@ -30,25 +30,25 @@ public:
     string hybrid_help;
 
     Controller(){
-        projections["azimuthal"]["gnomonic"] = GnomonicProjection();
-        projections["azimuthal"]["stereographic"] = StereoGraphicProjection();
-        projections["azimuthal"]["orthographic"] = OrthographicProjection();
-        projections["azimuthal"]["postel"] = PostelProjection();
-        projections["azimuthal"]["lambert"] = LambertAzimuthalProjection();
+        projections["azimuthal"]["gnomonic"] = make_shared<GnomonicProjection>();
+        projections["azimuthal"]["stereographic"] = make_shared<StereoGraphicProjection>();
+        projections["azimuthal"]["orthographic"] = make_shared<OrthographicProjection>();
+        projections["azimuthal"]["postel"] = make_shared<PostelProjection>();
+        projections["azimuthal"]["lambert"] = make_shared<LambertAzimuthalProjection>();
 
-        projections["cylindrical"]["equirectangular"] = EquirectangularProjection();
-        projections["cylindrical"]["lambert"] = LambertCylindricalProjection();
-        projections["cylindrical"]["mercator"] = MercatorProjection();
-        projections["cylindrical"]["perspective"] = PerspectiveProjection();
-        projections["cylindrical"]["behrmann"] = BehrmannProjection();
-        projections["cylindrical"]["trystan-edwards"] = TrystanEdwardsProjection();
-        projections["cylindrical"]["gall"] = GallProjection();
+        projections["cylindrical"]["equirectangular"] = make_shared<EquirectangularProjection>();
+        projections["cylindrical"]["lambert"] = make_shared<LambertCylindricalProjection>();
+        projections["cylindrical"]["mercator"] = make_shared<MercatorProjection>();
+        projections["cylindrical"]["perspective"] = make_shared<PerspectiveProjection>();
+        projections["cylindrical"]["behrmann"] = make_shared<BehrmannProjection>();
+        projections["cylindrical"]["trystan-edwards"] = make_shared<TrystanEdwardsProjection>();
+        projections["cylindrical"]["gall"] = make_shared<GallProjection>();
 
-        projections["conic"]["ptolemy"] = PtolemyProjection();
-        projections["conic"]["lambert"] = LambertConicProjection();
+        projections["conic"]["ptolemy"] = make_shared<PtolemyProjection>();
+        projections["conic"]["lambert"] = make_shared<LambertConicProjection>();
 
-        projections["hybrid"]["sanson"] = SansonProjectionSpecial();
-        projections["hybrid"]["werner-stab"] = WernerStabProjectionSpecial();
+        projections["hybrid"]["sanson"] = make_shared<SansonProjectionSpecial>();
+        projections["hybrid"]["werner-stab"] = make_shared<WernerStabProjectionSpecial>();
 
         general_help = "There are 3 basic projections to choose from:\n"
                                     " -> Azimuthal projection - The mapping of radial lines can be visualized by imagining\n"
@@ -126,6 +126,13 @@ public:
         cout << hybrid_help <<endl;
     }
 
+    void print_saved_projections(){
+        cout << "you have "<<existing_projections.size()<<" saved projections:"<<endl;
+        for(auto &proj : existing_projections){
+            cout << " name:"<<proj.first<<", type: "<<proj.second.first<<endl;
+        }
+    }
+
     void help_cmd(stringstream &ss){
         string word;
         ss >> word;
@@ -167,7 +174,7 @@ public:
             cout << "invalid name."<<endl;
             return;
         }
-        existing_projections[alias] = make_shared<Projection>((*subtype_it).second);
+        existing_projections[alias] = make_pair(proj_type+" "+proj_subtype,(*subtype_it).second);
         cout <<proj_type<<" "<<proj_subtype <<" projection called \""<<alias<<"\" was added to your list of projections."<<endl;
     }
 
@@ -180,7 +187,7 @@ public:
             return;
         }
         current_projection.first = alias;
-        current_projection.second = existing_projections[alias];
+        current_projection.second = existing_projections[alias].second;
     }
 
     void add_cmd(stringstream &ss){
@@ -203,7 +210,7 @@ public:
                 cout <<"point \""<<name<<"\" was successfully added to the main database."<<endl;
                 return;
             }
-            else if(coord_type == "relative"){
+            else if(coord_type == "local"){
                 if(current_projection.second == nullptr){
                     cout << "error: you currently are not in any projection."<<endl;
                     return;
@@ -247,6 +254,23 @@ public:
         }
     }
 
+    void print_cmd(stringstream &ss){
+        string what;
+        ss >> what;
+
+        if(what == "local"){
+            if(current_projection.second == nullptr){
+                cout << "we are not in any projection."<<endl;
+                return;
+            }
+            current_projection.second->print_local();
+        }
+        if(what == "projections"){
+            print_saved_projections();
+        }
+
+    }
+
 
     void process_input(istream &is){
         string line;
@@ -268,9 +292,7 @@ public:
             if(word == "enter") enter_cmd(ss);
             if(word == "add") add_cmd(ss);
             if(word == "menu") current_projection.second = nullptr;
-            if(word == "print"){
-
-            }
+            if(word == "print") print_cmd(ss);
             if(word == "get"){
 
             }

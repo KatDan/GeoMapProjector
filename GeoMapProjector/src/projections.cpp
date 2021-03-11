@@ -23,7 +23,7 @@ shared_ptr<Region> Projection::find_region(const string &name) {
 AzimuthalProjection::AzimuthalProjection() : Projection() {}
 
 
-void AzimuthalProjection::add_point(const string &name, double c1, double c2){
+void AzimuthalProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
         RealCoords real_coords(c1,c2);
         shared_ptr<PolarCoords> coords = compute_coords(real_coords);
@@ -32,12 +32,6 @@ void AzimuthalProjection::add_point(const string &name, double c1, double c2){
             return;
         }
         points[name] = coords;
-    }
-}
-
-void AzimuthalProjection::print_points() const{
-    for(auto &point : points){
-        cout << point.first<<": e="<<point.second->epsilon<<", r="<<point.second->rho<<endl;
     }
 }
 
@@ -113,6 +107,15 @@ double AzimuthalProjection::calculate_rectangular_area(const string &name) {
     return result;
 }
 
+void AzimuthalProjection::print_local() {
+    cout << "-------------------------------------------"<<endl;
+    cout << points.size()<<" local point(s) saved:"<<endl;
+    for(auto &point : points){
+        cout <<" "<<point.first<<": epsilon="<<point.second->epsilon<<", rho="<<point.second->rho<<endl;
+    }
+    cout << "-------------------------------------------"<<endl;
+}
+
 
 GnomonicProjection::GnomonicProjection() : AzimuthalProjection(){}
 
@@ -173,7 +176,7 @@ shared_ptr<PolarCoords> LambertAzimuthalProjection::compute_coords(RealCoords &c
 
 CylindricalProjection::CylindricalProjection() : Projection(){}
 
-void CylindricalProjection::add_point(const string &name, double c1, double c2){
+void CylindricalProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
         RealCoords real_coords(c1,c2);
         shared_ptr<CartesianCoords> coords = compute_coords(real_coords);
@@ -254,6 +257,15 @@ double CylindricalProjection::calculate_rectangular_area(const string &name) {
     double result = get_rectangular_area<CartesianCoords>(s,n,e,w);
 
     return result;
+}
+
+void CylindricalProjection::print_local() {
+    cout << "-------------------------------------------"<<endl;
+    cout << points.size()<<" local point(s) saved:"<<endl;
+    for(auto &point : points){
+        cout <<" "<<point.first<<": x="<< point.second->x<<", y="<<point.second->y<<endl;
+    }
+    cout << "-------------------------------------------"<<endl;
 }
 
 EquirectangularProjection::EquirectangularProjection() : CylindricalProjection(){}
@@ -354,7 +366,7 @@ shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &
 
 
 
-void ConicProjection::add_point(const string &name, double c1, double c2){
+void ConicProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
         RealCoords real_coords(c1,c2);
         shared_ptr<PolarCoords> coords = compute_coords(real_coords);
@@ -437,6 +449,15 @@ double ConicProjection::calculate_rectangular_area(const string &name) {
     return result;
 }
 
+void ConicProjection::print_local() {
+    cout << "-------------------------------------------"<<endl;
+    cout << points.size()<<" local point(s) saved:"<<endl;
+    for(auto &point : points){
+        cout <<" "<<point.first<<": epsilon="<<point.second->epsilon<<", rho="<<point.second->rho<<endl;
+    }
+    cout << "-------------------------------------------"<<endl;
+}
+
 shared_ptr<Database> Projection::db = nullptr;
 
 Projection::Projection() {
@@ -492,4 +513,8 @@ double RealProjection::calculate_rectangular_area(const string &name) {
     double result = get_rectangular_area<RealCoords>(*region->south,*region->north,*region->east,*region->west);
 
     return result;
+}
+
+void RealProjection::print_local() {
+    cout <<"There are no local points in this type of projection. Everything is automatically moved to the main database."<<endl;
 }

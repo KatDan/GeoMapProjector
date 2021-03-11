@@ -12,6 +12,14 @@ using namespace std;
 Coords::Coords(enum lat_or_long type):singleton_type{type}{}
 Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
+string Coords::get_coords() const {
+    if(singleton_type == BOTH){
+        return to_string(coords_pair.first) + " "+to_string(coords_pair.second);
+    }
+    else if(singleton_type == LATITUDE) return to_string(coords_pair.first);
+    else return to_string(coords_pair.second);
+}
+
 RealCoords::RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
 RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
     if (type == LATITUDE) {
