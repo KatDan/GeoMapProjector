@@ -70,8 +70,8 @@ double get_distance(T p0, T p1);
 
 template<>
 double get_distance<RealCoords>(RealCoords p0, RealCoords p1){
-    double sigma = deg_arccos(deg_sin(p0.latitude)*deg_sin(p1.latitude)+
-            deg_cos(p0.latitude)*deg_cos(p1.latitude)*deg_cos(abs(p0.longitude-p1.longitude)));
+    double sigma = acos(deg_sin(90-p0.latitude)*deg_sin(90-p1.latitude)*deg_cos(abs(p0.longitude-p1.longitude))+
+            deg_cos(90-p0.latitude)*deg_cos(90-p1.latitude));
     return sigma * EARTH_PERIMETER;
 }
 

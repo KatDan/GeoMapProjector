@@ -19,6 +19,8 @@ class Controller{
 public:
     map<string, pair<string,shared_ptr<Projection>>> existing_projections;
 
+    shared_ptr<Projection> real_projection;
+
     pair<string,shared_ptr<Projection>> current_projection;
 
     map<string, map<string, shared_ptr<Projection>>> projections;
@@ -30,6 +32,10 @@ public:
     string hybrid_help;
 
     Controller(){
+        real_projection = make_shared<RealProjection>();
+        current_projection.first = "real";
+        current_projection.second = real_projection;
+
         projections["azimuthal"]["gnomonic"] = make_shared<GnomonicProjection>();
         projections["azimuthal"]["stereographic"] = make_shared<StereoGraphicProjection>();
         projections["azimuthal"]["orthographic"] = make_shared<OrthographicProjection>();
@@ -211,7 +217,7 @@ public:
                 return;
             }
             else if(coord_type == "local"){
-                if(current_projection.second == nullptr){
+                if(current_projection.second == real_projection){
                     cout << "error: you currently are not in any projection."<<endl;
                     return;
                 }
@@ -259,7 +265,7 @@ public:
         ss >> what;
 
         if(what == "local"){
-            if(current_projection.second == nullptr){
+            if(current_projection.second == real_projection){
                 cout << "we are not in any projection."<<endl;
                 return;
             }
@@ -279,6 +285,57 @@ public:
         }
     }
 
+    double get_scale(stringstream &ss){
+        double scale = 1;
+        string scale_start;
+        scale_start += ss.get();
+        scale_start += ss.get();
+        if(scale_start != "1:"){
+            cout << "please, type a scale in format \"1:[number]\". Scale ignored."<<endl;
+            return scale;
+        }
+        ss >> scale;
+        if(ss.fail()) {
+            cout << "invalid scale." << endl;
+        }
+        return scale;
+    }
+
+    void get_cmd(stringstream &ss){
+        string calc_type;
+        ss >> calc_type;
+        string output;
+        double scale = 1;
+        if(calc_type == "distance"){
+            string p1, p2;
+            ss >> p1;
+            ss >> p2;
+            string has_scale;
+            ss >> has_scale;
+            if(has_scale == "scale"){
+                scale = get_scale(ss);
+            }
+            double result = current_projection.second->calculate_distance(p1,p2);
+            output = to_string(result/scale)+"km";
+        }
+        else if(calc_type == "area"){
+            string region;
+            ss >> region;
+            string has_scale;
+            ss >> has_scale;
+            if(has_scale == "scale"){
+                scale = get_scale(ss);
+            }
+            double result = current_projection.second->calculate_rectangular_area(region);
+            output = to_string(result/scale)+"km^2";
+        }
+        else{
+            cout << "invalid command."<<endl;
+            return;
+        }
+        cout << output << endl;
+    }
+
     void process_input(istream &is){
         string line;
         cout <<">main-menu: ";
@@ -288,7 +345,7 @@ public:
                 exit_cmd();
                 return;
             }
-            transform(line.begin(),line.end(),line.begin(),::tolower);
+            //transform(line.begin(),line.end(),line.begin(),::tolower);
 
             stringstream ss(line);
             string word;
@@ -298,21 +355,13 @@ public:
             if(word == "make") make_cmd(ss);
             if(word == "enter") enter_cmd(ss);
             if(word == "add") add_cmd(ss);
-            if(word == "menu") current_projection.second = nullptr;
+            if(word == "menu") current_projection.second = real_projection;
             if(word == "print") print_cmd(ss);
-            if(word == "get"){
-
-            }
-            if(word == "rescale"){
-
-            }
-            if(word == "reset"){
-
-            }
+            if(word == "get") get_cmd(ss);
+            else cout << "invalid command. Please type \"help\" for help."<<endl;
 
 
-
-            if(current_projection.second == nullptr) cout <<"\n>main-menu: ";
+            if(current_projection.second == real_projection) cout <<"\n>main-menu: ";
             else cout << "\n>" << current_projection.first<<": ";
         }
     }
