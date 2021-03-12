@@ -52,7 +52,7 @@ void Database::add_data(string &name, double c1, double c2, coords_type type, en
     auto p = make_shared<Point>(c1,c2,type);
     auto p_dup = p;
     data[name] = p_dup;
-    if(obj_type == CUSTOM) custom[name] = p;
+    if(obj_type == CUSTOM) custom_points[name] = p;
     else if(obj_type == CITY) cities[name] = p;
     else if(obj_type == MOUNTAIN) mountains[name] = p;
 }
@@ -63,7 +63,7 @@ void Database::add_data(string &name, double s, double n, double e, double w, en
     data[name] = another_ptr;
     if(obj_type == LAKE) lakes[name] = region_ptr;
     else if(obj_type == CONTINENT) continents[name] = region_ptr;
-    else if (obj_type == CUSTOM) custom[name] = region_ptr;
+    else if (obj_type == CUSTOM) custom_regions[name] = region_ptr;
 }
 
 void Database::add_data(string &name, double s, double n, double e, double w,string &capital_name, double c1, double c2){
@@ -128,8 +128,11 @@ void Database::print_continents() const{
 
 void Database::print_custom() const{
     cout << "-------------------------------------------"<<endl;
-    cout << custom.size()<<" custom data saved:"<<endl;
-    for(auto &cust : custom){
+    cout << custom_points.size()+custom_regions.size()<<" custom data saved:"<<endl;
+    for(auto &cust : custom_points){
+        cout << " "<<cust.first<<": "<< cust.second->print_coords()<<endl;
+    }
+    for(auto &cust : custom_regions){
         cout << " "<<cust.first<<": "<< cust.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;

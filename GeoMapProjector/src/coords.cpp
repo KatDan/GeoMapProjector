@@ -91,7 +91,7 @@ double get_rectangular_area(T b0, T b1, T b2, T b3);
 
 template<>
 double get_rectangular_area<PolarCoords>(PolarCoords s, PolarCoords n, PolarCoords e, PolarCoords w){
-    return (M_PI/(abs(e.epsilon-w.epsilon)))*(abs(pow(s.rho,2)-pow(n.rho,2)));
+    return (abs(e.epsilon-w.epsilon)/360)*M_PI*(abs(pow(s.rho,2)-pow(n.rho,2)));
 }
 
 template<>
@@ -101,6 +101,6 @@ double get_rectangular_area<CartesianCoords>(CartesianCoords s, CartesianCoords 
 
 template<>
 double get_rectangular_area<RealCoords>(RealCoords s, RealCoords n, RealCoords e, RealCoords w){
-    return 4*pow(EARTH_PERIMETER,2)*deg_arcsin(deg_tan((abs(e.longitude-w.longitude))/(2*EARTH_PERIMETER))
+    return 4*pow(EARTH_PERIMETER,2)*asin(deg_tan((abs(e.longitude-w.longitude))/(2*EARTH_PERIMETER))
             *deg_tan((abs(s.latitude-n.latitude))/(2*EARTH_PERIMETER)));
 }

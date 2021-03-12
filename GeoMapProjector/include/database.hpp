@@ -91,7 +91,8 @@ public:
     map<string, shared_ptr<Data>> lakes;
     map<string, shared_ptr<Data>> cities;
     map<string, shared_ptr<Data>> mountains;
-    map<string, shared_ptr<Data>> custom;
+    map<string, shared_ptr<Data>> custom_points;
+    map<string, shared_ptr<Data>> custom_regions;
     map<string, shared_ptr<Data>> continents;
 
     Database(){}

@@ -27,7 +27,7 @@ int main() {
     auto result = gproj.calculate_rectangular_area("Slovakia");
     cout.precision(15);
     cout << "result: "<<result;*/
-
+    cout.precision(15);
     Controller c;
     c.process_input(cin);
 

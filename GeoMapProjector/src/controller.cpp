@@ -85,7 +85,7 @@ public:
         azimuthal_help = "Azimuthal projections:"
                                       " -> Gnomonic - cannot project the equator\n"
                                       " -> Stereographic - cannot project the south pole\n"
-                                      " -> Ortographic - can show only one hemisphere\n"
+                                      " -> Orthographic - can show only one hemisphere\n"
                                       " -> Postel\n"
                                       " -> Lambert - usually used only for one hemisphere";
 
@@ -288,7 +288,9 @@ public:
     double get_scale(stringstream &ss){
         double scale = 1;
         string scale_start;
-        scale_start += ss.get();
+        auto c = ss.get();
+        while(isspace(c)) c = ss.get();
+        scale_start += c;
         scale_start += ss.get();
         if(scale_start != "1:"){
             cout << "please, type a scale in format \"1:[number]\". Scale ignored."<<endl;
@@ -316,7 +318,7 @@ public:
                 scale = get_scale(ss);
             }
             double result = current_projection.second->calculate_distance(p1,p2);
-            output = to_string(result/scale)+"km";
+            cout <<fixed <<result/scale <<"km"<<endl;
         }
         else if(calc_type == "area"){
             string region;
@@ -327,13 +329,12 @@ public:
                 scale = get_scale(ss);
             }
             double result = current_projection.second->calculate_rectangular_area(region);
-            output = to_string(result/scale)+"km^2";
+            cout <<fixed <<result/pow(scale,2) << "km^2"<<endl;
         }
         else{
             cout << "invalid command."<<endl;
             return;
         }
-        cout << output << endl;
     }
 
     void process_input(istream &is){
@@ -352,12 +353,12 @@ public:
             ss >> word;
 
             if(word == "help") help_cmd(ss);
-            if(word == "make") make_cmd(ss);
-            if(word == "enter") enter_cmd(ss);
-            if(word == "add") add_cmd(ss);
-            if(word == "menu") current_projection.second = real_projection;
-            if(word == "print") print_cmd(ss);
-            if(word == "get") get_cmd(ss);
+            else if(word == "make") make_cmd(ss);
+            else if(word == "enter") enter_cmd(ss);
+            else if(word == "add") add_cmd(ss);
+            else if(word == "menu") current_projection.second = real_projection;
+            else if(word == "print") print_cmd(ss);
+            else if(word == "get") get_cmd(ss);
             else cout << "invalid command. Please type \"help\" for help."<<endl;
 
 

@@ -7,8 +7,11 @@ shared_ptr<Region> Projection::find_region(const string &name) {
     if(db->continents.find(name) == db->continents.end()){
         if(db->countries.find(name) == db->countries.end()){
             if(db->lakes.find(name) == db->lakes.end()){
-                cout <<"Region with name \""<<name<<"\" does not exist."<<endl;
-                return nullptr;
+                if(db->custom_regions.find(name) == db->custom_regions.end()){
+                    cout <<"Region with name \""<<name<<"\" does not exist."<<endl;
+                    return nullptr;
+                }
+                else region_ptr = static_pointer_cast<Region>(db->custom_regions[name]);
             }
             else region_ptr = static_pointer_cast<Region>(db->lakes[name]);
         }
@@ -314,7 +317,7 @@ shared_ptr<CartesianCoords> BehrmannProjection::compute_coords(RealCoords &coord
 TrystanEdwardsProjection::TrystanEdwardsProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> TrystanEdwardsProjection::compute_coords(RealCoords &coords){
-    double phi_0 = deg_arccos(sqrt(2/M_PI));
+    double phi_0 = acos(sqrt(2/M_PI));
     double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
     double y = EARTH_PERIMETER * (deg_sin(coords.latitude)/deg_cos(phi_0));
     return make_shared<CartesianCoords>(x,y);

@@ -33,16 +33,6 @@ double deg_cot(double number){
     return 1/tan(rad_number);
 }
 
-double deg_arccos(double number){
-    double rad_number = deg_to_rad(number);
-    return acos(rad_number);
-}
-
-double deg_arcsin(double number){
-    double rad_number = deg_to_rad(number);
-    return asin(rad_number);
-}
-
 double normalize_deg(double degree){
     return fmod(degree,360.0);
 }
