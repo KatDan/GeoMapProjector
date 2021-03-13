@@ -20,14 +20,18 @@ string Coords::get_coords() const {
     else return to_string(coords_pair.second);
 }
 
-RealCoords::RealCoords(double lat, double lon):Coords(lat,lon),latitude{lat},longitude{lon}{}
+RealCoords::RealCoords(double lat, double lon):Coords(normalize_coords(lat,lon).first,normalize_coords(lat,lon).second){
+    auto normalized = normalize_coords(lat,lon);
+    latitude = normalized.first;
+    longitude = normalized.second;
+}
 RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
     if (type == LATITUDE) {
-        latitude = value;
+        latitude = normalize_coords(value,0).first;
         longitude = -1;
     }
     else if (type == LONGITUDE){
-        longitude = value;
+        longitude = normalize_coords(0,value).second;
         latitude = -1;
     }
 }
@@ -38,17 +42,47 @@ double RealCoords::get_singleton_value() {
     else return 0;
 }
 
+pair<double, double> RealCoords::normalize_coords(double lat, double lon) {
+    while(lat < -90){
+        lat += 180;
+    }
+    while(lat > 90){
+        lat -= 180;
+    }
+    while(lon < -180){
+        lon += 360;
+    }
+    while(lon > 180){
+        lon -= 360;
+    }
+    return make_pair(lat,lon);
+}
 
-PolarCoords::PolarCoords(double e, double r):Coords(r,e),epsilon{e},rho{r}{}
+
+PolarCoords::PolarCoords(double e, double r):Coords(normalize_coords(e,r).first,normalize_coords(e,r).second){
+    auto normalized = normalize_coords(e,r);
+    epsilon = normalized.second;
+    rho = normalized.first;
+}
 PolarCoords::PolarCoords(double value, enum lat_or_long type):Coords(type){
-    if(type == LATITUDE) rho = value;
-    else if(type == LONGITUDE) epsilon = value;
+    if(type == LATITUDE) rho = normalize_coords(0,value).second;
+    else if(type == LONGITUDE) epsilon = normalize_coords(value,0).first;
 }
 
 double PolarCoords::get_singleton_value() {
     if(singleton_type == LATITUDE) return rho;
     else if(singleton_type == LONGITUDE) return epsilon;
     else return 0;
+}
+
+pair<double, double> PolarCoords::normalize_coords(double r, double e) {
+    while(e < -180){
+        e += 360;
+    }
+    while(e > 180){
+        e -= 360;
+    }
+    return make_pair(r,e);
 }
 
 
@@ -62,6 +96,10 @@ double CartesianCoords::get_singleton_value() {
     if(singleton_type == LATITUDE) return y;
     else if(singleton_type == LONGITUDE) return x;
     else return 0;
+}
+
+pair<double, double> CartesianCoords::normalize_coords(double x, double y) {
+    return make_pair(x,y);
 }
 
 

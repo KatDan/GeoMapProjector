@@ -196,26 +196,6 @@ public:
         current_projection.second = existing_projections[alias].second;
     }
 
-    double normalize_latitude(double lat){
-        while(lat < -90){
-            lat += 180;
-        }
-        while(lat > 90){
-            lat -= 180;
-        }
-        return lat;
-    }
-
-    double normalize_longitude(double lon){
-        while(lon < -180){
-            lon += 360;
-        }
-        while(lon > 180){
-            lon -= 360;
-        }
-        return lon;
-    }
-
     void add_cmd(stringstream &ss){
         string type;
         ss >>type;

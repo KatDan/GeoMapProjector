@@ -32,6 +32,8 @@ public:
     string get_coords() const;
 
     virtual ~Coords(){}
+
+    virtual pair<double,double> normalize_coords(double a, double b){};
 };
 
 class RealCoords : public Coords{
@@ -45,6 +47,8 @@ public:
     double get_singleton_value();
 
     ~RealCoords(){}
+
+    pair<double,double> normalize_coords(double a, double b) override;
 };
 
 class PolarCoords: public Coords{
@@ -59,6 +63,8 @@ public:
     double get_singleton_value();
 
     ~PolarCoords(){};
+
+    pair<double,double> normalize_coords(double a, double b) override;
 };
 
 class CartesianCoords : public Coords{
@@ -73,6 +79,8 @@ public:
     double get_singleton_value();
 
     ~CartesianCoords(){};
+
+    pair<double,double> normalize_coords(double a, double b) override;
 };
 
 
