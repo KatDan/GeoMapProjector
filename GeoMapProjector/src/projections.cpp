@@ -464,7 +464,24 @@ Projection::Projection() {
     if(!db){
         db_loader loader;
         Database database;
-        loader.add_initial_data(database);
+        cout << "Database is being loaded. We can load more than 20 000 cities, but as \n"
+                "default, only 100 biggest cities is loaded. Would you like to change the amount\n"
+                "of loaded cities [y/n]?"<<endl;
+        string answer;
+        cin >> answer;
+        if(answer != "y"){
+            loader.add_initial_data(database);
+        }
+        else{
+            cout <<"type a desired number of cities in the database: ";
+            int number;
+            cin >> number;
+            if(cin.fail()){
+                cout << "invalid number. The database is loading in default mode."<<endl;
+                loader.add_initial_data(database);
+            }
+            else loader.add_initial_data(database,number);
+        }
         db = make_shared<Database>(database);
     }
 }
