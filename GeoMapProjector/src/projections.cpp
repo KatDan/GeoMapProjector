@@ -118,6 +118,15 @@ void AzimuthalProjection::print_local() {
     cout << "-------------------------------------------"<<endl;
 }
 
+shared_ptr<RealCoords> AzimuthalProjection::convert_to_real_coords(const string &p) {
+    shared_ptr<PolarCoords> p_ptr = static_pointer_cast<PolarCoords>(find_point(p));
+    if(p_ptr == nullptr){
+        cout <<"the point does not exist."<<endl;
+        return nullptr;
+    }
+    auto result = decompute_coords(*p_ptr);
+}
+
 
 GnomonicProjection::GnomonicProjection() : AzimuthalProjection(){}
 
@@ -131,6 +140,11 @@ shared_ptr<PolarCoords> GnomonicProjection::compute_coords(RealCoords &coords){
     return make_shared<PolarCoords>(epsilon,rho);
 }
 
+shared_ptr<RealCoords> GnomonicProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon;
+    double phi = 90 - rad_to_deg(atan(coords.rho/EARTH_PERIMETER));
+    return make_shared<RealCoords>(phi,lambda);
+}
 
 StereoGraphicProjection::StereoGraphicProjection() : AzimuthalProjection(){}
 
@@ -144,7 +158,11 @@ shared_ptr<PolarCoords> StereoGraphicProjection::compute_coords(RealCoords &coor
     return make_shared<PolarCoords>(epsilon,rho);
 }
 
-
+shared_ptr<RealCoords> StereoGraphicProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon;
+    double phi = 90 - 2 * rad_to_deg(atan(coords.rho/(2*EARTH_PERIMETER)));
+    return make_shared<RealCoords>(phi,lambda);
+}
 
 OrthographicProjection::OrthographicProjection():AzimuthalProjection() {}
 
@@ -155,6 +173,11 @@ shared_ptr<PolarCoords> OrthographicProjection::compute_coords(RealCoords &coord
     return make_shared<PolarCoords>(epsilon,rho);
 }
 
+shared_ptr<RealCoords> OrthographicProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon;
+    double phi = 90 - rad_to_deg(asin(coords.rho/EARTH_PERIMETER));
+    return make_shared<RealCoords>(phi,lambda);
+}
 
 PostelProjection::PostelProjection() : AzimuthalProjection(){}
 
@@ -165,6 +188,11 @@ shared_ptr<PolarCoords> PostelProjection::compute_coords(RealCoords &coords){
     return make_shared<PolarCoords>(epsilon,rho);
 }
 
+shared_ptr<RealCoords> PostelProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon;
+    double phi = 90 - rad_to_deg(coords.rho/EARTH_PERIMETER);
+    return make_shared<RealCoords>(phi,lambda);
+}
 
 LambertAzimuthalProjection::LambertAzimuthalProjection() : AzimuthalProjection(){}
 
@@ -173,6 +201,12 @@ shared_ptr<PolarCoords> LambertAzimuthalProjection::compute_coords(RealCoords &c
     double delta = 90 - coords.latitude;
     double rho = 2*EARTH_PERIMETER * deg_sin(delta/2);
     return make_shared<PolarCoords>(epsilon,rho);
+}
+
+shared_ptr<RealCoords> LambertAzimuthalProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon;
+    double phi = 90 - 2*rad_to_deg(asin(coords.rho/(2*EARTH_PERIMETER)));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 
@@ -365,6 +399,9 @@ shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &
     return make_shared<PolarCoords>(epsilon,rho);
 }
 
+shared_ptr<RealCoords> WernerStabProjectionSpecial::decompute_coords(PolarCoords &coords) {
+    return AzimuthalProjection::decompute_coords(coords);
+}
 
 
 void ConicProjection::add_point(string &name, double c1, double c2){
@@ -534,4 +571,8 @@ double RealProjection::calculate_rectangular_area(const string &name) {
 
 void RealProjection::print_local() {
     cout <<"There are no local points in this type of projection. Everything is automatically moved to the main database."<<endl;
+}
+
+shared_ptr<RealCoords> RealProjection::convert_to_real_coords(const string &p) {
+    return Projection::convert_to_real_coords(p);
 }

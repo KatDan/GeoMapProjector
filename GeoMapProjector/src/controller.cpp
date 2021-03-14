@@ -309,7 +309,19 @@ public:
         string output;
         double scale = 1;
         double conversion_factor = 1;
-        if(calc_type == "distance"){
+        if(calc_type == "point"){
+            string p = get_multiword_name(ss);
+            auto coords = current_projection.second->find_point(p);
+            if(coords == nullptr){
+                cout << "the point does not exist."<<endl;
+                return;
+            }
+            cout << coords->get_coords() << endl;
+        }
+        else if(calc_type == "region"){
+
+        }
+        else if(calc_type == "distance"){
             string p1, p2;
             p1 = get_multiword_name(ss);
             p2 = get_multiword_name(ss);
