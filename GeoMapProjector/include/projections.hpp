@@ -153,7 +153,9 @@ public:
 
     virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &coords){}
 
-    virtual shared_ptr<RealCoords> convert_to_real_coords(const string &p){}
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+
+    virtual shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords){};
 
     void add_point(string &name, double c1, double c2) override;
 
@@ -175,7 +177,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class LambertCylindricalProjection : public CylindricalProjection{
@@ -184,7 +186,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class MercatorProjection : public CylindricalProjection{
@@ -193,7 +195,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class PerspectiveProjection : public CylindricalProjection{
@@ -202,7 +204,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class BehrmannProjection : public CylindricalProjection{
@@ -211,7 +213,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class TrystanEdwardsProjection : public CylindricalProjection{
@@ -220,7 +222,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class GallProjection : public CylindricalProjection{
@@ -229,7 +231,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
-
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 class SansonProjectionSpecial : public CylindricalProjection{
@@ -238,6 +240,7 @@ public:
 
     shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
 
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
 };
 
 
@@ -248,7 +251,9 @@ public:
 
     virtual shared_ptr<PolarCoords> compute_coords(RealCoords &coords){}
 
-    virtual shared_ptr<RealCoords> convert_to_real_coords(const string &p){}
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+
+    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &coords){}
 
     void add_point(string &name, double c1, double c2) override;
 
@@ -269,6 +274,7 @@ public:
 
     shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
 };
 
 class LambertConicProjection : public ConicProjection{
@@ -277,6 +283,7 @@ public:
 
     shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
 
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
 };
 
 

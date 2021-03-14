@@ -1,3 +1,4 @@
+#include <limits>
 #include "../include/projections.hpp"
 
 using namespace std;
@@ -39,7 +40,6 @@ void AzimuthalProjection::add_point(string &name, double c1, double c2){
 
 shared_ptr<Coords> AzimuthalProjection::find_point(const string &p0){
     shared_ptr<PolarCoords> p0_ptr;
-    //auto stuff = points.find(p0);
     if(points.find(p0) == points.end()){
         if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
@@ -215,7 +215,7 @@ CylindricalProjection::CylindricalProjection() : Projection(){}
 
 void CylindricalProjection::add_point(string &name, double c1, double c2){
     if(points.find(name) == points.end()){
-        shared_ptr<CartesianCoords> coords = make_shared<CartesianCoords>(c1,c2);
+        shared_ptr<CartesianCoords> coords = make_shared<CartesianCoords>(c2,c1);
         if(coords == nullptr){
             cout << "unable to project this point in the current projection."<<endl;
             return;
@@ -304,6 +304,16 @@ void CylindricalProjection::print_local() {
     cout << "-------------------------------------------"<<endl;
 }
 
+shared_ptr<RealCoords> CylindricalProjection::convert_to_real_coords(const string &p) {
+    shared_ptr<CartesianCoords> p_ptr = static_pointer_cast<CartesianCoords>(find_point(p));
+    if(p_ptr == nullptr){
+        cout <<"the point does not exist."<<endl;
+        return nullptr;
+    }
+    auto result = decompute_coords(*p_ptr);
+    return result;
+}
+
 EquirectangularProjection::EquirectangularProjection() : CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> EquirectangularProjection::compute_coords(RealCoords &coords){
@@ -312,12 +322,24 @@ shared_ptr<CartesianCoords> EquirectangularProjection::compute_coords(RealCoords
     return make_shared<CartesianCoords>(x,y);
 }
 
+shared_ptr<RealCoords> EquirectangularProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/EARTH_PERIMETER);
+    double phi = rad_to_deg(coords.y/EARTH_PERIMETER);
+    return make_shared<RealCoords>(phi,lambda);
+}
+
 LambertCylindricalProjection::LambertCylindricalProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> LambertCylindricalProjection::compute_coords(RealCoords &coords){
     double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
     double y = EARTH_PERIMETER * deg_sin(coords.latitude);
     return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<RealCoords> LambertCylindricalProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/EARTH_PERIMETER);
+    double phi = rad_to_deg(asin(coords.y/EARTH_PERIMETER));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 MercatorProjection::MercatorProjection() : CylindricalProjection(){}
@@ -332,12 +354,24 @@ shared_ptr<CartesianCoords> MercatorProjection::compute_coords(RealCoords &coord
     return make_shared<CartesianCoords>(x,y);
 }
 
+shared_ptr<RealCoords> MercatorProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/EARTH_PERIMETER);
+    double phi = 90-2*rad_to_deg(atan(1/exp(coords.y/EARTH_PERIMETER)));
+    return make_shared<RealCoords>(phi,lambda);
+}
+
 PerspectiveProjection::PerspectiveProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> PerspectiveProjection::compute_coords(RealCoords &coords){
     double x = EARTH_PERIMETER * deg_to_rad(coords.longitude);
     double y = 2 * EARTH_PERIMETER * deg_tan(coords.latitude/2);
     return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<RealCoords> PerspectiveProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/EARTH_PERIMETER);
+    double phi = 2*rad_to_deg(atan(coords.y/(2*EARTH_PERIMETER)));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 BehrmannProjection::BehrmannProjection():CylindricalProjection(){}
@@ -349,13 +383,26 @@ shared_ptr<CartesianCoords> BehrmannProjection::compute_coords(RealCoords &coord
     return make_shared<CartesianCoords>(x,y);
 }
 
+shared_ptr<RealCoords> BehrmannProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/(EARTH_PERIMETER*deg_cos(30)));
+    double phi = rad_to_deg(asin(coords.y*deg_cos(30)/EARTH_PERIMETER));
+    return make_shared<RealCoords>(phi,lambda);
+}
+
 TrystanEdwardsProjection::TrystanEdwardsProjection():CylindricalProjection(){}
 
 shared_ptr<CartesianCoords> TrystanEdwardsProjection::compute_coords(RealCoords &coords){
-    double phi_0 = acos(sqrt(2/M_PI));
-    double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(phi_0);
-    double y = EARTH_PERIMETER * (deg_sin(coords.latitude)/deg_cos(phi_0));
+    double n = sqrt(2/M_PI);
+    double x = EARTH_PERIMETER * deg_to_rad(coords.longitude)*n;
+    double y = EARTH_PERIMETER * deg_sin(coords.latitude)*(1/n);
     return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<RealCoords> TrystanEdwardsProjection::decompute_coords(CartesianCoords &coords) {
+    double n = sqrt(2/M_PI);
+    double lambda = rad_to_deg(coords.x/(EARTH_PERIMETER*n));
+    double phi = rad_to_deg(asin(n*coords.y/EARTH_PERIMETER));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 GallProjection::GallProjection(): CylindricalProjection(){}
@@ -367,6 +414,12 @@ shared_ptr<CartesianCoords> GallProjection::compute_coords(RealCoords &coords){
     return make_shared<CartesianCoords>(x,y);
 }
 
+shared_ptr<RealCoords> GallProjection::decompute_coords(CartesianCoords &coords) {
+    double lambda = rad_to_deg(coords.x/(EARTH_PERIMETER*deg_cos(45)));
+    double phi = 2*rad_to_deg(atan(coords.y/(EARTH_PERIMETER*(1+deg_cos(45)))));
+    return make_shared<RealCoords>(phi,lambda);
+}
+
 
 shared_ptr<PolarCoords> PtolemyProjection::compute_coords(RealCoords &coords) {
     double phi_0 = 30;
@@ -374,6 +427,12 @@ shared_ptr<PolarCoords> PtolemyProjection::compute_coords(RealCoords &coords) {
     double epsilon = coords.longitude * deg_cos(delta_0);
     double rho = EARTH_PERIMETER * (deg_tan(delta_0)+deg_to_rad((90-coords.latitude)-delta_0));
     return make_shared<PolarCoords>(rho,epsilon);
+}
+
+shared_ptr<RealCoords> PtolemyProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = 2*coords.epsilon;
+    double phi = 90 - 60 - rad_to_deg((coords.rho/EARTH_PERIMETER)-deg_tan(60));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coords) {
@@ -384,11 +443,23 @@ shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coord
     return make_shared<PolarCoords>(rho,epsilon);
 }
 
+shared_ptr<RealCoords> LambertConicProjection::decompute_coords(PolarCoords &coords) {
+    double lambda = coords.epsilon/(pow(deg_cos(30),2));
+    double phi = 90 - 2 * rad_to_deg(asin(deg_cos(30)*coords.rho/(2*EARTH_PERIMETER)));
+    return make_shared<RealCoords>(phi,lambda);
+}
+
 
 shared_ptr<CartesianCoords> SansonProjectionSpecial::compute_coords(RealCoords &coords) {
     double x = EARTH_PERIMETER * deg_to_rad(coords.longitude) * deg_cos(coords.latitude);
     double y = EARTH_PERIMETER * deg_to_rad(coords.latitude);
     return make_shared<CartesianCoords>(x,y);
+}
+
+shared_ptr<RealCoords> SansonProjectionSpecial::decompute_coords(CartesianCoords &coords) {
+    double phi = rad_to_deg(coords.y/EARTH_PERIMETER);
+    double lambda = rad_to_deg(coords.x/(EARTH_PERIMETER*deg_cos(phi)));
+    return make_shared<RealCoords>(phi,lambda);
 }
 
 shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &coords) {
@@ -401,7 +472,8 @@ shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &
 }
 
 shared_ptr<RealCoords> WernerStabProjectionSpecial::decompute_coords(PolarCoords &coords) {
-    return AzimuthalProjection::decompute_coords(coords);
+    double phi = 90 - rad_to_deg(coords.rho/EARTH_PERIMETER);
+    return make_shared<RealCoords>(phi,0);
 }
 
 
@@ -419,7 +491,7 @@ void ConicProjection::add_point(string &name, double c1, double c2){
 shared_ptr<Coords> ConicProjection::find_point(const string &p0){
     shared_ptr<PolarCoords> p0_ptr;
     if(points.find(p0) == points.end()){
-        if(db->data.find(p0) == db->data.end()){
+        if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
         }
         else if(db->data[p0]->type == POINT) {
@@ -494,6 +566,16 @@ void ConicProjection::print_local() {
         cout <<" "<<point.first<<": epsilon="<<point.second->epsilon<<", rho="<<point.second->rho<<endl;
     }
     cout << "-------------------------------------------"<<endl;
+}
+
+shared_ptr<RealCoords> ConicProjection::convert_to_real_coords(const string &p) {
+    shared_ptr<PolarCoords> p_ptr = static_pointer_cast<PolarCoords>(find_point(p));
+    if(p_ptr == nullptr){
+        cout <<"the point does not exist."<<endl;
+        return nullptr;
+    }
+    auto result = decompute_coords(*p_ptr);
+    return result;
 }
 
 shared_ptr<Database> Projection::db = nullptr;
