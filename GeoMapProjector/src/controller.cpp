@@ -308,6 +308,7 @@ public:
         ss >> calc_type;
         string output;
         double scale = 1;
+        double conversion_factor = 1;
         if(calc_type == "distance"){
             string p1, p2;
             p1 = get_multiword_name(ss);
@@ -317,8 +318,18 @@ public:
             if(has_scale == "scale"){
                 scale = get_scale(ss);
             }
+            string has_unit;
+            string unit = "km";
+            ss >> has_unit;
+            if(has_unit == "units"){
+                ss >> unit;
+                if(unit == "m") conversion_factor = 1000;
+                else if(unit == "cm") conversion_factor = 100000;
+                else if(unit == "mm") conversion_factor = 1000000;
+            }
             double result = current_projection.second->calculate_distance(p1,p2);
-            cout <<fixed <<result/scale <<"km"<<endl;
+            double scaled_converted_result = (result / scale) * conversion_factor;
+            cout <<fixed <<scaled_converted_result<<unit<<endl;
         }
         else if(calc_type == "area"){
             if(existing_projections[current_projection.first].first.substr(0,6) == "hybrid"){
@@ -332,8 +343,18 @@ public:
             if(has_scale == "scale"){
                 scale = get_scale(ss);
             }
+            string has_unit;
+            string unit = "km";
+            ss >> has_unit;
+            if(has_unit == "units"){
+                ss >> unit;
+                if(unit == "m") conversion_factor = 1000000;
+                else if(unit == "cm") conversion_factor = 10000000000;
+                else if(unit == "mm") conversion_factor = 1000000000000;
+            }
             double result = current_projection.second->calculate_rectangular_area(region);
-            cout <<fixed <<result/pow(scale,2) << "km^2"<<endl;
+            double scaled_converted_result = (result/pow(scale,2))*conversion_factor;
+            cout <<fixed << scaled_converted_result<<unit<< "^2"<<endl;
         }
         else{
             cout << "invalid command."<<endl;
