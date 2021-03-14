@@ -36,6 +36,7 @@ public:
         current_projection.first = "real";
         current_projection.second = real_projection;
 
+        projections["real"]["real"] = real_projection;
         projections["azimuthal"]["gnomonic"] = make_shared<GnomonicProjection>();
         projections["azimuthal"]["stereographic"] = make_shared<StereoGraphicProjection>();
         projections["azimuthal"]["orthographic"] = make_shared<OrthographicProjection>();
@@ -154,46 +155,27 @@ public:
         cout <<"sea you next time!"<<endl;
     }
 
-    void make_cmd(stringstream &ss){
-        string proj_type;
-        string proj_subtype;
-        string alias;
-
-        ss >> proj_type;
-
-        auto main_proj_it = projections.find(proj_type);
-        if(main_proj_it == projections.end()){
-            cout << "this type of projection does not exist"<<endl;
-            return;
-        }
-
-        ss >> proj_subtype;
-        auto subtype_it = (*main_proj_it).second.find(proj_subtype);
-
-        if(subtype_it == (*main_proj_it).second.end()){
-            cout << "this type of projection does not exist"<<endl;
-            return;
-        }
-
-        ss >> alias;
-        if(alias == ""){
-            cout << "invalid name."<<endl;
-            return;
-        }
-        existing_projections[alias] = make_pair(proj_type+" "+proj_subtype,(*subtype_it).second);
-        cout <<proj_type<<" "<<proj_subtype <<" projection called \""<<alias<<"\" was added to your list of projections."<<endl;
-    }
-
     void enter_cmd(stringstream &ss){
-        string alias;
-        ss >> alias;
-        auto alias_it = existing_projections.find(alias);
-        if(alias_it == existing_projections.end()){
-            cout << "There is none projection saved under this name."<<endl;
+        string type, subtype;
+        ss >> type;
+        if(type == "real"){
+            current_projection.first = type;
+            current_projection.second = real_projection;
             return;
         }
-        current_projection.first = alias;
-        current_projection.second = existing_projections[alias].second;
+        ss >> subtype;
+        auto alias_it = projections.find(type);
+        if(alias_it == projections.end()){
+            cout << "This projection does not exist. Type \"help projections\" for more info."<<endl;
+            return;
+        }
+        auto subtype_it = (alias_it->second).find(subtype);
+        if(subtype_it == alias_it->second.end()){
+            cout << "This projection does not exist. Type \"help projections\" for more info."<<endl;
+            return;
+        }
+        current_projection.first = type+" "+subtype;
+        current_projection.second = projections[type][subtype];
     }
 
     string get_multiword_name(stringstream &ss){
@@ -321,7 +303,6 @@ public:
         return scale;
     }
 
-    //tu treba podporovat viacslovne nazvy
     void get_cmd(stringstream &ss){
         string calc_type;
         ss >> calc_type;
@@ -362,7 +343,7 @@ public:
 
     void process_input(istream &is){
         string line;
-        cout <<">main-menu: ";
+        cout <<">real: ";
         getline(is,line);
         while(getline(is,line)){
 
@@ -377,7 +358,6 @@ public:
             ss >> word;
 
             if(word == "help") help_cmd(ss);
-            else if(word == "make") make_cmd(ss);
             else if(word == "enter") enter_cmd(ss);
             else if(word == "add") add_cmd(ss);
             else if(word == "menu") current_projection.second = real_projection;
@@ -386,7 +366,7 @@ public:
             else cout << "invalid command. Please type \"help\" for help."<<endl;
 
 
-            if(current_projection.second == real_projection) cout <<"\n>main-menu: ";
+            if(current_projection.second == real_projection) cout <<"\n>real: ";
             else cout << "\n>" << current_projection.first<<": ";
         }
     }
