@@ -125,6 +125,7 @@ shared_ptr<RealCoords> AzimuthalProjection::convert_to_real_coords(const string 
         return nullptr;
     }
     auto result = decompute_coords(*p_ptr);
+    return result;
 }
 
 
@@ -137,7 +138,7 @@ shared_ptr<PolarCoords> GnomonicProjection::compute_coords(RealCoords &coords){
     double epsilon = coords.longitude;
     double delta = 90 - coords.latitude;
     double rho = EARTH_PERIMETER * deg_tan(delta);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> GnomonicProjection::decompute_coords(PolarCoords &coords) {
@@ -155,7 +156,7 @@ shared_ptr<PolarCoords> StereoGraphicProjection::compute_coords(RealCoords &coor
     double epsilon = coords.longitude;
     double delta = 90 - coords.latitude;
     double rho = 2 * EARTH_PERIMETER * deg_tan(delta/2);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> StereoGraphicProjection::decompute_coords(PolarCoords &coords) {
@@ -170,7 +171,7 @@ shared_ptr<PolarCoords> OrthographicProjection::compute_coords(RealCoords &coord
     double epsilon = coords.longitude;
     double delta = 90 - coords.latitude;
     double rho = EARTH_PERIMETER * deg_sin(delta);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> OrthographicProjection::decompute_coords(PolarCoords &coords) {
@@ -185,7 +186,7 @@ shared_ptr<PolarCoords> PostelProjection::compute_coords(RealCoords &coords){
     double epsilon = coords.longitude;
     double delta = 90 - coords.latitude;
     double rho = EARTH_PERIMETER * deg_to_rad(delta);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> PostelProjection::decompute_coords(PolarCoords &coords) {
@@ -200,7 +201,7 @@ shared_ptr<PolarCoords> LambertAzimuthalProjection::compute_coords(RealCoords &c
     double epsilon = coords.longitude;
     double delta = 90 - coords.latitude;
     double rho = 2*EARTH_PERIMETER * deg_sin(delta/2);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> LambertAzimuthalProjection::decompute_coords(PolarCoords &coords) {
@@ -372,7 +373,7 @@ shared_ptr<PolarCoords> PtolemyProjection::compute_coords(RealCoords &coords) {
     double delta_0 = 90 - phi_0;
     double epsilon = coords.longitude * deg_cos(delta_0);
     double rho = EARTH_PERIMETER * (deg_tan(delta_0)+deg_to_rad((90-coords.latitude)-delta_0));
-    return make_shared<PolarCoords>(epsilon, rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coords) {
@@ -380,7 +381,7 @@ shared_ptr<PolarCoords> LambertConicProjection::compute_coords(RealCoords &coord
     double delta_0 = 90 - phi_0;
     double epsilon = coords.longitude * pow(deg_cos(delta_0/2),2);
     double rho = 2 * EARTH_PERIMETER * (deg_sin((90-coords.latitude)/2)/(deg_cos(delta_0/2)));
-    return make_shared<PolarCoords>(epsilon, rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 
@@ -396,7 +397,7 @@ shared_ptr<PolarCoords> WernerStabProjectionSpecial::compute_coords(RealCoords &
     double delta = 90 - coords.latitude;
     double epsilon = 360 * deg_sin(delta) / deg_to_rad(delta);
     double rho = EARTH_PERIMETER * deg_to_rad(delta);
-    return make_shared<PolarCoords>(epsilon,rho);
+    return make_shared<PolarCoords>(rho,epsilon);
 }
 
 shared_ptr<RealCoords> WernerStabProjectionSpecial::decompute_coords(PolarCoords &coords) {

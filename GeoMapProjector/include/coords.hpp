@@ -57,7 +57,7 @@ public:
     double rho;
 
     PolarCoords():Coords(){}
-    PolarCoords(double e, double r);
+    PolarCoords(double r, double e);
     PolarCoords(double value, enum lat_or_long type);
 
     double get_singleton_value();

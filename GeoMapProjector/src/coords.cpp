@@ -59,8 +59,8 @@ pair<double, double> RealCoords::normalize_coords(double lat, double lon) {
 }
 
 
-PolarCoords::PolarCoords(double e, double r):Coords(normalize_coords(e,r).first,normalize_coords(e,r).second){
-    auto normalized = normalize_coords(e,r);
+PolarCoords::PolarCoords(double r, double e):Coords(normalize_coords(r,e).first,normalize_coords(r,e).second){
+    auto normalized = normalize_coords(r,e);
     epsilon = normalized.second;
     rho = normalized.first;
 }
