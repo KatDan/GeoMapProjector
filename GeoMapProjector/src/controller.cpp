@@ -196,6 +196,24 @@ public:
         current_projection.second = existing_projections[alias].second;
     }
 
+    string get_multiword_name(stringstream &ss){
+        string result;
+        ss >> result;
+        if(result[0] != '"') return result;
+
+        string next_word;
+        ss >> next_word;
+        while(!ss.eof() && next_word[next_word.size()-1] != '"'){
+            result += " "+next_word;
+            ss >>next_word;
+        }
+        if(ss.eof() && next_word[next_word.size()-1] != '"'){
+            return "";
+        }
+        else result += " "+next_word;
+        return result.substr(1,result.size()-2);
+    }
+
     void add_cmd(stringstream &ss){
         string type;
         ss >>type;
@@ -205,11 +223,11 @@ public:
             if(coord_type == "real"){
                 string name;
                 double lat, lon;
-                ss >> name;
+                name = get_multiword_name(ss);
                 ss >> lat;
                 ss >> lon;
-                if(ss.fail()){
-                    cout <<"invalid number."<<endl;
+                if(ss.fail() || name == ""){
+                    cout <<"error: invalid input."<<endl;
                     return;
                 }
                 Projection::db->add_data(name,lat,lon,coords_type::REAL,object_type::CUSTOM);
@@ -222,7 +240,7 @@ public:
                     return;
                 }
                 string name;
-                ss >>name;
+                name = get_multiword_name(ss);
                 double relative_x, relative_y;
                 ss >> relative_x;
                 ss >> relative_y;
@@ -242,7 +260,7 @@ public:
         else if(type == "region"){
             string name;
             double s,n,e,w;
-            ss >> name;
+            name = get_multiword_name(ss);
             ss >>s;
             ss >> n;
             ss >> e;
@@ -303,6 +321,7 @@ public:
         return scale;
     }
 
+    //tu treba podporovat viacslovne nazvy
     void get_cmd(stringstream &ss){
         string calc_type;
         ss >> calc_type;
@@ -310,8 +329,8 @@ public:
         double scale = 1;
         if(calc_type == "distance"){
             string p1, p2;
-            ss >> p1;
-            ss >> p2;
+            p1 = get_multiword_name(ss);
+            p2 = get_multiword_name(ss);
             string has_scale;
             ss >> has_scale;
             if(has_scale == "scale"){
@@ -326,7 +345,7 @@ public:
                 return;
             }
             string region;
-            ss >> region;
+            region = get_multiword_name(ss);
             string has_scale;
             ss >> has_scale;
             if(has_scale == "scale"){

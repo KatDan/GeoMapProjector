@@ -66,20 +66,6 @@ sstream
 algorithm
 -
 
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/coords.cpp
-utility
--
-cmath
--
-my_math.hpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/my_math.hpp
-../include/coords.hpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/coords.hpp
-
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/database.cpp
-../include/database.hpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/database.hpp
-
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/db_loader.cpp
 ../include/database.hpp
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/database.hpp
@@ -99,8 +85,4 @@ iostream
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/projections.hpp
 controller.cpp
 C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/controller.cpp
-
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/src/projections.cpp
-../include/projections.hpp
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/include/projections.hpp
 
