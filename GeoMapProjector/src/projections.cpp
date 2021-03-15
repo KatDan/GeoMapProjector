@@ -299,7 +299,7 @@ void CylindricalProjection::print_local() {
     cout << "-------------------------------------------"<<endl;
     cout << points.size()<<" local point(s) saved:"<<endl;
     for(auto &point : points){
-        cout <<" "<<point.first<<": x="<< point.second->x<<", y="<<point.second->y<<endl;
+        cout <<" "<<point.first<<": "<<point.second->get_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }

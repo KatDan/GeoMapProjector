@@ -29,7 +29,7 @@ public:
 
     virtual double get_singleton_value(){}
 
-    string get_coords() const;
+    virtual string get_coords() const;
 
     virtual ~Coords(){}
 
@@ -44,9 +44,11 @@ public:
     RealCoords(double lat, double lon);
     RealCoords(double value, enum lat_or_long type);
 
-    double get_singleton_value();
+    double get_singleton_value() override;
 
     ~RealCoords(){}
+
+    string get_coords() const override;
 
     pair<double,double> normalize_coords(double a, double b) override;
 };
@@ -60,9 +62,11 @@ public:
     PolarCoords(double r, double e);
     PolarCoords(double value, enum lat_or_long type);
 
-    double get_singleton_value();
+    double get_singleton_value() override;
 
     ~PolarCoords(){};
+
+    string get_coords() const override;
 
     pair<double,double> normalize_coords(double a, double b) override;
 };
@@ -76,9 +80,11 @@ public:
     CartesianCoords(double x, double y);
     CartesianCoords(double value, enum lat_or_long type);
 
-    double get_singleton_value();
+    double get_singleton_value() override;
 
     ~CartesianCoords(){};
+
+    string get_coords() const override;
 
     pair<double,double> normalize_coords(double a, double b) override;
 };

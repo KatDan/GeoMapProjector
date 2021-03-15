@@ -58,6 +58,10 @@ pair<double, double> RealCoords::normalize_coords(double lat, double lon) {
     return make_pair(lat,lon);
 }
 
+string RealCoords::get_coords() const {
+    return "lat="+to_string(latitude)+", lon="+to_string(longitude);
+}
+
 
 PolarCoords::PolarCoords(double r, double e):Coords(normalize_coords(r,e).first,normalize_coords(r,e).second){
     auto normalized = normalize_coords(r,e);
@@ -85,6 +89,10 @@ pair<double, double> PolarCoords::normalize_coords(double r, double e) {
     return make_pair(r,e);
 }
 
+string PolarCoords::get_coords() const {
+    return "rho="+to_string(rho)+", e="+to_string(epsilon);
+}
+
 
 CartesianCoords::CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
 CartesianCoords::CartesianCoords(double value, enum lat_or_long type):Coords(type){
@@ -100,6 +108,10 @@ double CartesianCoords::get_singleton_value() {
 
 pair<double, double> CartesianCoords::normalize_coords(double x, double y) {
     return make_pair(x,y);
+}
+
+string CartesianCoords::get_coords() const {
+    return "y="+to_string(y)+", x="+to_string(x);
 }
 
 

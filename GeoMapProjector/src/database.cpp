@@ -10,7 +10,7 @@ Point::Point(double c1, double c2, enum coords_type type = REAL):Data(data_type:
 }
 
 string Point::print_coords() const{
-    return to_string(coords->coords_pair.first)+" "+to_string(coords->coords_pair.second);
+    return coords->get_coords();
 }
 
 Region::Region(double s, double n, double e, double w):Data(data_type::REGION),
@@ -94,7 +94,9 @@ void Database::print_cities() const{
     cout << "-------------------------------------------"<<endl;
     cout << cities.size() << " cities saved: "<<endl;
     for(auto &city : cities){
-        cout << " "<<city.first<<": "<< city.second->print_coords()<<endl;
+        if(city.first.size() > 12) cout << " "<<city.first<<": \t"<< city.second->print_coords()<<endl;
+        else if(city.first.size() < 5) cout << " "<<city.first<<": \t\t\t"<< city.second->print_coords()<<endl;
+        else cout << " "<<city.first<<": \t\t"<< city.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
@@ -103,7 +105,9 @@ void Database::print_mountains() const{
     cout << "-------------------------------------------"<<endl;
     cout << mountains.size()<<" mountains saved:"<<endl;
     for(auto &mountain : mountains){
-        cout <<" "<<mountain.first<<": "<< mountain.second->print_coords()<<endl;
+        if(mountain.first.size() > 12) cout <<" "<<mountain.first<<": \t"<< mountain.second->print_coords()<<endl;
+        else if(mountain.first.size() < 5) cout <<" "<<mountain.first<<": \t\t\t"<< mountain.second->print_coords()<<endl;
+        else cout <<" "<<mountain.first<<": \t\t"<< mountain.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
@@ -112,7 +116,9 @@ void Database::print_lakes() const{
     cout << "-------------------------------------------"<<endl;
     cout << lakes.size()<<" lakes saved: "<<endl;
     for(auto &lake : lakes){
-        cout << " "<<lake.first<<": "<< lake.second->print_coords()<<endl;
+        if(lake.first.size() > 12) cout << " "<<lake.first<<": \t"<< lake.second->print_coords()<<endl;
+        else if(lake.first.size() < 5) cout << " "<<lake.first<<": \t\t\t"<< lake.second->print_coords()<<endl;
+        else cout << " "<<lake.first<<": \t\t"<< lake.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
@@ -121,7 +127,8 @@ void Database::print_continents() const{
     cout << "-------------------------------------------"<<endl;
     cout << continents.size()<<" continents saved: "<<endl;
     for(auto &cont : continents){
-        cout << " "<<cont.first<<": "<< cont.second->print_coords()<<endl;
+        if(cont.first.size() < 5) cout << " "<<cont.first<<": \t\t"<< cont.second->print_coords()<<endl;
+        else cout << " "<<cont.first<<": \t"<< cont.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
@@ -130,10 +137,14 @@ void Database::print_custom() const{
     cout << "-------------------------------------------"<<endl;
     cout << custom_points.size()+custom_regions.size()<<" custom data saved:"<<endl;
     for(auto &cust : custom_points){
-        cout << " "<<cust.first<<": "<< cust.second->print_coords()<<endl;
+        if(cust.first.size() > 12 ) cout << " "<<cust.first<<": \t"<< cust.second->print_coords()<<endl;
+        else if(cust.first.size() < 5) cout << " "<<cust.first<<": \t\t\t"<< cust.second->print_coords()<<endl;
+        else cout << " "<<cust.first<<": \t\t"<< cust.second->print_coords()<<endl;
     }
     for(auto &cust : custom_regions){
-        cout << " "<<cust.first<<": "<< cust.second->print_coords()<<endl;
+        if(cust.first.size() > 12 ) cout << " "<<cust.first<<": \t"<< cust.second->print_coords()<<endl;
+        else if(cust.first.size() < 5) cout << " "<<cust.first<<": \t\t\t"<< cust.second->print_coords()<<endl;
+        else cout << " "<<cust.first<<": \t\t"<< cust.second->print_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
