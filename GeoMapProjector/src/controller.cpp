@@ -197,8 +197,8 @@ public:
         ss >> word;
 
         if(word == "") cout << help <<endl;
-        else if(word == "projections") cout<<projection_help<<endl;
-        else if(word.compare("azimuthal") == 0) cout<<azimuthal_help<<endl;
+        else if(word == "projections") cout << projection_help <<endl;
+        else if(word == "azimuthal") cout << azimuthal_help <<endl;
         else if(word == "cylindrical") cout << cylindrical_help<<endl;
         else if(word == "conic") cout << conic_help<<endl;
         else if(word == "hybrid") cout << hybrid_help<<endl;
@@ -439,7 +439,7 @@ public:
 
     void process_input(istream &is){
         string line;
-        cout <<"\n Welcome to GeoMapProjector!\nFor more info about supported commands type \"help\"\n";
+        cout <<"\n Welcome to GeoMapProjector!\nFor more info about supported commands type \"help\"\nType \"exit\" to exit the program.\n";
         cout <<">real: ";
         getline(is,line);
         while(getline(is,line)){
