@@ -40,7 +40,18 @@ void AzimuthalProjection::add_point(string &name, double c1, double c2){
 
 shared_ptr<Coords> AzimuthalProjection::find_point(const string &p0){
     shared_ptr<PolarCoords> p0_ptr;
-    if(points.find(p0) == points.end()){
+    if(p0.find('.') != string::npos){
+        auto dot_it = p0.find('.');
+
+        string country = p0.substr(0,dot_it);
+        string is_capital = p0.substr(dot_it+1);
+        if(is_capital != "capital") return nullptr;
+
+        if(db->countries.find(country) == db->countries.end()) return nullptr;
+        auto capital = static_pointer_cast<Region>(db->countries[country])->capital;
+        p0_ptr = compute_coords(*capital->coords);
+    }
+    else if(points.find(p0) == points.end()){
         if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
         }
@@ -226,7 +237,18 @@ void CylindricalProjection::add_point(string &name, double c1, double c2){
 
 shared_ptr<Coords> CylindricalProjection::find_point(const string &p0){
     shared_ptr<CartesianCoords> p0_ptr;
-    if(points.find(p0) == points.end()){
+    if(p0.find('.') != string::npos){
+        auto dot_it = p0.find('.');
+
+        string country = p0.substr(0,dot_it);
+        string is_capital = p0.substr(dot_it+1);
+        if(is_capital != "capital") return nullptr;
+
+        if(db->countries.find(country) == db->countries.end()) return nullptr;
+        auto capital = static_pointer_cast<Region>(db->countries[country])->capital;
+        p0_ptr = compute_coords(*capital->coords);
+    }
+    else if(points.find(p0) == points.end()){
         if(db->data.find(p0) == db->data.end()){
             return nullptr;
         }
@@ -490,7 +512,18 @@ void ConicProjection::add_point(string &name, double c1, double c2){
 
 shared_ptr<Coords> ConicProjection::find_point(const string &p0){
     shared_ptr<PolarCoords> p0_ptr;
-    if(points.find(p0) == points.end()){
+    if(p0.find('.') != string::npos){
+        auto dot_it = p0.find('.');
+
+        string country = p0.substr(0,dot_it);
+        string is_capital = p0.substr(dot_it+1);
+        if(is_capital != "capital") return nullptr;
+
+        if(db->countries.find(country) == db->countries.end()) return nullptr;
+        auto capital = static_pointer_cast<Region>(db->countries[country])->capital;
+        p0_ptr = compute_coords(*capital->coords);
+    }
+    else if(points.find(p0) == points.end()){
         if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
         }
@@ -616,8 +649,18 @@ shared_ptr<RealCoords> RealProjection::compute_coords(RealCoords &coords) {
 
 shared_ptr<Coords> RealProjection::find_point(const string &p0) {
     shared_ptr<RealCoords> p0_ptr;
+    if(p0.find('.') != string::npos){
+        auto dot_it = p0.find('.');
 
-    if(db->data.find(p0) == db->data.end()){
+        string country = p0.substr(0,dot_it);
+        string is_capital = p0.substr(dot_it+1);
+        if(is_capital != "capital") return nullptr;
+
+        if(db->countries.find(country) == db->countries.end()) return nullptr;
+        auto capital = static_pointer_cast<Region>(db->countries[country])->capital;
+        p0_ptr = compute_coords(*capital->coords);
+    }
+    else if(db->data.find(p0) == db->data.end()){
         return nullptr;
     }
     else if(db->data[p0]->type == POINT) {

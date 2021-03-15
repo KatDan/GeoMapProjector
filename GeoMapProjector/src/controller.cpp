@@ -139,6 +139,7 @@ public:
                    " (3) area <name> - prints the area between the longitudes and the latitudes defining\n"
                    "                   the borders of the region <name> in kilometres squared.\n"
                    "\n"
+                   "<name> can be in format \"<country_name>.capital\"\n"
                    "Parentheses \"()\" mean that their content is optional.\n"
                    "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
                    "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
@@ -239,6 +240,13 @@ public:
         current_projection.second = projections[type][subtype];
     }
 
+    bool is_valid_name(string &str){
+        for(auto &c: str){
+            if(!(isalnum(c) || c == ' ')) return false;
+        }
+        return true;
+    }
+
     string get_multiword_name(stringstream &ss){
         string result;
         ss >> result;
@@ -267,6 +275,10 @@ public:
                 string name;
                 double lat, lon;
                 name = get_multiword_name(ss);
+                if(!is_valid_name(name)){
+                    cout <<"error: invalid name. Use only letters, spaces and digits."<<endl;
+                    return;
+                }
                 ss >> lat;
                 ss >> lon;
                 if(ss.fail() || name == ""){
@@ -284,6 +296,10 @@ public:
                 }
                 string name;
                 name = get_multiword_name(ss);
+                if(!is_valid_name(name)){
+                    cout <<"error: invalid name. Use only letters, spaces and digits."<<endl;
+                    return;
+                }
                 double relative_x, relative_y;
                 ss >> relative_x;
                 ss >> relative_y;
@@ -304,6 +320,10 @@ public:
             string name;
             double s,n,e,w;
             name = get_multiword_name(ss);
+            if(!is_valid_name(name)){
+                cout <<"error: invalid name. Use only letters, spaces and digits."<<endl;
+                return;
+            }
             ss >>s;
             ss >> n;
             ss >> e;
