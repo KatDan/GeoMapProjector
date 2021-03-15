@@ -22,10 +22,4 @@ double deg_tan(double number);
 
 double deg_cot(double number);
 
-double deg_arccos(double number);
-
-double deg_arcsin(double number);
-
-double normalize_deg(double degree);
-
 #endif //GEOMAPPROJECTOR_MY_MATH_HPP

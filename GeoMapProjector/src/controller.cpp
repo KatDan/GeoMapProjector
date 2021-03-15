@@ -4,14 +4,8 @@
 #include "../include/projections.hpp"
 
 #include<iostream>
-#include<fstream>
 #include<sstream>
 #include<algorithm>
-
-#define AZIMUTH_PROJ_INDEX 0
-#define CYLINDRICAL_PROJ_INDEX 1
-#define CONIC_PROJ_INDEX 2
-
 
 using namespace std;
 
@@ -193,11 +187,11 @@ public:
 
     }
 
-    void help_cmd(stringstream &ss){
+    void help_cmd(stringstream &ss) const{
         string word;
         ss >> word;
 
-        if(word == "") cout << help <<endl;
+        if(word.empty()) cout << help <<endl;
         else if(word == "projections") cout << projection_help <<endl;
         else if(word == "azimuthal") cout << azimuthal_help <<endl;
         else if(word == "cylindrical") cout << cylindrical_help<<endl;
@@ -211,7 +205,7 @@ public:
         else if(word == "get") cout << get_help << endl;
     }
 
-    void exit_cmd() const{
+    static void exit_cmd() {
         cout <<"sea you next time!"<<endl;
     }
 
@@ -240,14 +234,11 @@ public:
         current_projection.second = projections[type][subtype];
     }
 
-    bool is_valid_name(string &str){
-        for(auto &c: str){
-            if(!(isalnum(c) || c == ' ')) return false;
-        }
-        return true;
+    static bool is_valid_name(const string &str){
+        return all_of(str.begin(),str.end(),[](char c){return (isalnum(c) || c == ' ');});
     }
 
-    string get_multiword_name(stringstream &ss){
+    static string get_multiword_name(stringstream &ss){
         string result;
         ss >> result;
         if(result[0] != '"') return result;
@@ -281,11 +272,11 @@ public:
                 }
                 ss >> lat;
                 ss >> lon;
-                if(ss.fail() || name == ""){
+                if(ss.fail() || name.empty()){
                     cout <<"error: invalid input."<<endl;
                     return;
                 }
-                Projection::db->add_data(name,lat,lon,coords_type::REAL,object_type::CUSTOM);
+                Projection::db->add_data(name,lat,lon,object_type::CUSTOM);
                 cout <<"point \""<<name<<"\" was successfully added to the main database."<<endl;
                 return;
             }
@@ -364,13 +355,13 @@ public:
         }
     }
 
-    double get_scale(stringstream &ss){
+    static double get_scale(stringstream &ss){
         double scale = 1;
         string scale_start;
         auto c = ss.get();
         while(isspace(c)) c = ss.get();
-        scale_start += c;
-        scale_start += ss.get();
+        scale_start += (char)c;
+        scale_start += (char)ss.get();
         if(scale_start != "1:"){
             cout << "please, type a scale in format \"1:[number]\". Scale ignored."<<endl;
             return scale;

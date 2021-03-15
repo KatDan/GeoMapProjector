@@ -3,8 +3,6 @@
 //
 #include "../include/my_math.hpp"
 
-//#define EARTH_PERIMETER 6371.11
-
 double deg_to_rad(double number){
     return number * M_PI / 180;
 }
@@ -31,8 +29,4 @@ double deg_tan(double number){
 double deg_cot(double number){
     double rad_number = deg_to_rad(number);
     return 1/tan(rad_number);
-}
-
-double normalize_deg(double degree){
-    return fmod(degree,360.0);
 }

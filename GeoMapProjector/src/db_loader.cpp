@@ -11,11 +11,11 @@
 class db_loader{
 public:
 
-    db_loader(){};
+    db_loader()= default;;
 
-    ~db_loader(){}
+    ~db_loader()= default;
 
-    double get_coordinate(istream &is){
+    static double get_coordinate(istream &is){
         string num_string;
         string hemisphere;
 
@@ -27,7 +27,7 @@ public:
         return coord;
     }
 
-    void add_countries(Database &db){
+    static void add_countries(Database &db){
         ifstream is("../extreme_points_on_earth_countries.csv");
 
         if(is.fail()){
@@ -58,7 +58,7 @@ public:
         is.close();
     }
 
-    void add_lakes(Database &db){
+    static void add_lakes(Database &db){
         ifstream is("../extreme_points_on_earth_lakes.csv");
 
         if(is.fail()){
@@ -84,7 +84,7 @@ public:
         is.close();
     }
 
-    void add_mountains(Database &db){
+    static void add_mountains(Database &db){
         ifstream is("../extreme_points_on_earth_mountains.csv");
 
         if(is.fail()){
@@ -103,13 +103,13 @@ public:
             double lat = get_coordinate(ss);
             double lon = get_coordinate(ss);
 
-            db.add_data(mount,lat,lon,coords_type::REAL,object_type::MOUNTAIN);
+            db.add_data(mount,lat,lon,object_type::MOUNTAIN);
 
         }
         is.close();
     }
 
-    void add_cities(Database &db,int number){
+    static void add_cities(Database &db,int number){
         ifstream is("../worldcities_mega_db.csv");
 
         if(is.fail()){
@@ -137,13 +137,13 @@ public:
             double lat = stod(lat_string);
             double lon = stod(lon_string);
 
-            db.add_data(city,lat,lon,coords_type::REAL,object_type::CITY);
+            db.add_data(city,lat,lon,object_type::CITY);
             iteration++;
         }
         is.close();
     }
 
-    void add_continents(Database &db){
+    static void add_continents(Database &db){
         ifstream is("../extreme_points_on_earth_continents.csv");
 
         if(is.fail()){
@@ -170,7 +170,7 @@ public:
     }
 
 
-    void add_initial_data(Database &db, int number = 100){
+    static void add_initial_data(Database &db, int number = 100){
         add_continents(db);
         add_countries(db);
         add_lakes(db);

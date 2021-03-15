@@ -1,10 +1,7 @@
 //
 // Created by Ja on 28.02.2021.
 //
-/*#include<iostream>
-#include<utility>
-#include<cmath>
-#include "my_math.hpp"*/
+
 #include "../include/coords.hpp"
 
 using namespace std;
@@ -106,8 +103,8 @@ double CartesianCoords::get_singleton_value() {
     else return 0;
 }
 
-pair<double, double> CartesianCoords::normalize_coords(double x, double y) {
-    return make_pair(x,y);
+pair<double, double> CartesianCoords::normalize_coords(double xx, double xy) {
+    return make_pair(xx,xy);
 }
 
 string CartesianCoords::get_coords() const {
@@ -116,41 +113,41 @@ string CartesianCoords::get_coords() const {
 
 
 template<typename T>
-double get_distance(T p0, T p1);
+double get_distance(const T &p0, const T &p1);
 
 template<>
-double get_distance<RealCoords>(RealCoords p0, RealCoords p1){
+double get_distance<RealCoords>(const RealCoords &p0, const RealCoords &p1){
     double sigma = acos(deg_sin(90-p0.latitude)*deg_sin(90-p1.latitude)*deg_cos(abs(p0.longitude-p1.longitude))+
             deg_cos(90-p0.latitude)*deg_cos(90-p1.latitude));
     return sigma * EARTH_PERIMETER;
 }
 
 template<>
-double get_distance<PolarCoords>(PolarCoords p0, PolarCoords p1){
+double get_distance<PolarCoords>(const PolarCoords &p0, const PolarCoords &p1){
     return sqrt(pow(p0.rho,2)+pow(p1.rho,2)-2*p0.rho*p1.rho*deg_cos(abs(p0.epsilon-p1.epsilon)));
 }
 
 template<>
-double get_distance<CartesianCoords>(CartesianCoords p0, CartesianCoords p1){
+double get_distance<CartesianCoords>(const CartesianCoords &p0, const CartesianCoords &p1){
     return sqrt(pow(p0.x-p1.x,2)+pow(p0.y-p1.y,2));
 
 }
 
 template<typename T>
-double get_rectangular_area(T b0, T b1, T b2, T b3);
+double get_rectangular_area(const T &b0, const T &b1, const T &b2, const T &b3);
 
 template<>
-double get_rectangular_area<PolarCoords>(PolarCoords s, PolarCoords n, PolarCoords e, PolarCoords w){
+double get_rectangular_area<PolarCoords>(const PolarCoords &s, const PolarCoords &n, const PolarCoords &e, const PolarCoords &w){
     return (abs(e.epsilon-w.epsilon)/360)*M_PI*(abs(pow(s.rho,2)-pow(n.rho,2)));
 }
 
 template<>
-double get_rectangular_area<CartesianCoords>(CartesianCoords s, CartesianCoords n, CartesianCoords e, CartesianCoords w){
+double get_rectangular_area<CartesianCoords>(const CartesianCoords &s, const CartesianCoords &n, const CartesianCoords &e, const CartesianCoords &w){
     return (abs(s.y-n.y))*(abs(e.x-w.x));
 }
 
 template<>
-double get_rectangular_area<RealCoords>(RealCoords s, RealCoords n, RealCoords e, RealCoords w){
+double get_rectangular_area<RealCoords>(const RealCoords &s, const RealCoords &n, const RealCoords &e, const RealCoords &w){
     return 4*pow(EARTH_PERIMETER,2)*asin(deg_tan((abs(e.longitude-w.longitude))/(2*EARTH_PERIMETER))
             *deg_tan((abs(s.latitude-n.latitude))/(2*EARTH_PERIMETER)));
 }

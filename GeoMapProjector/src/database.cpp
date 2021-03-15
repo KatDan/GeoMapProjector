@@ -3,9 +3,11 @@
 //
 #include "../include/database.hpp"
 
+#include <utility>
+
 Data::Data(enum data_type type):type{type}{}
 
-Point::Point(double c1, double c2, enum coords_type type = REAL):Data(data_type::POINT){
+Point::Point(double c1, double c2):Data(data_type::POINT){
     coords = make_shared<RealCoords>(c1,c2);
 }
 
@@ -23,10 +25,10 @@ Region::Region(double s, double n, double e, double w):Data(data_type::REGION),
     centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
 }
 
-Region::Region(double s, double n, double e, double w, string &capital_name, double c1, double c2):Data(data_type::COUNTRY),
+Region::Region(double s, double n, double e, double w, string capital_name, double c1, double c2):Data(data_type::COUNTRY),
   south{make_shared<RealCoords>(s,lat_or_long::LATITUDE)},north{make_shared<RealCoords>(n,lat_or_long::LATITUDE)},
-  east{make_shared<RealCoords>(e,lat_or_long::LONGITUDE)},west{make_shared<RealCoords>(w,lat_or_long::LONGITUDE)},capital_name{capital_name},
-  capital{make_shared<Point>(c1,c2,coords_type::REAL)}{
+  east{make_shared<RealCoords>(e,lat_or_long::LONGITUDE)},west{make_shared<RealCoords>(w,lat_or_long::LONGITUDE)},capital_name{std::move(capital_name)},
+  capital{make_shared<Point>(c1,c2)}{
 
     double latitude_difference = abs(s-n);
     double longitude_difference = abs(e-w);
@@ -48,8 +50,8 @@ string Region::print_coords() const{
 
 }
 
-void Database::add_data(string &name, double c1, double c2, coords_type type, enum object_type obj_type){
-    auto p = make_shared<Point>(c1,c2,type);
+void Database::add_data(const string &name, double c1, double c2, enum object_type obj_type){
+    auto p = make_shared<Point>(c1,c2);
     auto p_dup = p;
     data[name] = p_dup;
     if(obj_type == CUSTOM) custom_points[name] = p;
@@ -57,7 +59,7 @@ void Database::add_data(string &name, double c1, double c2, coords_type type, en
     else if(obj_type == MOUNTAIN) mountains[name] = p;
 }
 
-void Database::add_data(string &name, double s, double n, double e, double w, enum object_type obj_type){
+void Database::add_data(const string &name, double s, double n, double e, double w, enum object_type obj_type){
     auto region_ptr = make_shared<Region>(s,n,e,w);
     auto another_ptr = region_ptr;
     data[name] = another_ptr;
@@ -66,19 +68,11 @@ void Database::add_data(string &name, double s, double n, double e, double w, en
     else if (obj_type == CUSTOM) custom_regions[name] = region_ptr;
 }
 
-void Database::add_data(string &name, double s, double n, double e, double w,string &capital_name, double c1, double c2){
+void Database::add_data(const string &name, double s, double n, double e, double w,const string &capital_name, double c1, double c2){
     auto country_ptr = make_shared<Region>(s,n,e,w,capital_name,c1,c2);
     auto c_ptr = country_ptr;
     data[name] = c_ptr;
     countries[name] = country_ptr;
-}
-
-shared_ptr<Data> Database::get_data(string &name){
-    if(data.find(name) == data.end()){
-        cout << "\""<<name<<"\" is not in the database."<<endl;
-        return nullptr;
-    }
-    return data[name];
 }
 
 void Database::print_countries() const{

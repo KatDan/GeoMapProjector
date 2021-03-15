@@ -5,11 +5,6 @@
 #ifndef GEOMAPPROJECTOR_DATABASE_HPP
 #define GEOMAPPROJECTOR_DATABASE_HPP
 
-
-//
-// Created by Ja on 28.02.2021.
-//
-
 #include<utility>
 #include<memory>
 #include<cmath>
@@ -25,19 +20,13 @@ enum data_type{
     COUNTRY
 };
 
-enum coords_type{
-    REAL,
-    POLAR,
-    CARTESIAN
-};
-
 class Data{
 public:
     enum data_type type;
 
     Data(enum data_type type);
 
-    virtual string print_coords() const{};
+    virtual string print_coords() const{return "";}
 
     ~Data(){}
 };
@@ -46,7 +35,7 @@ class Point : public Data{
 public:
     shared_ptr<RealCoords> coords;
 
-    Point(double c1, double c2, enum coords_type type);
+    Point(double c1, double c2);
     string print_coords() const;
 
     ~Point(){}
@@ -66,13 +55,9 @@ public:
 
     Region(double s, double n, double e, double w);
 
-    Region(double s, double n, double e, double w, string &capital_name, double c1, double c2);
-
-    double get_singleton_val(shared_ptr<Coords> coord);
+    Region(double s, double n, double e, double w, string capital_name, double c1, double c2);
 
     string print_coords() const;
-
-
 };
 
 enum object_type{
@@ -80,7 +65,6 @@ enum object_type{
     CUSTOM,
     MOUNTAIN,
     LAKE,
-    STATE,
     CONTINENT
 };
 
@@ -97,13 +81,11 @@ public:
 
     Database(){}
 
-    void add_data(string &name, double c1, double c2, coords_type type, enum object_type obj_type);
+    void add_data(const string &name, double c1, double c2, enum object_type obj_type);
 
-    void add_data(string &name, double s, double n, double e, double w, enum object_type obj_type);
+    void add_data(const string &name, double s, double n, double e, double w, enum object_type obj_type);
 
-    void add_data(string &name, double s, double n, double e, double w,string &capital_name, double c1, double c2);
-
-    shared_ptr<Data> get_data(string &name);
+    void add_data(const string &name, double s, double n, double e, double w,const string &capital_name, double c1, double c2);
 
     void print_countries() const;
 

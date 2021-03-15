@@ -109,10 +109,10 @@ double AzimuthalProjection::calculate_rectangular_area(const string &name) {
         return 0;
     }
 
-    auto s = *polar_s.get();
-    auto n = *polar_n.get();
-    auto e = *polar_e.get();
-    auto w = *polar_w.get();
+    auto s = *polar_s;
+    auto n = *polar_n;
+    auto e = *polar_e;
+    auto w = *polar_w;
 
 
     double result = get_rectangular_area<PolarCoords>(s,n,e,w);
@@ -306,10 +306,10 @@ double CylindricalProjection::calculate_rectangular_area(const string &name) {
         return 0;
     }
 
-    auto s = *cartesian_s.get();
-    auto n = *cartesian_n.get();
-    auto e = *cartesian_e.get();
-    auto w = *cartesian_w.get();
+    auto s = *cartesian_s;
+    auto n = *cartesian_n;
+    auto e = *cartesian_e;
+    auto w = *cartesian_w;
 
 
     double result = get_rectangular_area<CartesianCoords>(s,n,e,w);
@@ -581,10 +581,10 @@ double ConicProjection::calculate_rectangular_area(const string &name) {
         return 0;
     }
 
-    auto s = *polar_s.get();
-    auto n = *polar_n.get();
-    auto e = *polar_e.get();
-    auto w = *polar_w.get();
+    auto s = *polar_s;
+    auto n = *polar_n;
+    auto e = *polar_e;
+    auto w = *polar_w;
 
 
     double result = get_rectangular_area<PolarCoords>(s,n,e,w);
