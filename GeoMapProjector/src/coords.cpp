@@ -112,8 +112,6 @@ string CartesianCoords::get_coords() const {
 }
 
 
-template<typename T>
-double get_distance(const T &p0, const T &p1);
 
 template<>
 double get_distance<RealCoords>(const RealCoords &p0, const RealCoords &p1){
@@ -132,9 +130,6 @@ double get_distance<CartesianCoords>(const CartesianCoords &p0, const CartesianC
     return sqrt(pow(p0.x-p1.x,2)+pow(p0.y-p1.y,2));
 
 }
-
-template<typename T>
-double get_rectangular_area(const T &b0, const T &b1, const T &b2, const T &b3);
 
 template<>
 double get_rectangular_area<PolarCoords>(const PolarCoords &s, const PolarCoords &n, const PolarCoords &e, const PolarCoords &w){

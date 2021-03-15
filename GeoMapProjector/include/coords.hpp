@@ -103,7 +103,7 @@ template<>
 double get_distance<CartesianCoords>(const CartesianCoords &p0, const CartesianCoords &p1);
 
 template<typename T>
-double get_rectangular_area(const T &b0, const T &b1, const T &b2, const T &b3);
+double get_rectangular_area(const T &s, const T &n, const T &e, const T &w);
 
 template<>
 double get_rectangular_area<PolarCoords>(const PolarCoords &s, const PolarCoords &n, const PolarCoords &e, const PolarCoords &w);

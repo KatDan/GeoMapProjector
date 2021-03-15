@@ -52,8 +52,7 @@ string Region::print_coords() const{
 
 void Database::add_data(const string &name, double c1, double c2, enum object_type obj_type){
     auto p = make_shared<Point>(c1,c2);
-    auto p_dup = p;
-    data[name] = p_dup;
+    data[name] = p;
     if(obj_type == CUSTOM) custom_points[name] = p;
     else if(obj_type == CITY) cities[name] = p;
     else if(obj_type == MOUNTAIN) mountains[name] = p;
@@ -61,8 +60,7 @@ void Database::add_data(const string &name, double c1, double c2, enum object_ty
 
 void Database::add_data(const string &name, double s, double n, double e, double w, enum object_type obj_type){
     auto region_ptr = make_shared<Region>(s,n,e,w);
-    auto another_ptr = region_ptr;
-    data[name] = another_ptr;
+    data[name] = region_ptr;
     if(obj_type == LAKE) lakes[name] = region_ptr;
     else if(obj_type == CONTINENT) continents[name] = region_ptr;
     else if (obj_type == CUSTOM) custom_regions[name] = region_ptr;
@@ -70,8 +68,7 @@ void Database::add_data(const string &name, double s, double n, double e, double
 
 void Database::add_data(const string &name, double s, double n, double e, double w,const string &capital_name, double c1, double c2){
     auto country_ptr = make_shared<Region>(s,n,e,w,capital_name,c1,c2);
-    auto c_ptr = country_ptr;
-    data[name] = c_ptr;
+    data[name] = country_ptr;
     countries[name] = country_ptr;
 }
 

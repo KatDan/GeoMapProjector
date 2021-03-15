@@ -9,6 +9,7 @@ CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj: ../src/controller.cpp
 CMakeFiles/GeoMapProjector.dir/src/controller.cpp.obj: ../src/db_loader.cpp
 
 CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj: ../include/coords.hpp
+CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj: ../include/my_math.hpp
 CMakeFiles/GeoMapProjector.dir/src/coords.cpp.obj: ../src/coords.cpp
 
 CMakeFiles/GeoMapProjector.dir/src/database.cpp.obj: ../include/coords.hpp
