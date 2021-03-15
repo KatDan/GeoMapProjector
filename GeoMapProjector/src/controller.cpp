@@ -25,11 +25,18 @@ public:
 
     map<string, map<string, shared_ptr<Projection>>> projections;
 
-    string general_help;
+    string projection_help;
     string azimuthal_help;
     string cylindrical_help;
     string conic_help;
     string hybrid_help;
+    string get_help;
+    string print_help;
+    string home_help;
+    string add_help;
+    string enter_help;
+    string help;
+    string real_help;
 
     Controller(){
         real_projection = make_shared<RealProjection>();
@@ -57,98 +64,150 @@ public:
         projections["hybrid"]["sanson"] = make_shared<SansonProjectionSpecial>();
         projections["hybrid"]["werner-stab"] = make_shared<WernerStabProjectionSpecial>();
 
-        general_help = "There are 3 basic projections to choose from:\n"
-                                    " -> Azimuthal projection - The mapping of radial lines can be visualized by imagining\n"
-                                    "                           a plane tangent to the Earth, with the central point as \n"
-                                    "                           tangent point. This projection uses polar coordinates starting \n"
-                                    "                           at the north pole. The directions from it are preserved. \n"
-                                    "                           For more info type \"help azimuthal\".\n"
-                                    " -> Cylindrical projection - The mapping of meridians to vertical lines can be \n"
-                                    "                             visualized by imagining a cylinder whose axis coincides\n"
-                                    "                             with the Earth's axis of rotation. This cylinder is \n"
-                                    "                             wrapped around the Earth, projected onto, and then unrolled.\n"
-                                    "                             Cylindrical projections stretch distances east-west and \n"
-                                    "                             use cartesian coordinates. These projections have a low\n"
-                                    "                             distortion around the equator and a high distortion around\n"
-                                    "                             the poles. For more info type\n"
-                                    "                             \"help cylindrical\".\n"
-                                    " -> Conic projection - One or two standard parallels are defined (30 degrees in our case).\n"
-                                    "                       They may be visualized as secant lines where the cone intersects the globe,\n"
-                                    "                       or, as the tangent line where the cone is tangent to the globe. The \n"
-                                    "                       resulting conic map has low distortion in scale, shape, and area near those \n"
-                                    "                       standard parallels. For more info type \"help conic\".\n"
-                                    " + Hybrid projections - projection plane is an affine transformation of some of the\n"
-                                    "                         projections mentioned above. They may have both polar and\n"
-                                    "                         cartesian coordinate system. For more info type \"help hybrid\"\n"
-                                    " + basic latitude and longitude coordinates of a globe.";
+        projection_help = "There are 3 basic projections to choose from:\n"
+                                    " -> azimuthal - The mapping of radial lines can be visualized by imagining\n"
+                                    "                a plane tangent to the Earth, with the central point as \n"
+                                    "                tangent point. This projection uses polar coordinates starting \n"
+                                    "                at the north pole. The directions from it are preserved. \n"
+                                    "                For more info type \"help azimuthal\".\n"
+                                    " -> cylindrical - The mapping of meridians to vertical lines can be \n"
+                                    "                  visualized by imagining a cylinder whose axis coincides\n"
+                                    "                  with the Earth's axis of rotation. This cylinder is \n"
+                                    "                  wrapped around the Earth, projected onto, and then unrolled.\n"
+                                    "                  Cylindrical projections stretch distances east-west and \n"
+                                    "                  use cartesian coordinates. These projections have a low\n"
+                                    "                  distortion around the equator and a high distortion around\n"
+                                    "                  the poles. For more info type \"help cylindrical\".\n"
+                                    " -> conic - One or two standard parallels are defined (30 degrees in our case).\n"
+                                    "            They may be visualized as secant lines where the cone intersects the globe,\n"
+                                    "            or, as the tangent line where the cone is tangent to the globe. The \n"
+                                    "            resulting conic map has low distortion in scale, shape, and area near those \n"
+                                    "            standard parallels. For more info type \"help conic\".\n"
+                                    " + hybrid - projection plane is an affine transformation of some of the\n"
+                                    "            projections mentioned above. They may have both polar and\n"
+                                    "            cartesian coordinate system. For more info type \"help hybrid\"\n"
+                                    " + real - basic latitudinal and longitudinal geographical coordinates.\n"
+                          "----------------------------------------------------------------------------------------------\n";
 
 
-        azimuthal_help = "Azimuthal projections:"
-                                      " -> Gnomonic - cannot project the equator\n"
-                                      " -> Stereographic - cannot project the south pole\n"
-                                      " -> Orthographic - can show only one hemisphere\n"
-                                      " -> Postel\n"
-                                      " -> Lambert - usually used only for one hemisphere";
+        azimuthal_help = "\"azimuthal\" projections:"
+                                      " -> gnomonic - cannot project the equator\n"
+                                      " -> stereographic - cannot project the south pole\n"
+                                      " -> orthographic - can show only one hemisphere\n"
+                                      " -> postel\n"
+                                      " -> lambert - usually used only for one hemisphere\n"
+                         "----------------------------------------------------------------------------------------------\n";
 
 
-        cylindrical_help = "Cylindrical projections (cannot project poles):\n"
+        cylindrical_help = "\"cylindrical\" projections (cannot project poles):\n"
                                         "  1) one standard parallel:\n"
-                                        "     -> Equirectangular\n"
-                                        "     -> Lambert\n"
-                                        "     -> Mercator\n"
-                                        "     -> Perspective\n"
+                                        "     -> equirectangular (also called \"Marin projection\")\n"
+                                        "     -> lambert\n"
+                                        "     -> mercator\n"
+                                        "     -> perspective\n"
                                         "  2) two standard parallels:\n"
-                                        "     -> Behrmann\n"
-                                        "     -> Trystan Edwards\n"
-                                        "     -> Gall";
+                                        "     -> behrmann\n"
+                                        "     -> trystan-edwards\n"
+                                        "     -> gall\n"
+                           "----------------------------------------------------------------------------------------------\n";
 
 
-        conic_help = "Conic projections:\n"
-                                  " -> Ptolemy\n"
-                                  " -> Lambert";
+        conic_help = "\"conic\" projections:\n"
+                                  " -> ptolemy (also called Equidistant conic projection)\n"
+                                  " -> lambert\n"
+                     "----------------------------------------------------------------------------------------------\n";
 
 
-        hybrid_help = "Hybrid projections:\n"
-                                   " -> Sanson - the projection looks like an onion\n"
-                                   " -> Werner-Stab - the projection look like a heart";
-    }
+        hybrid_help = "\"hybrid\" projections:\n"
+                                   " -> sanson - the projection looks like an onion\n"
+                                   " -> werner-stab - the projection look like a heart"
+                      "----------------------------------------------------------------------------------------------\n";
 
-    void print_projections_help() const{
-        cout << general_help <<endl;
-    }
+        real_help = "\"real\" projection - the coordinates are standard geographical coordinates in degrees,\n"
+                    "                      with the equator being on latitude 0 degrees.\n"
+                    "----------------------------------------------------------------------------------------------\n";
 
-    void print_help_azimuth() const {
-        cout << azimuthal_help <<endl;
-    }
+        get_help = "COMMAND: get [(1)|(2)|(3)]\n"
+                   " (1) point (real) <name> - prints the real coordinates of a point. Can be used to transform\n"
+                   "                    coordinates of the locally saved point into real coordinates.\n"
+                   " (2) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance\n"
+                   "                    between two points in the current projection in kilometres. \n"
+                   "                  - by adding \"scale <scale>\" the scale of the projection can be\n"
+                   "                    set. \n"
+                   "                  - <scale> has to be in format \"1:<int>\".\n"
+                   "                  - when using scale, units can be set by adding \"units [m|cm|mm]\"."
+                   " (3) area <name> - prints the area between the longitudes and the latitudes defining\n"
+                   "                   the borders of the region <name> in kilometres squared.\n"
+                   "\n"
+                   "Parentheses \"()\" mean that their content is optional.\n"
+                   "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
+                   "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
+                   "----------------------------------------------------------------------------------------------\n";
 
-    void print_help_cylindrical() const{
-        cout << cylindrical_help << endl;
-    }
+        print_help = "COMMAND: print [countries|cities|mountains|lakes|continents|custom|local] - prints the\n"
+                     "                  given data that is saved in that category.\n"
+                     "                - \"local\" option prints the custom local points saved in the current projection.\n"
+                     "                - the rest of the options prints data saved in the main database.\n"
+                     "\n"
+                     "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
+                     "----------------------------------------------------------------------------------------------\n";
 
-    void print_help_conic() const{
-        cout << conic_help <<endl;
-    }
+        home_help = "COMMAND: home - switches the current projection back into the real one. This \"projection\" does\n"
+                    "                not contain any local points, each data saved in real coordinates is being saved in\n"
+                    "                the main database.\n"
+                    "----------------------------------------------------------------------------------------------\n";
 
-    void print_help_hybrid() const{
-        cout << hybrid_help <<endl;
-    }
 
-    void print_saved_projections(){
-        cout << "you have "<<existing_projections.size()<<" saved projections:"<<endl;
-        for(auto &proj : existing_projections){
-            cout << " name:"<<proj.first<<", type: "<<proj.second.first<<endl;
-        }
+        add_help = "COMMAND: add [(1)|(2)]\n"
+                   " (1) point [real|local] <name> <lat> <lon> - saves the point with name <name> and coordinates <lat> <lon>\n"
+                   "                    - local <name> <lat> <lon> - The point is saved into the local projection\n"
+                   "                                    database with the coordinates having the orientation\n"
+                   "                                    of the latitude and longitude in real geographical projection.\n"
+                   "                    - real <name> <lat> <lon> - The point is saved into the main database in section \"custom\"\n"
+                   "                                  - <lat> <lon> are the latitude and longitude in a real geographical projection.\n"
+                   " (2) region <name> <south> <north> <east> <west> - saves the region with name <name> and the\n"
+                   "                  latitudinal and longitudinal borders in real geographical projection.\n"
+                   "                  The region is saved in the main database in section \"custom\"\n"
+                   "\n"
+                   "<name> can be a single word or multiple words bounded with the quotation marks \" \"\n"
+                   "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
+                   "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
+                   "----------------------------------------------------------------------------------------------\n";
+
+        enter_help = "COMMAND: enter <main_projection_type> <projection_subtype> - changes the current projection\n"
+                     "         into the given one.\n"
+                     "       - <main_projection_type> one of the listed in \"help projections\"\n"
+                     "       - <projection_subtype> - one of the listed in \"help <main_projection_type>\"\n"
+                     "\n"
+                     "EXAMPLE: \"enter conic ptolemy\"\n"
+                     "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
+                     "----------------------------------------------------------------------------------------------\n";
+
+        help = "COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints a manual page for a given\n"
+               "         command.\n"
+               "\n"
+               "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
+               "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
+               "----------------------------------------------------------------------------------------------\n";
+
     }
 
     void help_cmd(stringstream &ss){
         string word;
         ss >> word;
 
-        if(word == "projections") print_projections_help();
-        else if(word.compare("azimuthal") == 0) print_help_azimuth();
-        else if(word == "cylindrical") print_help_cylindrical();
-        else if(word == "conic") print_help_conic();
-        else if(word == "hybrid") print_help_hybrid();
+        if(word == "") cout << help <<endl;
+        else if(word == "projections") cout<<projection_help<<endl;
+        else if(word.compare("azimuthal") == 0) cout<<azimuthal_help<<endl;
+        else if(word == "cylindrical") cout << cylindrical_help<<endl;
+        else if(word == "conic") cout << conic_help<<endl;
+        else if(word == "hybrid") cout << hybrid_help<<endl;
+        else if(word == "real") cout << real_help <<endl;
+        else if(word == "enter") cout <<enter_help <<endl;
+        else if(word == "add") cout <<add_help<<endl;
+        else if(word == "home") cout <<home_help<<endl;
+        else if(word == "print") cout <<print_help<<endl;
+        else if(word == "get") cout << get_help << endl;
     }
 
     void exit_cmd() const{
@@ -158,12 +217,14 @@ public:
     void enter_cmd(stringstream &ss){
         string type, subtype;
         ss >> type;
+        transform(type.begin(), type.end(),type.begin(),::tolower);
         if(type == "real"){
             current_projection.first = type;
             current_projection.second = real_projection;
             return;
         }
         ss >> subtype;
+        transform(subtype.begin(), subtype.end(),subtype.begin(),::tolower);
         auto alias_it = projections.find(type);
         if(alias_it == projections.end()){
             cout << "This projection does not exist. Type \"help projections\" for more info."<<endl;
@@ -271,15 +332,13 @@ public:
             }
             current_projection.second->print_local();
         }
-        else if(what == "projections"){
-            print_saved_projections();
-        }
         else if(what == "countries") Projection::db->print_countries();
         else if(what == "cities") Projection::db->print_cities();
         else if(what == "mountains") Projection::db->print_mountains();
         else if(what == "lakes") Projection::db->print_lakes();
         else if(what == "continents") Projection::db->print_continents();
         else if(what == "custom") Projection::db->print_custom();
+        else if(what == "local") current_projection.second->print_local();
         else{
             cout << "invalid command."<<endl;
         }
@@ -380,6 +439,7 @@ public:
 
     void process_input(istream &is){
         string line;
+        cout <<"\n Welcome to GeoMapProjector!\nFor more info about supported commands type \"help\"\n";
         cout <<">real: ";
         getline(is,line);
         while(getline(is,line)){
@@ -388,7 +448,6 @@ public:
                 exit_cmd();
                 return;
             }
-            //transform(line.begin(),line.end(),line.begin(),::tolower);
 
             stringstream ss(line);
             string word;
@@ -397,7 +456,7 @@ public:
             if(word == "help") help_cmd(ss);
             else if(word == "enter") enter_cmd(ss);
             else if(word == "add") add_cmd(ss);
-            else if(word == "menu") current_projection.second = real_projection;
+            else if(word == "home") current_projection.second = real_projection;
             else if(word == "print") print_cmd(ss);
             else if(word == "get") get_cmd(ss);
             else cout << "invalid command. Please type \"help\" for help."<<endl;
