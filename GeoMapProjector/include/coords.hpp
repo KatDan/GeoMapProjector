@@ -33,7 +33,7 @@ public:
 
     virtual ~Coords(){}
 
-    virtual pair<double,double> normalize_coords(double a, double b){return pair<double,double>(0,0);}
+    //virtual pair<double,double> normalize_coords(double a, double b){return pair<double,double>(0,0);}
 };
 
 class RealCoords : public Coords{
@@ -50,7 +50,7 @@ public:
 
     string get_coords() const override;
 
-    pair<double,double> normalize_coords(double a, double b) override;
+    static pair<double,double> normalize_coords(double a, double b);
 };
 
 class PolarCoords: public Coords{
@@ -68,7 +68,7 @@ public:
 
     string get_coords() const override;
 
-    pair<double,double> normalize_coords(double a, double b) override;
+    static pair<double,double> normalize_coords(double a, double b);
 };
 
 class CartesianCoords : public Coords{
@@ -86,7 +86,7 @@ public:
 
     string get_coords() const override;
 
-    pair<double,double> normalize_coords(double a, double b) override;
+    static pair<double,double> normalize_coords(double a, double b);
 };
 
 

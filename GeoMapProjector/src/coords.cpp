@@ -103,10 +103,6 @@ double CartesianCoords::get_singleton_value() {
     else return 0;
 }
 
-pair<double, double> CartesianCoords::normalize_coords(double xx, double xy) {
-    return make_pair(xx,xy);
-}
-
 string CartesianCoords::get_coords() const {
     return "y="+to_string(y)+", x="+to_string(x);
 }
