@@ -80,7 +80,7 @@ public:
                                     " + hybrid - projection plane is an affine transformation of some of the\n"
                                     "            projections mentioned above. They may have both polar and\n"
                                     "            cartesian coordinate system. For more info type \"help hybrid\".\n"
-                                    " + real - basic latitudinal and longitudinal geographical coordinates.\n"
+                                    " + real - basic latitudinal and longitudinal geographical coordinates. Type \"help real\" for more info.\n"
                           "----------------------------------------------------------------------------------------------\n";
 
 
