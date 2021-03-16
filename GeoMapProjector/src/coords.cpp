@@ -66,8 +66,8 @@ PolarCoords::PolarCoords(double r, double e):Coords(normalize_coords(r,e).first,
     rho = normalized.first;
 }
 PolarCoords::PolarCoords(double value, enum lat_or_long type):Coords(type){
-    if(type == LATITUDE) rho = normalize_coords(0,value).second;
-    else if(type == LONGITUDE) epsilon = normalize_coords(value,0).first;
+    if(type == LATITUDE) rho = value;
+    else if(type == LONGITUDE) epsilon = normalize_coords(0,value).second;
 }
 
 double PolarCoords::get_singleton_value() {
