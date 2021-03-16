@@ -20,6 +20,11 @@ enum data_type{
     COUNTRY
 };
 
+enum coords_type{
+    CARTESIAN,
+    POLAR,
+};
+
 class Data{
 public:
     enum data_type type;
@@ -43,17 +48,19 @@ public:
 
 class Region : public Data{
 public:
-    shared_ptr<RealCoords> south;
-    shared_ptr<RealCoords> north;
-    shared_ptr<RealCoords> east;
-    shared_ptr<RealCoords> west;
+    shared_ptr<Coords> south;
+    shared_ptr<Coords> north;
+    shared_ptr<Coords> east;
+    shared_ptr<Coords> west;
 
-    shared_ptr<RealCoords> centroid;
+    shared_ptr<Coords> centroid;
 
     string capital_name;
     shared_ptr<Point> capital;
 
     Region(double s, double n, double e, double w);
+
+    Region(double s, double n, double e, double w, coords_type type);
 
     Region(double s, double n, double e, double w, string capital_name, double c1, double c2);
 

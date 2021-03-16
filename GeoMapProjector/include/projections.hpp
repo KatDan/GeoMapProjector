@@ -35,7 +35,9 @@ public:
 
     virtual shared_ptr<Coords> find_point(const string &name){return nullptr;};
 
-    static shared_ptr<Region> find_region(const string &name);
+    static shared_ptr<Region> get_region_from_db(const string &name);
+
+    virtual shared_ptr<Region> find_region(const string &name);
 
     virtual ~Projection(){};
 
@@ -58,6 +60,8 @@ public:
     double calculate_rectangular_area(const string &name) override;
 
     void print_local() override;
+
+    shared_ptr<Region> find_region(const string &name) override;
 };
 
 //main type
@@ -84,6 +88,8 @@ public:
     virtual ~AzimuthalProjection(){};
 
     void print_local() override;
+
+    shared_ptr<Region> find_region(const string &name) override;
 
 };
 
@@ -166,6 +172,8 @@ public:
     virtual ~CylindricalProjection(){};
 
     void print_local() override;
+
+    shared_ptr<Region> find_region(const string &name) override;
 
 };
 
@@ -264,6 +272,8 @@ public:
     virtual ~ConicProjection(){};
 
     void print_local() override;
+
+    shared_ptr<Region> find_region(const string &name) override;
 };
 
 class PtolemyProjection : public ConicProjection{

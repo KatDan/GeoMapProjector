@@ -90,6 +90,8 @@ public:
                                       " -> orthographic - can show only one hemisphere\n"
                                       " -> postel\n"
                                       " -> lambert - usually used only for one hemisphere\n"
+                                      "Coordinates in this projection are \"rho\" (distance from the North pole)\n"
+                                      "and \"epsilon\" (the angle analogous to longitude)\n"
                          "----------------------------------------------------------------------------------------------\n";
 
 
@@ -103,22 +105,27 @@ public:
                                         "     -> behrmann\n"
                                         "     -> trystan-edwards\n"
                                         "     -> gall\n"
+                                        "Coordinates in this projection are \"y\" (vertical distance from the equator)\n"
+                                        "and \"x\" (horizontal distance from the prime meridian)\n"
                            "----------------------------------------------------------------------------------------------\n";
 
 
         conic_help = "\"conic\" projections:\n"
                                   " -> ptolemy (also called Equidistant conic projection)\n"
                                   " -> lambert\n"
+                     "Coordinates in this projection are \"rho\" (distance from the North pole)\n"
+                     "and \"epsilon\" (the angle analogous to longitude)\n"
                      "----------------------------------------------------------------------------------------------\n";
 
 
         hybrid_help = "\"hybrid\" projections:\n"
-                                   " -> sanson - the projection looks like an onion\n"
-                                   " -> werner-stab - the projection look like a heart"
+                                   " -> sanson - the projection looks like an onion, cartesian coordinate system\n"
+                                   " -> werner-stab - the projection looks like a heart, polar coordinate system\n"
                       "----------------------------------------------------------------------------------------------\n";
 
         real_help = "\"real\" projection - the coordinates are standard geographical coordinates in degrees,\n"
-                    "                      with the equator being on latitude 0 degrees.\n"
+                    "                      with the equator being on latitude 0 degrees and the prime meridian\n"
+                    "                      on longitude 0 degrees\n"
                     "----------------------------------------------------------------------------------------------\n";
 
         get_help = "COMMAND: get [(1)|(2)|(3)]\n"
@@ -394,6 +401,16 @@ public:
                 return;
             }
             cout << coords->get_coords() << endl;
+        }
+        if(calc_type == "region"){
+            shared_ptr<Region> region;
+            string p = get_multiword_name(ss);
+            region = current_projection.second->find_region(p);
+            if(region == nullptr){
+                cout << "the point does not exist."<<endl;
+                return;
+            }
+            cout << region->print_coords() << endl;
         }
         else if(calc_type == "distance"){
             string p1, p2;

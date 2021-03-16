@@ -3,24 +3,8 @@
 
 using namespace std;
 
-shared_ptr<Region> Projection::find_region(const string &name) {
-    shared_ptr<Region> region_ptr;
-    if(db->continents.find(name) == db->continents.end()){
-        if(db->countries.find(name) == db->countries.end()){
-            if(db->lakes.find(name) == db->lakes.end()){
-                if(db->custom_regions.find(name) == db->custom_regions.end()){
-                    cout <<"Region with name \""<<name<<"\" does not exist."<<endl;
-                    return nullptr;
-                }
-                else region_ptr = static_pointer_cast<Region>(db->custom_regions[name]);
-            }
-            else region_ptr = static_pointer_cast<Region>(db->lakes[name]);
-        }
-        else region_ptr = static_pointer_cast<Region>(db->countries[name]);
-    }
-    else region_ptr = static_pointer_cast<Region>(db->continents[name]);
-
-    return region_ptr;
+shared_ptr<Region> RealProjection::find_region(const string &name) {
+    return get_region_from_db(name);
 }
 
 
@@ -61,7 +45,7 @@ shared_ptr<Coords> AzimuthalProjection::find_point(const string &p0){
         }
         else{
             shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-            p0_ptr = compute_coords(*point_p0->centroid);
+            p0_ptr = compute_coords(*(static_pointer_cast<RealCoords>(point_p0->centroid)));
         }
     }
     else{
@@ -85,37 +69,12 @@ double AzimuthalProjection::calculate_rectangular_area(const string &name) {
     shared_ptr<Region> region = find_region(name);
     if(region == nullptr) return 0;
 
-    auto polar_s = compute_coords(*region->south);
-    if(polar_s == nullptr){
-        cout << "unable to project south in this type of projection."<<endl;
-        return 0;
-    }
+    auto s = static_pointer_cast<PolarCoords>(region->south);
+    auto n = static_pointer_cast<PolarCoords>(region->north);
+    auto e = static_pointer_cast<PolarCoords>(region->east);
+    auto w = static_pointer_cast<PolarCoords>(region->west);
 
-    auto polar_n = compute_coords(*region->north);
-    if(polar_n == nullptr){
-        cout << "unable to project north in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto polar_e = compute_coords(*region->east);
-    if(polar_e == nullptr){
-        cout << "unable to project east in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto polar_w = compute_coords(*region->west);
-    if(polar_w == nullptr){
-        cout << "unable to project west in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto s = *polar_s;
-    auto n = *polar_n;
-    auto e = *polar_e;
-    auto w = *polar_w;
-
-
-    double result = get_rectangular_area<PolarCoords>(s,n,e,w);
+    double result = get_rectangular_area<PolarCoords>(*s,*n,*e,*w);
 
     return result;
 }
@@ -137,6 +96,42 @@ shared_ptr<RealCoords> AzimuthalProjection::convert_to_real_coords(const string 
     }
     auto result = decompute_coords(*p_ptr);
     return result;
+}
+
+shared_ptr<Region> AzimuthalProjection::find_region(const string &name) {
+    auto region = get_region_from_db(name);
+    if(region == nullptr) return nullptr;
+
+    auto polar_s = compute_coords(dynamic_cast<RealCoords &>(*region->south));
+    if(polar_s == nullptr){
+        cout << "unable to project south in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_n = compute_coords(dynamic_cast<RealCoords &>(*region->north));
+    if(polar_n == nullptr){
+        cout << "unable to project north in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_e = compute_coords(dynamic_cast<RealCoords &>(*region->east));
+    if(polar_e == nullptr){
+        cout << "unable to project east in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_w = compute_coords(dynamic_cast<RealCoords &>(*region->west));
+    if(polar_w == nullptr){
+        cout << "unable to project west in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto s = polar_s->rho;
+    auto n = polar_n->rho;
+    auto e = polar_e->epsilon;
+    auto w = polar_w->epsilon;
+
+    return make_shared<Region>(s,n,e,w,POLAR);
 }
 
 
@@ -258,7 +253,7 @@ shared_ptr<Coords> CylindricalProjection::find_point(const string &p0){
         }
         else{
             shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-            p0_ptr = compute_coords(*point_p0->centroid);
+            p0_ptr = compute_coords(*static_pointer_cast<RealCoords>(point_p0->centroid));
         }
     }
     else{
@@ -282,37 +277,12 @@ double CylindricalProjection::calculate_rectangular_area(const string &name) {
     shared_ptr<Region> region = find_region(name);
     if(region == nullptr) return 0;
 
-    auto cartesian_s = compute_coords(*region->south);
-    if(cartesian_s == nullptr){
-        cout << "unable to project south in this type of projection."<<endl;
-        return 0;
-    }
+    auto s = static_pointer_cast<CartesianCoords>(region->south);
+    auto n = static_pointer_cast<CartesianCoords>(region->north);
+    auto e = static_pointer_cast<CartesianCoords>(region->east);
+    auto w = static_pointer_cast<CartesianCoords>(region->west);
 
-    auto cartesian_n = compute_coords(*region->north);
-    if(cartesian_n == nullptr){
-        cout << "unable to project north in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto cartesian_e = compute_coords(*region->east);
-    if(cartesian_e == nullptr){
-        cout << "unable to project east in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto cartesian_w = compute_coords(*region->west);
-    if(cartesian_w == nullptr){
-        cout << "unable to project west in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto s = *cartesian_s;
-    auto n = *cartesian_n;
-    auto e = *cartesian_e;
-    auto w = *cartesian_w;
-
-
-    double result = get_rectangular_area<CartesianCoords>(s,n,e,w);
+    double result = get_rectangular_area<CartesianCoords>(*s,*n,*e,*w);
 
     return result;
 }
@@ -334,6 +304,42 @@ shared_ptr<RealCoords> CylindricalProjection::convert_to_real_coords(const strin
     }
     auto result = decompute_coords(*p_ptr);
     return result;
+}
+
+shared_ptr<Region> CylindricalProjection::find_region(const string &name) {
+    auto region = get_region_from_db(name);
+    if(region == nullptr) return nullptr;
+
+    auto polar_s = compute_coords(dynamic_cast<RealCoords &>(*region->south));
+    if(polar_s == nullptr){
+        cout << "unable to project south in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_n = compute_coords(dynamic_cast<RealCoords &>(*region->north));
+    if(polar_n == nullptr){
+        cout << "unable to project north in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_e = compute_coords(dynamic_cast<RealCoords &>(*region->east));
+    if(polar_e == nullptr){
+        cout << "unable to project east in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_w = compute_coords(dynamic_cast<RealCoords &>(*region->west));
+    if(polar_w == nullptr){
+        cout << "unable to project west in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto s = polar_s->y;
+    auto n = polar_n->y;
+    auto e = polar_e->x;
+    auto w = polar_w->x;
+
+    return make_shared<Region>(s,n,e,w,CARTESIAN);
 }
 
 EquirectangularProjection::EquirectangularProjection() : CylindricalProjection(){}
@@ -533,7 +539,7 @@ shared_ptr<Coords> ConicProjection::find_point(const string &p0){
         }
         else{
             shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-            p0_ptr = compute_coords(*point_p0->centroid);
+            p0_ptr = compute_coords(*static_pointer_cast<RealCoords>(point_p0->centroid));
         }
     }
     else{
@@ -557,37 +563,12 @@ double ConicProjection::calculate_rectangular_area(const string &name) {
     shared_ptr<Region> region = find_region(name);
     if(region == nullptr) return 0;
 
-    auto polar_s = compute_coords(*region->south);
-    if(polar_s == nullptr){
-        cout << "unable to project south in this type of projection."<<endl;
-        return 0;
-    }
+    auto s = static_pointer_cast<PolarCoords>(region->south);
+    auto n = static_pointer_cast<PolarCoords>(region->north);
+    auto e = static_pointer_cast<PolarCoords>(region->east);
+    auto w = static_pointer_cast<PolarCoords>(region->west);
 
-    auto polar_n = compute_coords(*region->north);
-    if(polar_n == nullptr){
-        cout << "unable to project north in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto polar_e = compute_coords(*region->east);
-    if(polar_e == nullptr){
-        cout << "unable to project east in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto polar_w = compute_coords(*region->west);
-    if(polar_w == nullptr){
-        cout << "unable to project west in this type of projection."<<endl;
-        return 0;
-    }
-
-    auto s = *polar_s;
-    auto n = *polar_n;
-    auto e = *polar_e;
-    auto w = *polar_w;
-
-
-    double result = get_rectangular_area<PolarCoords>(s,n,e,w);
+    double result = get_rectangular_area<PolarCoords>(*s,*n,*e,*w);
 
     return result;
 }
@@ -609,6 +590,42 @@ shared_ptr<RealCoords> ConicProjection::convert_to_real_coords(const string &p) 
     }
     auto result = decompute_coords(*p_ptr);
     return result;
+}
+
+shared_ptr<Region> ConicProjection::find_region(const string &name) {
+    auto region = get_region_from_db(name);
+    if(region == nullptr) return nullptr;
+
+    auto polar_s = compute_coords(dynamic_cast<RealCoords &>(*region->south));
+    if(polar_s == nullptr){
+        cout << "unable to project south in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_n = compute_coords(dynamic_cast<RealCoords &>(*region->north));
+    if(polar_n == nullptr){
+        cout << "unable to project north in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_e = compute_coords(dynamic_cast<RealCoords &>(*region->east));
+    if(polar_e == nullptr){
+        cout << "unable to project east in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto polar_w = compute_coords(dynamic_cast<RealCoords &>(*region->west));
+    if(polar_w == nullptr){
+        cout << "unable to project west in this type of projection."<<endl;
+        return nullptr;
+    }
+
+    auto s = polar_s->rho;
+    auto n = polar_n->rho;
+    auto e = polar_e->epsilon;
+    auto w = polar_w->epsilon;
+
+    return make_shared<Region>(s,n,e,w,POLAR);
 }
 
 shared_ptr<Database> Projection::db = nullptr;
@@ -636,6 +653,46 @@ Projection::Projection() {
         }
         db = make_shared<Database>(database);
     }
+}
+
+shared_ptr<Region> Projection::find_region(const string &name) {
+    shared_ptr<Region> region_ptr;
+    if(db->continents.find(name) == db->continents.end()){
+        if(db->countries.find(name) == db->countries.end()){
+            if(db->lakes.find(name) == db->lakes.end()){
+                if(db->custom_regions.find(name) == db->custom_regions.end()){
+                    cout <<"Region with name \""<<name<<"\" does not exist."<<endl;
+                    return nullptr;
+                }
+                else region_ptr = static_pointer_cast<Region>(db->custom_regions[name]);
+            }
+            else region_ptr = static_pointer_cast<Region>(db->lakes[name]);
+        }
+        else region_ptr = static_pointer_cast<Region>(db->countries[name]);
+    }
+    else region_ptr = static_pointer_cast<Region>(db->continents[name]);
+
+    return region_ptr;
+}
+
+shared_ptr<Region> Projection::get_region_from_db(const string &name) {
+    shared_ptr<Region> region_ptr;
+    if(db->continents.find(name) == db->continents.end()){
+        if(db->countries.find(name) == db->countries.end()){
+            if(db->lakes.find(name) == db->lakes.end()){
+                if(db->custom_regions.find(name) == db->custom_regions.end()){
+                    cout <<"Region with name \""<<name<<"\" does not exist."<<endl;
+                    return nullptr;
+                }
+                else region_ptr = static_pointer_cast<Region>(db->custom_regions[name]);
+            }
+            else region_ptr = static_pointer_cast<Region>(db->lakes[name]);
+        }
+        else region_ptr = static_pointer_cast<Region>(db->countries[name]);
+    }
+    else region_ptr = static_pointer_cast<Region>(db->continents[name]);
+
+    return region_ptr;
 }
 
 RealProjection::RealProjection() : Projection(){
@@ -668,7 +725,7 @@ shared_ptr<Coords> RealProjection::find_point(const string &p0) {
     }
     else{
         shared_ptr<Region>  point_p0 = static_pointer_cast<Region>(db->data[p0]);
-        p0_ptr = compute_coords(*point_p0->centroid);
+        p0_ptr = compute_coords(*static_pointer_cast<RealCoords>(point_p0->centroid));
     }
 
     return p0_ptr;
@@ -689,7 +746,12 @@ double RealProjection::calculate_rectangular_area(const string &name) {
     shared_ptr<Region> region = find_region(name);
     if(region == nullptr) return 0;
 
-    double result = get_rectangular_area<RealCoords>(*region->south,*region->north,*region->east,*region->west);
+    auto s = static_pointer_cast<RealCoords>(region->south);
+    auto n = static_pointer_cast<RealCoords>(region->north);
+    auto e = static_pointer_cast<RealCoords>(region->east);
+    auto w = static_pointer_cast<RealCoords>(region->west);
+
+    double result = get_rectangular_area<RealCoords>(*s,*n,*e,*w);
 
     return result;
 }

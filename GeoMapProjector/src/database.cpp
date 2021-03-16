@@ -50,6 +50,36 @@ string Region::print_coords() const{
 
 }
 
+Region::Region(double s, double n, double e, double w, coords_type type) : Data(data_type::REGION) {
+    double latitude_difference = abs(s-n);
+    double longitude_difference = abs(e-w);
+
+    if(type == coords_type::POLAR){
+        south = make_shared<PolarCoords>(s,LATITUDE);
+        north = make_shared<PolarCoords>(n,LATITUDE);
+        east = make_shared<PolarCoords>(e, LONGITUDE);
+        west = make_shared<PolarCoords>(w, LONGITUDE);
+
+        centroid = make_shared<PolarCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+    }
+    else if(type == coords_type::CARTESIAN){
+        south = make_shared<CartesianCoords>(s,LATITUDE);
+        north = make_shared<CartesianCoords>(n,LATITUDE);
+        east = make_shared<CartesianCoords>(e, LONGITUDE);
+        west = make_shared<CartesianCoords>(w, LONGITUDE);
+
+        centroid = make_shared<CartesianCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+    }
+    else{
+        south = make_shared<RealCoords>(s,LATITUDE);
+        north = make_shared<RealCoords>(n,LATITUDE);
+        east = make_shared<RealCoords>(e, LONGITUDE);
+        west = make_shared<RealCoords>(w, LONGITUDE);
+
+        centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+    }
+}
+
 void Database::add_data(const string &name, double c1, double c2, enum object_type obj_type){
     auto p = make_shared<Point>(c1,c2);
     data[name] = p;
