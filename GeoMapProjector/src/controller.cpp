@@ -128,9 +128,14 @@ public:
                     "                      on longitude 0 degrees\n"
                     "----------------------------------------------------------------------------------------------\n";
 
-        get_help = "COMMAND: get [(1)|(2)|(3)]\n"
-                   " (1) point (real) <name> - prints the real coordinates of a point. Can be used to transform\n"
-                   "                    coordinates of the locally saved point into real coordinates.\n"
+        get_help = "COMMAND: get [(1)|(2)|(3)|(4)]\n"
+                   " (1) point (real) <name> - when \"real\" is present, prints the real coordinates of a point.\n"
+                   "                           It can be used to transform coordinates of the locally saved point into \n"
+                   "                           real coordinates.\n"
+                   "                         - when \"real\" is not present, prints the coordinates of a point\n"
+                   "                           in the current projection.\n"
+                   " (2) region <name> - prints the coordinates of a region in the current projection.\n"
+                   "                     If the region is a country, it also prints new coordinates of the capital city.\n"
                    " (2) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance\n"
                    "                    between two points in the current projection in kilometres. \n"
                    "                  - by adding \"scale <scale>\" the scale of the projection can be\n"

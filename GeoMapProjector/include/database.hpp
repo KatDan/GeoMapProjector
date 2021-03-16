@@ -38,9 +38,12 @@ public:
 
 class Point : public Data{
 public:
-    shared_ptr<RealCoords> coords;
+    shared_ptr<Coords> coords;
 
     Point(double c1, double c2);
+
+    Point(double c1, double c2, coords_type type);
+
     string print_coords() const;
 
     ~Point(){}
@@ -63,6 +66,8 @@ public:
     Region(double s, double n, double e, double w, coords_type type);
 
     Region(double s, double n, double e, double w, string capital_name, double c1, double c2);
+
+    Region(double s, double n, double e, double w, string capital_name, double c1, double c2,coords_type type);
 
     string print_coords() const;
 };

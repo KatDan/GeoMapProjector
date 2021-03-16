@@ -15,6 +15,12 @@ string Point::print_coords() const{
     return coords->get_coords();
 }
 
+Point::Point(double c1, double c2, coords_type type) : Data(data_type::POINT) {
+    if(type == POLAR) coords = make_shared<PolarCoords>(c1,c2);
+    else if(type == CARTESIAN) coords = make_shared<CartesianCoords>(c1,c2);
+    else coords = make_shared<RealCoords>(c1,c2);
+}
+
 Region::Region(double s, double n, double e, double w):Data(data_type::REGION),
   south{make_shared<RealCoords>(s,lat_or_long::LATITUDE)},north{make_shared<RealCoords>(n,lat_or_long::LATITUDE)},
     east{make_shared<RealCoords>(e,lat_or_long::LONGITUDE)},west{make_shared<RealCoords>(w,lat_or_long::LONGITUDE)}{
@@ -35,8 +41,6 @@ Region::Region(double s, double n, double e, double w, string capital_name, doub
 
     centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
 }
-
-
 string Region::print_coords() const{
     if(type == data_type::REGION){
         return "S: "+to_string(south->get_singleton_value())+", N: "+to_string(north->get_singleton_value())+", E: "
@@ -75,6 +79,45 @@ Region::Region(double s, double n, double e, double w, coords_type type) : Data(
         north = make_shared<RealCoords>(n,LATITUDE);
         east = make_shared<RealCoords>(e, LONGITUDE);
         west = make_shared<RealCoords>(w, LONGITUDE);
+
+        centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+    }
+}
+
+Region::Region(double s, double n, double e, double w, string capital_name, double c1, double c2, coords_type type) : Data(data_type::COUNTRY){
+    double latitude_difference = abs(s-n);
+    double longitude_difference = abs(e-w);
+
+    capital_name = std::move(capital_name);
+
+    if(type == coords_type::POLAR){
+        south = make_shared<PolarCoords>(s,LATITUDE);
+        north = make_shared<PolarCoords>(n,LATITUDE);
+        east = make_shared<PolarCoords>(e, LONGITUDE);
+        west = make_shared<PolarCoords>(w, LONGITUDE);
+
+        capital = make_shared<Point>(c1,c2,POLAR);
+
+        centroid = make_shared<PolarCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+
+    }
+    else if(type == coords_type::CARTESIAN){
+        south = make_shared<CartesianCoords>(s,LATITUDE);
+        north = make_shared<CartesianCoords>(n,LATITUDE);
+        east = make_shared<CartesianCoords>(e, LONGITUDE);
+        west = make_shared<CartesianCoords>(w, LONGITUDE);
+
+        capital = make_shared<Point>(c1,c2,CARTESIAN);
+
+        centroid = make_shared<CartesianCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
+    }
+    else{
+        south = make_shared<RealCoords>(s,LATITUDE);
+        north = make_shared<RealCoords>(n,LATITUDE);
+        east = make_shared<RealCoords>(e, LONGITUDE);
+        west = make_shared<RealCoords>(w, LONGITUDE);
+
+        capital = make_shared<Point>(c1,c2);
 
         centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
     }
