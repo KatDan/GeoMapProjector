@@ -31,9 +31,9 @@ Region::Region(double s, double n, double e, double w):Data(data_type::REGION),
     centroid = make_shared<RealCoords>(min(s,n)+latitude_difference,min(e,w)+longitude_difference);
 }
 
-Region::Region(double s, double n, double e, double w, string capital_name, double c1, double c2):Data(data_type::COUNTRY),
+Region::Region(double s, double n, double e, double w, const string &capital_name, double c1, double c2):Data(data_type::COUNTRY),
   south{make_shared<RealCoords>(s,lat_or_long::LATITUDE)},north{make_shared<RealCoords>(n,lat_or_long::LATITUDE)},
-  east{make_shared<RealCoords>(e,lat_or_long::LONGITUDE)},west{make_shared<RealCoords>(w,lat_or_long::LONGITUDE)},capital_name{std::move(capital_name)},
+  east{make_shared<RealCoords>(e,lat_or_long::LONGITUDE)},west{make_shared<RealCoords>(w,lat_or_long::LONGITUDE)},capital_name{capital_name},
   capital{make_shared<Point>(c1,c2)}{
 
     double latitude_difference = abs(s-n);
@@ -84,11 +84,11 @@ Region::Region(double s, double n, double e, double w, coords_type type) : Data(
     }
 }
 
-Region::Region(double s, double n, double e, double w, string capital_name, double c1, double c2, coords_type type) : Data(data_type::COUNTRY){
+Region::Region(double s, double n, double e, double w, const string &cap_name, double c1, double c2, coords_type type) : Data(data_type::COUNTRY){
     double latitude_difference = abs(s-n);
     double longitude_difference = abs(e-w);
 
-    capital_name = std::move(capital_name);
+    capital_name = cap_name;
 
     if(type == coords_type::POLAR){
         south = make_shared<PolarCoords>(s,LATITUDE);

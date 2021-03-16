@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Stuff that Peter told me does not belong on git 
+.idea
+cmake-build-debug

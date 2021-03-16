@@ -139,6 +139,8 @@ double get_rectangular_area<CartesianCoords>(const CartesianCoords &s, const Car
 
 template<>
 double get_rectangular_area<RealCoords>(const RealCoords &s, const RealCoords &n, const RealCoords &e, const RealCoords &w){
-    return 4*pow(EARTH_PERIMETER,2)*asin(deg_tan((abs(e.longitude-w.longitude))/(2*EARTH_PERIMETER))
-            *deg_tan((abs(s.latitude-n.latitude))/(2*EARTH_PERIMETER)));
+    double theta_1 = 90 - s.latitude;
+    double theta_2 = 90 - n.latitude;
+    double segment_area = 2*pow(EARTH_PERIMETER,2)*M_PI*(deg_cos(theta_2)-deg_cos(theta_1));
+    return segment_area * (abs(e.longitude-w.longitude)/360);
 }

@@ -79,7 +79,7 @@ public:
                                     "            standard parallels. For more info type \"help conic\".\n"
                                     " + hybrid - projection plane is an affine transformation of some of the\n"
                                     "            projections mentioned above. They may have both polar and\n"
-                                    "            cartesian coordinate system. For more info type \"help hybrid\"\n"
+                                    "            cartesian coordinate system. For more info type \"help hybrid\".\n"
                                     " + real - basic latitudinal and longitudinal geographical coordinates.\n"
                           "----------------------------------------------------------------------------------------------\n";
 
@@ -136,13 +136,13 @@ public:
                    "                           in the current projection.\n"
                    " (2) region <name> - prints the coordinates of a region in the current projection.\n"
                    "                     If the region is a country, it also prints new coordinates of the capital city.\n"
-                   " (2) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance\n"
+                   " (3) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance\n"
                    "                    between two points in the current projection in kilometres. \n"
                    "                  - by adding \"scale <scale>\" the scale of the projection can be\n"
                    "                    set. \n"
                    "                  - <scale> has to be in format \"1:<int>\".\n"
                    "                  - when using scale, units can be set by adding \"units [m|cm|mm]\"."
-                   " (3) area <name> - prints the area between the longitudes and the latitudes defining\n"
+                   " (4) area <name> - prints the area between the longitudes and the latitudes defining\n"
                    "                   the borders of the region <name> in kilometres squared.\n"
                    "\n"
                    "<name> can be in format \"<country_name>.capital\"\n"
@@ -407,7 +407,7 @@ public:
             }
             cout << coords->get_coords() << endl;
         }
-        if(calc_type == "region"){
+        else if(calc_type == "region"){
             shared_ptr<Region> region;
             string p = get_multiword_name(ss);
             region = current_projection.second->find_region(p);

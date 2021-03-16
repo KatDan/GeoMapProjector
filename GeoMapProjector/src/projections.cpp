@@ -83,7 +83,7 @@ void AzimuthalProjection::print_local() {
     cout << "-------------------------------------------"<<endl;
     cout << points.size()<<" local point(s) saved:"<<endl;
     for(auto &point : points){
-        cout <<" "<<point.first<<": epsilon="<<point.second->epsilon<<", rho="<<point.second->rho<<endl;
+        cout <<" "<<point.first<<": "<<point.second->get_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
@@ -585,7 +585,7 @@ void ConicProjection::print_local() {
     cout << "-------------------------------------------"<<endl;
     cout << points.size()<<" local point(s) saved:"<<endl;
     for(auto &point : points){
-        cout <<" "<<point.first<<": epsilon="<<point.second->epsilon<<", rho="<<point.second->rho<<endl;
+        cout <<" "<<point.first<<": "<<point.second->get_coords()<<endl;
     }
     cout << "-------------------------------------------"<<endl;
 }
