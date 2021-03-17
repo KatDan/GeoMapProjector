@@ -9,7 +9,7 @@ between latitudes and longitudes bordering a given region in any projection.
 
 
 
-## User documentation
+## User guide
 ### Main features
  - conversion of the point with real geographical coordinates into the coordinates of the desired projection and vice versa
  - conversion of the region with real coordinates into the coordinates of the desired projection (including conversion of capital city's coordinates for countries)
@@ -51,17 +51,17 @@ Source of the conversion formulae: *link to the slides if permitted*
 #### Built-in data
 The application has a built-in database containing:
 1. **Points**
-     - **cities** - at the start of the program, the user is asked whether the default number of the biggest cities in the world can be loaded or 
- the user wishes to change the number of cities being loaded into the database. The default number is 100 cities, but if needed, more than 26 000 cities can be loaded.
+     - **cities** - at the start of the program, the user is asked whether the default number of the biggest cities in the world can be loaded or  the user wishes to change the number of cities being loaded into the database. The default number is 100 cities, but if needed, 26 570 cities can be loaded.  
+      **NOTE:** If user requests bigger number of cities, only 26 570 cities will be loaded.
      - **mountains** - 61 largest mountains
  2. **Regions**:
-     - **countries** - 173 countries, including the coordinates of the capital city. The capital city can be accessed via 
-     `<name_of_the_country>.capital`.
+     - **countries** - 173 countries, including the coordinates of the capital city. The capital city can be accessed via `<name_of_the_country>.capital` (e.g. `Slovakia.capital`).
      - **continents** - 6 continents: Africa, America, Asia, Australia, Europe and Oceania
-     - **lakes** - 20 largest lakes
+     - **lakes** - 20 largest lakes   
+
     Regions are defined by their latitudinal and longitudinal borders. If the distance between the regions is being calculated, the region is represented as a point - the region's centroid.  
-    **Longitudinal coordinate values are normalized** so their value is between -180 and 180 degrees.  
-    **Latitudinal coordinate values are normalized** so their value is between -90 and 90 degrees in case of real coordinate system, and between 0 and 180 in case of polar coordinate system. 
+    **Longitudinal coordinate values are normalized** so their value is between -180 and 180 degrees (negative values on the western hemisphere and positive values on the eastern hemisphere).  
+    **Latitudinal coordinate values are normalized** so their value is between -90 and 90 degrees in case of real coordinate system (negative values on southern hemisphere and positive values on northern hemisphere), and between 0 and 180 in case of polar coordinate system. 
 
 #### Custom data
 Custom points and regions can be added via `add [point|region] <name> <data>`. If custom data has real geographical coordinates (from now on called "real coordinates"), it is saved into the main database accessible from all projections. 
@@ -78,15 +78,15 @@ More about the commands in section **Commands**.
 For the commands description, the following rules are applied:
  - Brackets `[o1|o2|o3|...]` mean that the one of the options o1,o2,... must be chosen.
  - Angle brackets `<name>` mean that value with given property must be substituted in there. In this case, the argument is the name of the point/region.
- - when a `<name>` is in angle brackets, it can be a single word or multiple words bounded with the quotation marks, e.g. `Slovakia`,`"Hong Kong"`, `"Czech Republic.capital"`
+    - when a `<name>` is in angle brackets, it can be a single word or multiple words bounded with the quotation marks, e.g. `Slovakia`,`"Hong Kong"`, `"Czech Republic.capital"`
  - Parentheses `()` mean that their content is an optional parameter.
 
 
 #### Supported commands
 
-- `help [enter|add|home|print|get|projections|<projection_name>]`
+- `help [enter|add|home|print|get|projections|<projection_type>]`
    - prints a manual page for a given category, its content is very similar to the description of the commands in this section. Typing plane `help` prints the possible manual pages.
-   - `help projections` and `help <projection_name>` prints the additional information about projection types and subtypes, the rest of the manual pages prints the information about other supported commands.
+   - `help projections` and `help <projection_type>` prints the additional information about projection types and subtypes, the rest of the manual pages prints the information about other supported commands.
    - example: `help print`,`help azimuthal`
 
 - `enter <main_projection_type> <projection_subtype>` - changes the current projection into the given one. Projection type and subtype must be written in lowercase.
@@ -100,11 +100,11 @@ For the commands description, the following rules are applied:
    	   database with the projection's coordinates having the orientation of the latitude and longitude in real geographical projection.
    	   - `real <name> <lat> <lon>` - the point is saved into the main database in section "custom".
    	   	   - `<lat> <lon>` are the latitude and longitude in a real geographical projection.
-   - (2) `region <name> <south> <north> <east> <west>` - saves the region with name `<name>` and the latitudinal and longitudinal borders in real geographical projection. The region is saved into the main database in section "custom".
+   - (2) `region <name> <south> <north> <east> <west>` - saves the region with name `<name>` and the latitudinal and longitudinal borders in real geographical coordinates. The region is saved into the main database in section "custom".
 
    - example: 
-      - `add point local "My new local point" 15.3 60` - saves "My new local point" into the current projection's database. In case our current projection is azimuthal, the coordinates are polar with values rho=15.3 and epsilon=60.
-      - `add region reg 20 30 60.1 -2.123` - saves the region "reg" with latitudinal borders 20 on the south and 30 on the north, and longitudinal borders 60.1 on the east and -2.123 on the west into the main database.
+      - `add point local "My new local point" 15.3 60` - saves "My new local point" into the current projection's database. Considering the current projection is azimuthal, the coordinates are polar with values rho=15.3 and epsilon=60.
+      - `add region reg -20 30 60.1 2.123` - saves the region named "reg" with southern border 20°S, northern border 30°N, eastern border 60.1°E and western border 2.123°E into the main database.
 
 - `home` - changes the current projection back into the real geographical coordinate system.
 
@@ -117,10 +117,13 @@ For the commands description, the following rules are applied:
    - (1) `point (real) <name>` 
    	   - when `real` is present, it prints the real coordinates of a point. It can be used to transform coordinates of the locally saved point into the real coordinates.
        - when `real` is **not** present, it prints the coordinates of a point in the current projection.
-   - (2) `region <name>` - prints the coordinates of a region in the current projection. If the region is a country, it also prints new coordinates of the capital city.
+   - (2) `region <name>` - prints the coordinates of a region in the current projection. If the region is a country, it also prints the coordinates of the capital city.
    - (3) `distance <name1> <name2> (scale <scale> (units [m|cm|mm]))` - prints the distance between two points. The result is the distance within the current projection, by default in kilometres.
    	   - by adding `scale <scale>` the scale of the projection can be set.
    	   - `<scale>` has to be in format `1:<real_number>`.
    	   - when using `scale <scale>`, the units can be set by adding `units [m|cm|mm]`.
-   - (4) `area <name>` - prints the area between the longitudes and the latitudes defining the borders of the region `<name>` in kilometres squared.
+   - (4) `area <name> (scale <scale> (units [m|cm|mm]))` - prints the area between the longitudes and the latitudes defining the borders of the region `<name>` in kilometres squared.
    	   - as in case (3), scale and units can be set, with resulting units being in `[m|cm|mm]` squared.
+
+- `exit` - terminates the program. The custom data is deleted.
+
