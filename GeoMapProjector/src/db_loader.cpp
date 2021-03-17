@@ -120,8 +120,7 @@ public:
         string line;
         getline(is,line,'\n');
         int iteration = 0;
-        while(iteration < number){
-            getline(is,line,'\n');
+        while(getline(is,line) && iteration < number){
             stringstream ss(line);
 
             string city, nothing;
