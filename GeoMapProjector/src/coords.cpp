@@ -77,10 +77,10 @@ double PolarCoords::get_singleton_value() {
 }
 
 pair<double, double> PolarCoords::normalize_coords(double r, double e) {
-    while(e < -180){
+    while(e < 0){
         e += 360;
     }
-    while(e > 180){
+    while(e > 360){
         e -= 360;
     }
     return make_pair(r,e);
