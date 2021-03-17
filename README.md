@@ -127,3 +127,34 @@ For the commands description, the following rules are applied:
 
 - `exit` - terminates the program. The custom data is deleted.
 
+
+## Developer documentation
+
+The program is implemented in C++20.  
+The initial data of the database are stored as csv files.  
+
+### Classes
+
+- **db_loader** - loads the initial data from csv files into the database.
+- **Database** - a class storing the data as `map<string, shared_ptr<Data>>` for each category. The categories are: `countries`,`lakes`,`cities`,`mountains`,`continents`,`custom_points`,`custom_regions` and `data` (stores everything in a single map). This class also prints the data saved in a given category. 
+  The database contains pointers to **Data**, which is a base class for classes:
+     - **Point** - stores points as `shared_ptr<Coords>`
+     - **Region** - stores regions and countries. It contains `shared_ptr<Coords>` for each region's border, the region's centroid, and if the region is a country, also the capital (in this case it also stores the capital name as `string`).
+- **Coords** - the base class for each type of coordinates. The coordinates are stored in `pair<double,double>`. The regions' borders can be represented as a single `double` value, so `enum singleton_type = {LATITUDE,LONGITUDE,BOTH}` is set while initialization. The data is then read according to their `singleton_type`.  
+Derived classes:
+   - **RealCoords** - the coordinates of a real geographical projection. Besides `pair<double,double>` of the base class, the data is also saved in `double latitude` and `double longitude` for more intuitive access to the values.
+   - **PolarCoords** - the coordinates of polar coordinate system used in azimuthal, conic and some of the hybrid projections. The coordinates are also saved in `double rho` and `double epsilon`.
+   - **CartesianCoords** - the coordinates of the cartesian coordinate system used in azimuthal, and some of the hybrid projections. The coordinates are also saved in `double y` and `double x`.  
+- **Projections** - class uniting classes for each supported projection. Directly derived classes are:
+    - **RealProjection** - supports computing with real geographical coordinate system, i.e. **RealCoords**.
+    - **AzimuthalProjection** - uses **PolarCoords**, it is a base class for all supported azimuthal subtypes and a hybrid - Werner-Stab projection.
+    - **CylindricalProjection** - uses **CartesianCoords**, it is a base class for all supported cylindrical subtypes and a hybrid - Sanson projection.
+    - **ConicProjection** - uses **PolarCoords**, it is a base class for all supported conic projections.
+- **Controller** - a class processing the user's input and printing the corresponding output. It contains all manual pages as `string`s and prints error messages. 
+
+
+### Calculations
+- Distance and area calculation is done using template `get distance(T &p0, T &p1)` and `get_rectangular_area(T &s, T &n, T &e, T &w)` for each derived class of **Coords**. 
+- `my_math.cpp` contains functions for alternatives of goniometric functions from `cmath` library, taking arguments in degrees instead of radians.
+- Conversions between map projections are defined in each subclass of **Projection**'s derived classes.
+- Scaling and conversion between units is done directly in **Controller**'s method `get_cmd`.

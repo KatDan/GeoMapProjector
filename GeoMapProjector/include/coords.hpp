@@ -32,8 +32,6 @@ public:
     virtual string get_coords() const;
 
     virtual ~Coords(){}
-
-    //virtual pair<double,double> normalize_coords(double a, double b){return pair<double,double>(0,0);}
 };
 
 class RealCoords : public Coords{
