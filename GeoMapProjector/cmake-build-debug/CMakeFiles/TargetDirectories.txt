@@ -1,3 +1,0 @@
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/GeoMapProjector.dir
-C:/Users/Ja/Documents/GitHub/GeoMapProjector/GeoMapProjector/cmake-build-debug/CMakeFiles/rebuild_cache.dir
