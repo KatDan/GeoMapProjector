@@ -158,3 +158,13 @@ Derived classes:
 - `my_math.cpp` contains functions for alternatives of goniometric functions from `cmath` library, taking arguments in degrees instead of radians.
 - Conversions between map projections are defined in each subclass of **Projection**'s derived classes.
 - Scaling and conversion between units is done directly in **Controller**'s method `get_cmd`.
+
+## Sources:
+[https://en.wikipedia.org/wiki/List_of_countries_by_southernmost_point](https://en.wikipedia.org/wiki/List_of_countries_by_southernmost_point)
+[https://en.wikipedia.org/wiki/List_of_countries_by_easternmost_point](https://en.wikipedia.org/wiki/List_of_countries_by_easternmost_point)
+[https://en.wikipedia.org/wiki/List_of_countries_by_westernmost_point](https://en.wikipedia.org/wiki/List_of_countries_by_westernmost_point)
+[https://en.wikipedia.org/wiki/List_of_countries_by_northernmost_point](https://en.wikipedia.org/wiki/List_of_countries_by_northernmost_point)
+[https://en.wikipedia.org/wiki/Lists_of_extreme_points](https://en.wikipedia.org/wiki/Lists_of_extreme_points)
+[http://www.csgnetwork.com/llinfotable.html](http://www.csgnetwork.com/llinfotable.html)
+[https://simplemaps.com/data/world-cities](https://simplemaps.com/data/world-cities)
+[https://www.visualcapitalist.com/worlds-25-largest-lakes/](https://www.visualcapitalist.com/worlds-25-largest-lakes/)
