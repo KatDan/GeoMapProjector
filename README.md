@@ -44,7 +44,11 @@ Supported projections:
  - Lambert (conformal conic) projection
  
 
-Source of the conversion formulae: *link to the slides if permitted*
+Source of the conversion formulae:
+ - [Cylindrical projections](https://web.natur.cuni.cz/~bayertom/images/courses/mmk/mk6.pdf)
+ - [Azimuthal projections](https://web.natur.cuni.cz/~bayertom/images/courses/mmk/mk10.pdf)
+ - [Conic projections](https://web.natur.cuni.cz/~bayertom/images/courses/mmk/mk8.pdf)
+ - [Hybrid projections](https://web.natur.cuni.cz/~bayertom/images/courses/mmk/mk11.pdf)
 
 
 ### Data
