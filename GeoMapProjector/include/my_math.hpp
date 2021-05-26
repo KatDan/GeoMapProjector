@@ -8,7 +8,7 @@
 #pragma once
 
 #include<cmath>
-#define EARTH_PERIMETER 6371.11
+const double EARTH_PERIMETER = 6371.11;
 
 double deg_to_rad(double number);
 

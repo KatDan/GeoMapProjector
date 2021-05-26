@@ -11,7 +11,7 @@
 class db_loader{
 public:
 
-    db_loader()= default;;
+    db_loader()= default;
 
     ~db_loader()= default;
 
