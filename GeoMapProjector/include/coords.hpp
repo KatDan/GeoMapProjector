@@ -24,7 +24,7 @@ public:
     enum lat_or_long singleton_type = BOTH;
 
     Coords(){}
-    Coords(enum lat_or_long type);
+    Coords(lat_or_long type);
     Coords(double c1, double c2);
 
     virtual double get_singleton_value(){return 0;}
@@ -40,7 +40,7 @@ public:
     double longitude;
 
     RealCoords(double lat, double lon);
-    RealCoords(double value, enum lat_or_long type);
+    RealCoords(double value, lat_or_long type);
 
     double get_singleton_value() override;
 
@@ -58,7 +58,7 @@ public:
 
     PolarCoords():Coords(){}
     PolarCoords(double r, double e);
-    PolarCoords(double value, enum lat_or_long type);
+    PolarCoords(double value, lat_or_long type);
 
     double get_singleton_value() override;
 
@@ -76,7 +76,7 @@ public:
 
     CartesianCoords(){}
     CartesianCoords(double x, double y);
-    CartesianCoords(double value, enum lat_or_long type);
+    CartesianCoords(double value, lat_or_long type);
 
     double get_singleton_value() override;
 

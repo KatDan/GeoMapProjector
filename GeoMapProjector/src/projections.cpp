@@ -651,6 +651,9 @@ Projection::Projection() {
         string answer;
         cin >> answer;
         if(answer != "y"){
+            if (answer != "n"){
+                cout << "invalid option. The database is loading in default mode."<<endl;
+            }
             db_loader::add_initial_data(database);
         }
         else{

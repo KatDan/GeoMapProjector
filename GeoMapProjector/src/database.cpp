@@ -5,7 +5,7 @@
 
 #include <utility>
 
-Data::Data(enum data_type type):type{type}{}
+Data::Data(data_type type):type{type}{}
 
 Point::Point(double c1, double c2):Data(data_type::POINT){
     coords = make_shared<RealCoords>(c1,c2);
@@ -123,7 +123,7 @@ Region::Region(double s, double n, double e, double w, const string &cap_name, d
     }
 }
 
-void Database::add_data(const string &name, double c1, double c2, enum object_type obj_type){
+void Database::add_data(const string &name, double c1, double c2, object_type obj_type){
     auto p = make_shared<Point>(c1,c2);
     data[name] = p;
     if(obj_type == CUSTOM) custom_points[name] = p;
@@ -131,7 +131,7 @@ void Database::add_data(const string &name, double c1, double c2, enum object_ty
     else if(obj_type == MOUNTAIN) mountains[name] = p;
 }
 
-void Database::add_data(const string &name, double s, double n, double e, double w, enum object_type obj_type){
+void Database::add_data(const string &name, double s, double n, double e, double w, object_type obj_type){
     auto region_ptr = make_shared<Region>(s,n,e,w);
     data[name] = region_ptr;
     if(obj_type == LAKE) lakes[name] = region_ptr;

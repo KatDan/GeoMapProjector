@@ -29,7 +29,7 @@ class Data{
 public:
     enum data_type type;
 
-    Data(enum data_type type);
+    Data(data_type type);
 
     virtual string print_coords() const{return "";}
 
@@ -93,9 +93,9 @@ public:
 
     Database(){}
 
-    void add_data(const string &name, double c1, double c2, enum object_type obj_type);
+    void add_data(const string &name, double c1, double c2, object_type obj_type);
 
-    void add_data(const string &name, double s, double n, double e, double w, enum object_type obj_type);
+    void add_data(const string &name, double s, double n, double e, double w, object_type obj_type);
 
     void add_data(const string &name, double s, double n, double e, double w,const string &capital_name, double c1, double c2);
 

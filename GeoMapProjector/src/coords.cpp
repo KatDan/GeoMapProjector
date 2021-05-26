@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Coords::Coords(enum lat_or_long type):singleton_type{type}{}
+Coords::Coords(lat_or_long type):singleton_type{type}{}
 Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
 string Coords::get_coords() const {
@@ -22,7 +22,7 @@ RealCoords::RealCoords(double lat, double lon):Coords(normalize_coords(lat,lon).
     latitude = normalized.first;
     longitude = normalized.second;
 }
-RealCoords::RealCoords(double value, enum lat_or_long type):Coords(type) {
+RealCoords::RealCoords(double value, lat_or_long type):Coords(type) {
     if (type == LATITUDE) {
         latitude = normalize_coords(value,0).first;
         longitude = -1;
@@ -65,7 +65,7 @@ PolarCoords::PolarCoords(double r, double e):Coords(normalize_coords(r,e).first,
     epsilon = normalized.second;
     rho = normalized.first;
 }
-PolarCoords::PolarCoords(double value, enum lat_or_long type):Coords(type){
+PolarCoords::PolarCoords(double value, lat_or_long type):Coords(type){
     if(type == LATITUDE) rho = value;
     else if(type == LONGITUDE) epsilon = normalize_coords(0,value).second;
 }
@@ -92,7 +92,7 @@ string PolarCoords::get_coords() const {
 
 
 CartesianCoords::CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
-CartesianCoords::CartesianCoords(double value, enum lat_or_long type):Coords(type){
+CartesianCoords::CartesianCoords(double value, lat_or_long type):Coords(type){
     if(type == LATITUDE) y = value;
     else if(type == LONGITUDE) x = value;
 }
