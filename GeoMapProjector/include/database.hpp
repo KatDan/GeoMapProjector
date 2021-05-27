@@ -31,7 +31,7 @@ public:
 
     Data(data_type type);
 
-    virtual string print_coords() const{return "";}
+    virtual string print_coords() const = 0;
 
     ~Data(){}
 };

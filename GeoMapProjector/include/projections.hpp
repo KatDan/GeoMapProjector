@@ -25,15 +25,15 @@ public:
 
     Projection();
 
-    virtual double calculate_distance(const string &, const string &) const{return 0;};
+    virtual double calculate_distance(const string &, const string &) const = 0;
 
     virtual shared_ptr<RealCoords> convert_to_real_coords(const string &) const {return nullptr;}
 
-    virtual double calculate_rectangular_area(const string &) const{return 0;}
+    virtual double calculate_rectangular_area(const string &) const = 0;
 
     virtual void add_point(string &, double, double){};
 
-    virtual shared_ptr<Coords> find_point(const string &) const{return nullptr;};
+    virtual shared_ptr<Coords> find_point(const string &) const = 0;
 
     static shared_ptr<Region> get_region_from_db(const string &name);
 
@@ -71,11 +71,11 @@ public:
 
     AzimuthalProjection();
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const {return nullptr;}
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const  = 0;
 
     shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const {return nullptr;}
+    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const  = 0;
 
     void add_point(string &name, double c1, double c2) override;
 
@@ -155,11 +155,11 @@ public:
 
     map<string,shared_ptr<CartesianCoords>> points;
 
-    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &) const {return nullptr;}
+    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &) const  = 0;
 
     shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(CartesianCoords &) const {return nullptr;};
+    virtual shared_ptr<RealCoords> decompute_coords(CartesianCoords &) const  = 0;
 
     void add_point(string &name, double c1, double c2) override;
 
@@ -255,11 +255,11 @@ class ConicProjection : public Projection{
 public:
     map<string,shared_ptr<PolarCoords>> points;
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const {return nullptr;}
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const  = 0;
 
     shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const {return nullptr;}
+    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const  = 0;
 
     void add_point(string &name, double c1, double c2) override;
 

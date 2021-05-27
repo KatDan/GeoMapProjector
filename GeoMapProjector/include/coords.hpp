@@ -27,7 +27,7 @@ public:
     Coords(lat_or_long type);
     Coords(double c1, double c2);
 
-    virtual double get_singleton_value() const {return 0;}
+    virtual double get_singleton_value() const = 0;
 
     virtual string get_coords() const;
 
