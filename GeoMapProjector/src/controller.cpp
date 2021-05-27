@@ -19,18 +19,136 @@ public:
 
     map<string, map<string, shared_ptr<Projection>>> projections;
 
-    string projection_help;
-    string azimuthal_help;
-    string cylindrical_help;
-    string conic_help;
-    string hybrid_help;
-    string get_help;
-    string print_help;
-    string home_help;
-    string add_help;
-    string enter_help;
-    string help;
-    string real_help;
+    const string projection_help = R"(
+There are 3 basic projections to choose from:
+     -> azimuthal - The mapping of radial lines can be visualized by imagining
+                    a plane tangent to the Earth, with the central point as
+                    tangent point. This projection uses polar coordinates starting
+                    at the north pole. The directions from it are preserved.
+                    For more info type "help azimuthal".
+     -> cylindrical - The mapping of meridians to vertical lines can be
+                      visualized by imagining a cylinder whose axis coincides
+                      with the Earth's axis of rotation. This cylinder is
+                      wrapped around the Earth, projected onto, and then unrolled.
+                      Cylindrical projections stretch distances east-west and
+                      use cartesian coordinates. These projections have a low
+                      distortion around the equator and a high distortion around
+                      the poles. For more info type "help cylindrical".
+     -> conic - One or two standard parallels are defined (30 degrees in our case).
+                They may be visualized as secant lines where the cone intersects the globe,
+                or, as the tangent line where the cone is tangent to the globe. The
+                resulting conic map has low distortion in scale, shape, and area near those
+                standard parallels. For more info type "help conic".
+     + hybrid - projection plane is an affine transformation of some of the
+                projections mentioned above. They may have both polar and
+                cartesian coordinate system. For more info type "help hybrid".
+     + real - basic latitudinal and longitudinal geographical coordinates. Type "help real" for more info.
+    ----------------------------------------------------------------------------------------------)";
+    const string azimuthal_help = R"(
+"azimuthal" projections:
+  -> gnomonic - cannot project the equator
+  -> stereographic - cannot project the south pole
+  -> orthographic - can show only one hemisphere
+  -> postel
+  -> lambert - usually used only for one hemisphere
+Coordinates in this projection are "rho" (distance from the North pole)
+and "epsilon" (the angle analogous to longitude)
+----------------------------------------------------------------------------------------------)";
+    const string cylindrical_help = R"(
+"cylindrical" projections (cannot project poles):
+  1) one standard parallel:
+     -> equirectangular (also called "Marin projection")
+     -> lambert
+     -> mercator
+     -> perspective
+  2) two standard parallels:
+     -> behrmann
+     -> trystan-edwards
+     -> gall
+Coordinates in this projection are "y" (vertical distance from the equator)
+and "x" (horizontal distance from the prime meridian)
+----------------------------------------------------------------------------------------------)";
+    const string conic_help = R"(
+"conic" projections:
+  -> ptolemy (also called Equidistant conic projection)
+  -> lambert
+Coordinates in this projection are "rho" (distance from the North pole)
+and "epsilon" (the angle analogous to longitude)
+----------------------------------------------------------------------------------------------)";
+    const string hybrid_help = R"(
+"hybrid" projections:
+  -> sanson - the projection looks like an onion, cartesian coordinate system
+  -> werner-stab - the projection looks like a heart, polar coordinate system
+----------------------------------------------------------------------------------------------)";
+    const string get_help = R"(
+COMMAND: get [(1)|(2)|(3)|(4)]
+ (1) point (real) <name> - when "real" is present, prints the real coordinates of a point.
+                           It can be used to transform coordinates of the locally saved point into
+                           real coordinates.
+                         - when "real" is not present, prints the coordinates of a point
+                           in the current projection.
+ (2) region <name> - prints the coordinates of a region in the current projection.
+                     If the region is a country, it also prints new coordinates of the capital city.
+ (3) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance
+                    between two points in the current projection in kilometres.
+                  - by adding "scale <scale>" the scale of the projection can be
+                    set.
+                  - <scale> has to be in format "1:<int>".
+                  - when using scale, units can be set by adding "units [m|cm|mm]".
+ (4) area <name> - prints the area between the longitudes and the latitudes defining
+                   the borders of the region <name> in kilometres squared.
+<name> can be in format "<country_name>.capital"
+Parentheses " () " mean that their content is optional.
+Brackets "[o1|o2|o3|...]" mean that the one of the options o1,o2,... must be chosen.
+Angle brackets "<name>" mean that value with given property must be substituted in there.
+----------------------------------------------------------------------------------------------)";
+    const string print_help = R"(
+COMMAND: print [countries|cities|mountains|lakes|continents|custom|local] - prints the
+                  given data that is saved in that category.
+                - "local" option prints the custom local points saved in the current projection.
+                - the rest of the options prints data saved in the main database.
+Brackets "[o1|o2|o3|...]" mean that the one of the options o1,o2,... must be chosen.
+----------------------------------------------------------------------------------------------)";
+    const string home_help = R"(
+COMMAND: home - switches the current projection back into the real one. This "projection" does
+                not contain any local points, each data saved in real coordinates is being saved in
+                the main database.
+----------------------------------------------------------------------------------------------)";
+    const string add_help = R"(
+COMMAND: add [(1)|(2)]
+  (1) point [real|local] <name> <lat> <lon> - saves the point with name <name> and coordinates <lat> <lon>
+                     - local <name> <lat> <lon> - The point is saved into the local projection
+                                     database with the coordinates having the orientation
+                                     of the latitude and longitude in real geographical projection.
+                     - real <name> <lat> <lon> - The point is saved into the main database in section "custom"
+                                   - <lat> <lon> are the latitude and longitude in a real geographical projection.
+  (2) region <name> <south> <north> <east> <west> - saves the region with name <name> and the
+                   latitudinal and longitudinal borders in real geographical projection.
+                   The region is saved in the main database in section "custom"
+<name> can be a single word or multiple words bounded with the quotation marks " "
+Brackets "[o1|o2|o3|...]" mean that the one of the options o1,o2,... must be chosen.
+Angle brackets "<name>" mean that value with given property must be substituted in there.
+ ----------------------------------------------------------------------------------------------)";
+    const string enter_help = R"(
+COMMAND: enter <main_projection_type> <projection_subtype> - changes the current projection
+         into the given one.
+       - <main_projection_type> one of the listed in "help projections"
+       - <projection_subtype> - one of the listed in "help <main_projection_type>"
+EXAMPLE: "enter conic ptolemy"
+Angle brackets "<name>" mean that value with given property must be substituted in there.
+----------------------------------------------------------------------------------------------)";
+    const string help = R"(
+COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints a manual page
+ for a given command.
+
+ Brackets "[o1|o2|o3|...]" mean that the one of the options o1,o2,... must be chosen.
+ Angle brackets "<name>" mean that value with given property must be substituted in there.
+ ----------------------------------------------------------------------------------------------)";
+    const string real_help = R"(
+"real" projection - the coordinates are standard geographical coordinates in degrees,
+                    with the equator being on latitude 0 degrees and the prime meridian
+                    on longitude 0 degrees
+----------------------------------------------------------------------------------------------)";
 
     Controller(){
         real_projection = make_shared<RealProjection>();
@@ -57,146 +175,6 @@ public:
 
         projections["hybrid"]["sanson"] = make_shared<SansonProjectionSpecial>();
         projections["hybrid"]["werner-stab"] = make_shared<WernerStabProjectionSpecial>();
-
-        projection_help = "There are 3 basic projections to choose from:\n"
-                                    " -> azimuthal - The mapping of radial lines can be visualized by imagining\n"
-                                    "                a plane tangent to the Earth, with the central point as \n"
-                                    "                tangent point. This projection uses polar coordinates starting \n"
-                                    "                at the north pole. The directions from it are preserved. \n"
-                                    "                For more info type \"help azimuthal\".\n"
-                                    " -> cylindrical - The mapping of meridians to vertical lines can be \n"
-                                    "                  visualized by imagining a cylinder whose axis coincides\n"
-                                    "                  with the Earth's axis of rotation. This cylinder is \n"
-                                    "                  wrapped around the Earth, projected onto, and then unrolled.\n"
-                                    "                  Cylindrical projections stretch distances east-west and \n"
-                                    "                  use cartesian coordinates. These projections have a low\n"
-                                    "                  distortion around the equator and a high distortion around\n"
-                                    "                  the poles. For more info type \"help cylindrical\".\n"
-                                    " -> conic - One or two standard parallels are defined (30 degrees in our case).\n"
-                                    "            They may be visualized as secant lines where the cone intersects the globe,\n"
-                                    "            or, as the tangent line where the cone is tangent to the globe. The \n"
-                                    "            resulting conic map has low distortion in scale, shape, and area near those \n"
-                                    "            standard parallels. For more info type \"help conic\".\n"
-                                    " + hybrid - projection plane is an affine transformation of some of the\n"
-                                    "            projections mentioned above. They may have both polar and\n"
-                                    "            cartesian coordinate system. For more info type \"help hybrid\".\n"
-                                    " + real - basic latitudinal and longitudinal geographical coordinates. Type \"help real\" for more info.\n"
-                          "----------------------------------------------------------------------------------------------\n";
-
-
-        azimuthal_help = "\"azimuthal\" projections:"
-                                      " -> gnomonic - cannot project the equator\n"
-                                      " -> stereographic - cannot project the south pole\n"
-                                      " -> orthographic - can show only one hemisphere\n"
-                                      " -> postel\n"
-                                      " -> lambert - usually used only for one hemisphere\n"
-                                      "Coordinates in this projection are \"rho\" (distance from the North pole)\n"
-                                      "and \"epsilon\" (the angle analogous to longitude)\n"
-                         "----------------------------------------------------------------------------------------------\n";
-
-
-        cylindrical_help = "\"cylindrical\" projections (cannot project poles):\n"
-                                        "  1) one standard parallel:\n"
-                                        "     -> equirectangular (also called \"Marin projection\")\n"
-                                        "     -> lambert\n"
-                                        "     -> mercator\n"
-                                        "     -> perspective\n"
-                                        "  2) two standard parallels:\n"
-                                        "     -> behrmann\n"
-                                        "     -> trystan-edwards\n"
-                                        "     -> gall\n"
-                                        "Coordinates in this projection are \"y\" (vertical distance from the equator)\n"
-                                        "and \"x\" (horizontal distance from the prime meridian)\n"
-                           "----------------------------------------------------------------------------------------------\n";
-
-
-        conic_help = "\"conic\" projections:\n"
-                                  " -> ptolemy (also called Equidistant conic projection)\n"
-                                  " -> lambert\n"
-                     "Coordinates in this projection are \"rho\" (distance from the North pole)\n"
-                     "and \"epsilon\" (the angle analogous to longitude)\n"
-                     "----------------------------------------------------------------------------------------------\n";
-
-
-        hybrid_help = "\"hybrid\" projections:\n"
-                                   " -> sanson - the projection looks like an onion, cartesian coordinate system\n"
-                                   " -> werner-stab - the projection looks like a heart, polar coordinate system\n"
-                      "----------------------------------------------------------------------------------------------\n";
-
-        real_help = "\"real\" projection - the coordinates are standard geographical coordinates in degrees,\n"
-                    "                      with the equator being on latitude 0 degrees and the prime meridian\n"
-                    "                      on longitude 0 degrees\n"
-                    "----------------------------------------------------------------------------------------------\n";
-
-        get_help = "COMMAND: get [(1)|(2)|(3)|(4)]\n"
-                   " (1) point (real) <name> - when \"real\" is present, prints the real coordinates of a point.\n"
-                   "                           It can be used to transform coordinates of the locally saved point into \n"
-                   "                           real coordinates.\n"
-                   "                         - when \"real\" is not present, prints the coordinates of a point\n"
-                   "                           in the current projection.\n"
-                   " (2) region <name> - prints the coordinates of a region in the current projection.\n"
-                   "                     If the region is a country, it also prints new coordinates of the capital city.\n"
-                   " (3) distance <name1> <name2> (scale <scale> (units [m|cm|mm])) - prints the distance\n"
-                   "                    between two points in the current projection in kilometres. \n"
-                   "                  - by adding \"scale <scale>\" the scale of the projection can be\n"
-                   "                    set. \n"
-                   "                  - <scale> has to be in format \"1:<int>\".\n"
-                   "                  - when using scale, units can be set by adding \"units [m|cm|mm]\"."
-                   " (4) area <name> - prints the area between the longitudes and the latitudes defining\n"
-                   "                   the borders of the region <name> in kilometres squared.\n"
-                   "\n"
-                   "<name> can be in format \"<country_name>.capital\"\n"
-                   "Parentheses \"()\" mean that their content is optional.\n"
-                   "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
-                   "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
-                   "----------------------------------------------------------------------------------------------\n";
-
-        print_help = "COMMAND: print [countries|cities|mountains|lakes|continents|custom|local] - prints the\n"
-                     "                  given data that is saved in that category.\n"
-                     "                - \"local\" option prints the custom local points saved in the current projection.\n"
-                     "                - the rest of the options prints data saved in the main database.\n"
-                     "\n"
-                     "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
-                     "----------------------------------------------------------------------------------------------\n";
-
-        home_help = "COMMAND: home - switches the current projection back into the real one. This \"projection\" does\n"
-                    "                not contain any local points, each data saved in real coordinates is being saved in\n"
-                    "                the main database.\n"
-                    "----------------------------------------------------------------------------------------------\n";
-
-
-        add_help = "COMMAND: add [(1)|(2)]\n"
-                   " (1) point [real|local] <name> <lat> <lon> - saves the point with name <name> and coordinates <lat> <lon>\n"
-                   "                    - local <name> <lat> <lon> - The point is saved into the local projection\n"
-                   "                                    database with the coordinates having the orientation\n"
-                   "                                    of the latitude and longitude in real geographical projection.\n"
-                   "                    - real <name> <lat> <lon> - The point is saved into the main database in section \"custom\"\n"
-                   "                                  - <lat> <lon> are the latitude and longitude in a real geographical projection.\n"
-                   " (2) region <name> <south> <north> <east> <west> - saves the region with name <name> and the\n"
-                   "                  latitudinal and longitudinal borders in real geographical projection.\n"
-                   "                  The region is saved in the main database in section \"custom\"\n"
-                   "\n"
-                   "<name> can be a single word or multiple words bounded with the quotation marks \" \"\n"
-                   "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
-                   "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
-                   "----------------------------------------------------------------------------------------------\n";
-
-        enter_help = "COMMAND: enter <main_projection_type> <projection_subtype> - changes the current projection\n"
-                     "         into the given one.\n"
-                     "       - <main_projection_type> one of the listed in \"help projections\"\n"
-                     "       - <projection_subtype> - one of the listed in \"help <main_projection_type>\"\n"
-                     "\n"
-                     "EXAMPLE: \"enter conic ptolemy\"\n"
-                     "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
-                     "----------------------------------------------------------------------------------------------\n";
-
-        help = "COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints a manual page for a given\n"
-               "         command.\n"
-               "\n"
-               "Brackets \"[o1|o2|o3|...]\" mean that the one of the options o1,o2,... must be chosen.\n"
-               "Angle brackets \"<name>\" mean that value with given property must be substituted in there.\n"
-               "----------------------------------------------------------------------------------------------\n";
-
     }
 
     void help_cmd(stringstream &ss) const{
