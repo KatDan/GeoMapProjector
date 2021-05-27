@@ -195,7 +195,7 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
         else if(word == "get") cout << get_help << endl;
     }
 
-    static void exit_cmd() {
+    static void exit_cmd(){
         cout <<"sea you next time!"<<endl;
     }
 
@@ -322,7 +322,7 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
         }
     }
 
-    void print_cmd(stringstream &ss){
+    void print_cmd(stringstream &ss) const {
         string what;
         ss >> what;
 
@@ -363,7 +363,7 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
         return scale;
     }
 
-    void get_cmd(stringstream &ss){
+    void get_cmd(stringstream &ss) const{
         string calc_type;
         ss >> calc_type;
         string output;
@@ -418,7 +418,7 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
             cout <<fixed <<scaled_converted_result<<unit<<endl;
         }
         else if(calc_type == "area"){
-            if(existing_projections[current_projection.first].first.substr(0,6) == "hybrid"){
+            if(existing_projections.at(current_projection.first).first.substr(0,6) == "hybrid"){
                 cout << "Calculation of area between longitudes and latitudes in hybrid projections is currently not supported."<<endl;
                 return;
             }
@@ -477,7 +477,4 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
             else cout << "\n>" << current_projection.first<<": ";
         }
     }
-
-
-
 };

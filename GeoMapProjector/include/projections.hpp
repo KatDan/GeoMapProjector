@@ -25,23 +25,23 @@ public:
 
     Projection();
 
-    virtual double calculate_distance(const string &, const string &){return 0;};
+    virtual double calculate_distance(const string &, const string &) const{return 0;};
 
-    virtual shared_ptr<RealCoords> convert_to_real_coords(const string &){return nullptr;}
+    virtual shared_ptr<RealCoords> convert_to_real_coords(const string &) const {return nullptr;}
 
-    virtual double calculate_rectangular_area(const string &){return 0;}
+    virtual double calculate_rectangular_area(const string &) const{return 0;}
 
     virtual void add_point(string &, double, double){};
 
-    virtual shared_ptr<Coords> find_point(const string &){return nullptr;};
+    virtual shared_ptr<Coords> find_point(const string &) const{return nullptr;};
 
     static shared_ptr<Region> get_region_from_db(const string &name);
 
-    virtual shared_ptr<Region> find_region(const string &name);
+    virtual shared_ptr<Region> find_region(const string &name) const;
 
     virtual ~Projection(){};
 
-    virtual void print_local(){};
+    virtual void print_local() const{};
 
 };
 
@@ -51,17 +51,17 @@ public:
 
     static shared_ptr<RealCoords> compute_coords(RealCoords &coords);
 
-    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    shared_ptr<Coords> find_point(const string &p0) override;
+    shared_ptr<Coords> find_point(const string &p0) const override;
 
-    double calculate_distance(const string &p0, const string &p1) override;
+    double calculate_distance(const string &p0, const string &p1) const override;
 
-    double calculate_rectangular_area(const string &name) override;
+    double calculate_rectangular_area(const string &name) const override;
 
-    void print_local() override;
+    void print_local() const override;
 
-    shared_ptr<Region> find_region(const string &name) override;
+    shared_ptr<Region> find_region(const string &name) const override;
 };
 
 //main type
@@ -71,25 +71,25 @@ public:
 
     AzimuthalProjection();
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &){return nullptr;}
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const {return nullptr;}
 
-    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &){return nullptr;}
+    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const {return nullptr;}
 
     void add_point(string &name, double c1, double c2) override;
 
-    shared_ptr<Coords> find_point(const string &p0) override;
+    shared_ptr<Coords> find_point(const string &p0) const override;
 
-    double calculate_distance(const string &p0, const string &p1) override;
+    double calculate_distance(const string &p0, const string &p1) const override;
 
-    double calculate_rectangular_area(const string &name) override;
+    double calculate_rectangular_area(const string &name) const override;
 
     virtual ~AzimuthalProjection(){};
 
-    void print_local() override;
+    void print_local() const override;
 
-    shared_ptr<Region> find_region(const string &name) override;
+    shared_ptr<Region> find_region(const string &name) const override;
 
 };
 
@@ -97,54 +97,54 @@ class GnomonicProjection : public AzimuthalProjection{
 public:
     GnomonicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class StereoGraphicProjection : public AzimuthalProjection{
 public:
     StereoGraphicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class OrthographicProjection : public AzimuthalProjection{
 public:
     OrthographicProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class PostelProjection : public AzimuthalProjection{
 public:
     PostelProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class LambertAzimuthalProjection : public AzimuthalProjection{
 public:
     LambertAzimuthalProjection();
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class WernerStabProjectionSpecial : public AzimuthalProjection{
 public:
     WernerStabProjectionSpecial(){}
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 
@@ -155,25 +155,25 @@ public:
 
     map<string,shared_ptr<CartesianCoords>> points;
 
-    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &){return nullptr;}
+    virtual shared_ptr<CartesianCoords> compute_coords(RealCoords &) const {return nullptr;}
 
-    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(CartesianCoords &){return nullptr;};
+    virtual shared_ptr<RealCoords> decompute_coords(CartesianCoords &) const {return nullptr;};
 
     void add_point(string &name, double c1, double c2) override;
 
-    shared_ptr<Coords> find_point(const string &p0) override;
+    shared_ptr<Coords> find_point(const string &p0) const override;
 
-    double calculate_distance(const string &p0, const string &p1) override;
+    double calculate_distance(const string &p0, const string &p1) const override;
 
-    double calculate_rectangular_area(const string &name) override;
+    double calculate_rectangular_area(const string &name) const override;
 
     virtual ~CylindricalProjection(){};
 
-    void print_local() override;
+    void print_local() const override;
 
-    shared_ptr<Region> find_region(const string &name) override;
+    shared_ptr<Region> find_region(const string &name)const override;
 
 };
 
@@ -181,72 +181,72 @@ class EquirectangularProjection : public CylindricalProjection{
 public:
     EquirectangularProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class LambertCylindricalProjection : public CylindricalProjection{
 public:
     LambertCylindricalProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class MercatorProjection : public CylindricalProjection{
 public:
     MercatorProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class PerspectiveProjection : public CylindricalProjection{
 public:
     PerspectiveProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class BehrmannProjection : public CylindricalProjection{
 public:
     BehrmannProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class TrystanEdwardsProjection : public CylindricalProjection{
 public:
     TrystanEdwardsProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class GallProjection : public CylindricalProjection{
 public:
     GallProjection();
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 class SansonProjectionSpecial : public CylindricalProjection{
 public:
     SansonProjectionSpecial(){}
 
-    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<CartesianCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(CartesianCoords &coords) const override;
 };
 
 
@@ -255,43 +255,43 @@ class ConicProjection : public Projection{
 public:
     map<string,shared_ptr<PolarCoords>> points;
 
-    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &){return nullptr;}
+    virtual shared_ptr<PolarCoords> compute_coords(RealCoords &) const {return nullptr;}
 
-    shared_ptr<RealCoords> convert_to_real_coords(const string &p) override;
+    shared_ptr<RealCoords> convert_to_real_coords(const string &p) const override;
 
-    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &){return nullptr;}
+    virtual shared_ptr<RealCoords> decompute_coords(PolarCoords &) const {return nullptr;}
 
     void add_point(string &name, double c1, double c2) override;
 
-    shared_ptr<Coords> find_point(const string &p0) override;
+    shared_ptr<Coords> find_point(const string &p0) const override;
 
-    double calculate_distance(const string &p0, const string &p1) override;
+    double calculate_distance(const string &p0, const string &p1) const override;
 
-    double calculate_rectangular_area(const string &name) override;
+    double calculate_rectangular_area(const string &name) const override;
 
     virtual ~ConicProjection(){};
 
-    void print_local() override;
+    void print_local() const override;
 
-    shared_ptr<Region> find_region(const string &name) override;
+    shared_ptr<Region> find_region(const string &name) const override;
 };
 
 class PtolemyProjection : public ConicProjection{
 public:
     PtolemyProjection(){}
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 class LambertConicProjection : public ConicProjection{
 public:
     LambertConicProjection(){};
 
-    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) override;
+    shared_ptr<PolarCoords> compute_coords(RealCoords &coords) const override;
 
-    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) override;
+    shared_ptr<RealCoords> decompute_coords(PolarCoords &coords) const override;
 };
 
 

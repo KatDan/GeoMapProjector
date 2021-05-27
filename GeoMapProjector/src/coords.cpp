@@ -33,7 +33,7 @@ RealCoords::RealCoords(double value, lat_or_long type):Coords(type) {
     }
 }
 
-double RealCoords::get_singleton_value() {
+double RealCoords::get_singleton_value() const {
     if(singleton_type == LATITUDE) return latitude;
     else if(singleton_type == LONGITUDE) return longitude;
     else return 0;
@@ -70,7 +70,7 @@ PolarCoords::PolarCoords(double value, lat_or_long type):Coords(type){
     else if(type == LONGITUDE) epsilon = normalize_coords(0,value).second;
 }
 
-double PolarCoords::get_singleton_value() {
+double PolarCoords::get_singleton_value() const {
     if(singleton_type == LATITUDE) return rho;
     else if(singleton_type == LONGITUDE) return epsilon;
     else return 0;
@@ -97,7 +97,7 @@ CartesianCoords::CartesianCoords(double value, lat_or_long type):Coords(type){
     else if(type == LONGITUDE) x = value;
 }
 
-double CartesianCoords::get_singleton_value() {
+double CartesianCoords::get_singleton_value() const {
     if(singleton_type == LATITUDE) return y;
     else if(singleton_type == LONGITUDE) return x;
     else return 0;

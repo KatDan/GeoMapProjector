@@ -168,7 +168,6 @@ public:
         is.close();
     }
 
-
     static void add_initial_data(Database &db, int number = 100){
         add_continents(db);
         add_countries(db);
