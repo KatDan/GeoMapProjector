@@ -12,7 +12,7 @@
 
 using namespace std;
 
-enum lat_or_long{
+enum class lat_or_long{
     BOTH,
     LATITUDE,
     LONGITUDE
@@ -21,7 +21,7 @@ enum lat_or_long{
 class Coords{
 public:
     pair<double,double> coords_pair;
-    enum lat_or_long singleton_type = BOTH;
+    enum lat_or_long singleton_type = lat_or_long::BOTH;
 
     Coords(){}
     Coords(lat_or_long type);

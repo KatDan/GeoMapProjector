@@ -10,14 +10,8 @@
 using namespace std;
 
 class Controller{
-public:
-    map<string, pair<string,shared_ptr<Projection>>> existing_projections;
+private:
 
-    shared_ptr<Projection> real_projection;
-
-    pair<string,shared_ptr<Projection>> current_projection;
-
-    map<string, map<string, shared_ptr<Projection>>> projections;
 
     const string projection_help = R"(
 There are 3 basic projections to choose from:
@@ -149,33 +143,6 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
                     with the equator being on latitude 0 degrees and the prime meridian
                     on longitude 0 degrees
 ----------------------------------------------------------------------------------------------)";
-
-    Controller(){
-        real_projection = make_shared<RealProjection>();
-        current_projection.first = "real";
-        current_projection.second = real_projection;
-
-        projections["real"]["real"] = real_projection;
-        projections["azimuthal"]["gnomonic"] = make_shared<GnomonicProjection>();
-        projections["azimuthal"]["stereographic"] = make_shared<StereoGraphicProjection>();
-        projections["azimuthal"]["orthographic"] = make_shared<OrthographicProjection>();
-        projections["azimuthal"]["postel"] = make_shared<PostelProjection>();
-        projections["azimuthal"]["lambert"] = make_shared<LambertAzimuthalProjection>();
-
-        projections["cylindrical"]["equirectangular"] = make_shared<EquirectangularProjection>();
-        projections["cylindrical"]["lambert"] = make_shared<LambertCylindricalProjection>();
-        projections["cylindrical"]["mercator"] = make_shared<MercatorProjection>();
-        projections["cylindrical"]["perspective"] = make_shared<PerspectiveProjection>();
-        projections["cylindrical"]["behrmann"] = make_shared<BehrmannProjection>();
-        projections["cylindrical"]["trystan-edwards"] = make_shared<TrystanEdwardsProjection>();
-        projections["cylindrical"]["gall"] = make_shared<GallProjection>();
-
-        projections["conic"]["ptolemy"] = make_shared<PtolemyProjection>();
-        projections["conic"]["lambert"] = make_shared<LambertConicProjection>();
-
-        projections["hybrid"]["sanson"] = make_shared<SansonProjectionSpecial>();
-        projections["hybrid"]["werner-stab"] = make_shared<WernerStabProjectionSpecial>();
-    }
 
     void help_cmd(stringstream &ss) const{
         string word;
@@ -446,6 +413,42 @@ COMMAND: help [projections|enter|add|home|print|get|<projection_name>] - prints 
             cout << "invalid command."<<endl;
             return;
         }
+    }
+
+public:
+    map<string, pair<string,shared_ptr<Projection>>> existing_projections;
+
+    shared_ptr<Projection> real_projection;
+
+    pair<string,shared_ptr<Projection>> current_projection;
+
+    map<string, map<string, shared_ptr<Projection>>> projections;
+
+    Controller(){
+        real_projection = make_shared<RealProjection>();
+        current_projection.first = "real";
+        current_projection.second = real_projection;
+
+        projections["real"]["real"] = real_projection;
+        projections["azimuthal"]["gnomonic"] = make_shared<GnomonicProjection>();
+        projections["azimuthal"]["stereographic"] = make_shared<StereoGraphicProjection>();
+        projections["azimuthal"]["orthographic"] = make_shared<OrthographicProjection>();
+        projections["azimuthal"]["postel"] = make_shared<PostelProjection>();
+        projections["azimuthal"]["lambert"] = make_shared<LambertAzimuthalProjection>();
+
+        projections["cylindrical"]["equirectangular"] = make_shared<EquirectangularProjection>();
+        projections["cylindrical"]["lambert"] = make_shared<LambertCylindricalProjection>();
+        projections["cylindrical"]["mercator"] = make_shared<MercatorProjection>();
+        projections["cylindrical"]["perspective"] = make_shared<PerspectiveProjection>();
+        projections["cylindrical"]["behrmann"] = make_shared<BehrmannProjection>();
+        projections["cylindrical"]["trystan-edwards"] = make_shared<TrystanEdwardsProjection>();
+        projections["cylindrical"]["gall"] = make_shared<GallProjection>();
+
+        projections["conic"]["ptolemy"] = make_shared<PtolemyProjection>();
+        projections["conic"]["lambert"] = make_shared<LambertConicProjection>();
+
+        projections["hybrid"]["sanson"] = make_shared<SansonProjectionSpecial>();
+        projections["hybrid"]["werner-stab"] = make_shared<WernerStabProjectionSpecial>();
     }
 
     void process_input(istream &is){

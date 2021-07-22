@@ -10,10 +10,10 @@ Coords::Coords(lat_or_long type):singleton_type{type}{}
 Coords::Coords(double c1, double c2):coords_pair(make_pair(c1,c2)){}
 
 string Coords::get_coords() const {
-    if(singleton_type == BOTH){
+    if(singleton_type == lat_or_long::BOTH){
         return to_string(coords_pair.first) + " "+to_string(coords_pair.second);
     }
-    else if(singleton_type == LATITUDE) return to_string(coords_pair.first);
+    else if(singleton_type == lat_or_long::LATITUDE) return to_string(coords_pair.first);
     else return to_string(coords_pair.second);
 }
 
@@ -23,19 +23,19 @@ RealCoords::RealCoords(double lat, double lon):Coords(normalize_coords(lat,lon).
     longitude = normalized.second;
 }
 RealCoords::RealCoords(double value, lat_or_long type):Coords(type) {
-    if (type == LATITUDE) {
+    if (type == lat_or_long::LATITUDE) {
         latitude = normalize_coords(value,0).first;
         longitude = -1;
     }
-    else if (type == LONGITUDE){
+    else if (type == lat_or_long::LONGITUDE){
         longitude = normalize_coords(0,value).second;
         latitude = -1;
     }
 }
 
 double RealCoords::get_singleton_value() const {
-    if(singleton_type == LATITUDE) return latitude;
-    else if(singleton_type == LONGITUDE) return longitude;
+    if(singleton_type == lat_or_long::LATITUDE) return latitude;
+    else if(singleton_type == lat_or_long::LONGITUDE) return longitude;
     else return 0;
 }
 
@@ -66,13 +66,13 @@ PolarCoords::PolarCoords(double r, double e):Coords(normalize_coords(r,e).first,
     rho = normalized.first;
 }
 PolarCoords::PolarCoords(double value, lat_or_long type):Coords(type){
-    if(type == LATITUDE) rho = value;
-    else if(type == LONGITUDE) epsilon = normalize_coords(0,value).second;
+    if(type == lat_or_long::LATITUDE) rho = value;
+    else if(type == lat_or_long::LONGITUDE) epsilon = normalize_coords(0,value).second;
 }
 
 double PolarCoords::get_singleton_value() const {
-    if(singleton_type == LATITUDE) return rho;
-    else if(singleton_type == LONGITUDE) return epsilon;
+    if(singleton_type == lat_or_long::LATITUDE) return rho;
+    else if(singleton_type == lat_or_long::LONGITUDE) return epsilon;
     else return 0;
 }
 
@@ -93,13 +93,13 @@ string PolarCoords::get_coords() const {
 
 CartesianCoords::CartesianCoords(double x, double y):Coords(y,x),x{x},y{y}{}
 CartesianCoords::CartesianCoords(double value, lat_or_long type):Coords(type){
-    if(type == LATITUDE) y = value;
-    else if(type == LONGITUDE) x = value;
+    if(type == lat_or_long::LATITUDE) y = value;
+    else if(type == lat_or_long::LONGITUDE) x = value;
 }
 
 double CartesianCoords::get_singleton_value() const {
-    if(singleton_type == LATITUDE) return y;
-    else if(singleton_type == LONGITUDE) return x;
+    if(singleton_type == lat_or_long::LATITUDE) return y;
+    else if(singleton_type == lat_or_long::LONGITUDE) return x;
     else return 0;
 }
 

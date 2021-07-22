@@ -39,7 +39,7 @@ shared_ptr<Coords> AzimuthalProjection::find_point(const string &p0) const{
         if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
         }
-        else if(db->data[p0]->type == POINT) {
+        else if(db->data[p0]->type == data_type::POINT) {
             shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
             p0_ptr = compute_coords(dynamic_cast<RealCoords &>(*point_p0->coords));
         }
@@ -135,7 +135,7 @@ shared_ptr<Region> AzimuthalProjection::find_region(const string &name) const{
          auto capital = compute_coords(dynamic_cast<RealCoords &>(*region->capital->coords));
          return make_shared<Region>(s,n,e,w,region->capital_name,capital->rho,capital->epsilon,coords_type::POLAR);
     }
-    else return make_shared<Region>(s,n,e,w,POLAR);
+    else return make_shared<Region>(s,n,e,w,coords_type::POLAR);
 }
 
 
@@ -251,7 +251,7 @@ shared_ptr<Coords> CylindricalProjection::find_point(const string &p0) const{
         if(db->data.find(p0) == db->data.end()){
             return nullptr;
         }
-        else if(db->data[p0]->type == POINT) {
+        else if(db->data[p0]->type == data_type::POINT) {
             shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
             p0_ptr = compute_coords(dynamic_cast<RealCoords &>(*point_p0->coords));
         }
@@ -347,7 +347,7 @@ shared_ptr<Region> CylindricalProjection::find_region(const string &name) const{
         auto capital = compute_coords(dynamic_cast<RealCoords &>(*region->capital->coords));
         return make_shared<Region>(s,n,e,w,region->capital_name,capital->y,capital->x,coords_type::CARTESIAN);
     }
-    else return make_shared<Region>(s,n,e,w,CARTESIAN);
+    else return make_shared<Region>(s,n,e,w,coords_type::CARTESIAN);
 }
 
 EquirectangularProjection::EquirectangularProjection() : CylindricalProjection(){}
@@ -541,7 +541,7 @@ shared_ptr<Coords> ConicProjection::find_point(const string &p0) const{
         if(db->data.find(p0) == Projection::db->data.end()){
             return nullptr;
         }
-        else if(db->data[p0]->type == POINT) {
+        else if(db->data[p0]->type == data_type::POINT) {
             shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
             p0_ptr = compute_coords(dynamic_cast<RealCoords &>(*point_p0->coords));
         }
@@ -637,7 +637,7 @@ shared_ptr<Region> ConicProjection::find_region(const string &name) const{
         auto capital = compute_coords(dynamic_cast<RealCoords &>(*region->capital->coords));
         return make_shared<Region>(s,n,e,w,region->capital_name,capital->rho,capital->epsilon,coords_type::POLAR);
     }
-    else return make_shared<Region>(s,n,e,w,POLAR);
+    else return make_shared<Region>(s,n,e,w,coords_type::POLAR);
 }
 
 shared_ptr<Database> Projection::db = nullptr;
@@ -734,7 +734,7 @@ shared_ptr<Coords> RealProjection::find_point(const string &p0) const{
     else if(db->data.find(p0) == db->data.end()){
         return nullptr;
     }
-    else if(db->data[p0]->type == POINT) {
+    else if(db->data[p0]->type == data_type::POINT) {
         shared_ptr<Point>  point_p0 = static_pointer_cast<Point>(db->data[p0]);
         p0_ptr = compute_coords(dynamic_cast<RealCoords &>(*point_p0->coords));
     }

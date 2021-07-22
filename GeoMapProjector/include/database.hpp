@@ -14,13 +14,13 @@
 
 using namespace std;
 
-enum data_type{
+enum class data_type{
     POINT,
     REGION,
     COUNTRY
 };
 
-enum coords_type{
+enum class coords_type{
     CARTESIAN,
     POLAR,
 };
