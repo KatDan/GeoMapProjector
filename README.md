@@ -129,6 +129,13 @@ For the commands description, the following rules are applied:
    - (4) `area <name> (scale <scale> (units [m|cm|mm]))` - prints the area between the longitudes and the latitudes defining the borders of the region `<name>` in kilometres squared.
    	   - as in case (3), scale and units can be set, with resulting units being in `[m|cm|mm]` squared.
 
+   - examples:
+      - >conic ptolemy:`get point Seoul`- returns the coordinates of Seoul in current coordinates;
+      - >conic ptolemy:`get point real MyCustomConicPtolemyPoint` - returns the real coordinates of the point created in the local coordinate system;
+      - `get region Asia`;
+      - >conic ptolemy:`get distance Seoul Tokyo scale 1:1000000 units cm` - returns the distance between the two cities in current projection in given scale and units;
+      - `get area Asia scale 1:15000` - returns the area of Asia in a given scale in the default units - kilometers. 
+
 - `exit` - terminates the program. The custom data is deleted.
 
 
